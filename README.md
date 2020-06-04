@@ -41,7 +41,7 @@ Custom style and components - enables perserving the original brand design of cu
 
 ---
 
-## State management
+## State management and data handling
 Context API + GraphQL
 
 - viable for a smallscale/simple application resulting in faster development
