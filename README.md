@@ -1,7 +1,7 @@
 # Frontend tech stack
 
 ## CI/CD
-gitlab + gitlabCI/CD?
+gitlab + docker + gitlabCI/CD?
 
 Alternatives:
 - github + circleCI
