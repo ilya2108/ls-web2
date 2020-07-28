@@ -50,6 +50,10 @@ Apollo + GraphQL
 - replaces Redux
 - caches fetched data, and fetches only when data has been changed in the server database
 
+Redux + Sagas
+- classic path
+- Sagas managable sideffects, easier to test, no callback hell like in Redux Thunk
+
 ---
 
 ## CSR vs SSR
@@ -97,11 +101,14 @@ Mocha + chai + Sinon.js + istanbul
 - Sinon.js for mocking
 - istanbul for coverage report
 
+<span style="color: lightgreen;">Cypress</span>
+- automated UI testing
+
 ---
 
 ## Optimization
 react-loadable
 - code splitting
 
-<span style="color: lightgreen;">PWA</span>
+PWA
 - take advantage of setup resources by create-react-app to add progressive web app capabilities
