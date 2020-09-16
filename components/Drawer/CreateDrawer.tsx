@@ -1,11 +1,11 @@
-// new SideNavigation dependencies
+// documentation
+// https://atlaskit.atlassian.com/packages/design-system/drawer
+
+// dependencies
 import {
     SideNavigation,
-    Header,
-    NavigationHeader,
     NavigationContent,
     ButtonItem,
-    Section,
   } from "@atlaskit/side-navigation";
 
   import CalendarIcon from "@atlaskit/icon/glyph/calendar";
@@ -14,7 +14,7 @@ import {
 
 
 // New SideNavigation
-const CreateDrawer = () => (
+const CreateDrawer: React.FunctionComponent = () => (
     <SideNavigation label="project">
     <NavigationContent>
       <ButtonItem iconBefore={<CalendarIcon label=""/>}>Start Exam <strong>right now</strong></ButtonItem>

@@ -1,5 +1,5 @@
-// dependencies
-import Head from "next/head";
+// documentation
+// https://atlaskit.atlassian.com/packages/design-system/table-tree
 
 // atlaskit
 import TableTree, { Headers, Header, Rows, Row, Cell } from '@atlaskit/table-tree';

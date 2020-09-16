@@ -1,8 +1,11 @@
+// documentation
+// Drawer: https://atlaskit.atlassian.com/packages/design-system/drawer
+// Quick search: https://atlaskit.atlassian.com/packages/search/quick-search
+
+// TODO: Make search logic
 import React from "react";
 import {
-  QuickSearch,
   ObjectResult,
-  ContainerResult,
   ResultItemGroup,
 } from "@atlaskit/quick-search";
 

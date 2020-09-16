@@ -1,3 +1,7 @@
+// documentation
+// Buttons: https://atlassian.design/components/button/examples
+// TextArea: https://atlaskit.atlassian.com/packages/design-system/textarea
+
 // atlaskit
 import Button, { ButtonGroup } from "@atlaskit/button";
 import TextArea from "@atlaskit/textarea";

@@ -1,3 +1,8 @@
+// documentation
+// Navigation: https://atlaskit.atlassian.com/packages/design-system/navigation-next
+// Page, Grid: https://atlaskit.atlassian.com/packages/design-system/page
+// Page Layout: https://atlaskit.atlassian.com/packages/design-system/page-layout
+
 // dependencies
 import React from 'react';
 import {
@@ -13,7 +18,11 @@ import { Content, PageLayout, Main } from "@atlaskit/page-layout";
 import ContainerNavigation from "../components/ContainerNavigation/ContainerNavigation";
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
 
-const Layout = ({children}) => (
+interface ILayoutProps {
+  children: React.ReactNode
+}
+
+const Layout = ({children}: ILayoutProps) => (
   <Page>
     <NavigationProvider>
       <LayoutManager

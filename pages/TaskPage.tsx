@@ -1,5 +1,3 @@
-import Head from 'next/head'
-
 // layout components
 import Layout from "../layout/Layout";
 

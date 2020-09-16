@@ -1,3 +1,6 @@
+// documentation
+// https://atlaskit.atlassian.com/packages/design-system/navigation-next
+
 // dependencies
 import React from "react";
 import GlobalNavigation from "@atlaskit/global-navigation";
@@ -9,7 +12,7 @@ import CreateDrawer from "../Drawer/CreateDrawer";
 // ICONS
 import ReposIcon from "@atlaskit/icon/glyph/bitbucket/repos";
 
-type LSGlobalNavigationState = {
+interface ILSGlobalNavigationState {
   isSearchDrawerOpen: boolean;
   shouldUnmountOnExit: boolean;
   isSearchDrawerFocusLockEnabled: boolean;
@@ -18,19 +21,15 @@ type LSGlobalNavigationState = {
   isCreateDrawerFocusLockEnabled: boolean;
 };
 
-class LSGlobalNavigation extends React.Component<{}, LSGlobalNavigationState> {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isSearchDrawerOpen: false,
-      shouldUnmountOnExit: false,
-      isSearchDrawerFocusLockEnabled: true,
-      unmountOnExit: true,
-      isCreateDrawerOpen: false,
-      isCreateDrawerFocusLockEnabled: true,
-    };
-  }
+class LSGlobalNavigation extends React.Component<{}, ILSGlobalNavigationState> {
+  state: ILSGlobalNavigationState = {
+    isSearchDrawerOpen: false,
+    shouldUnmountOnExit: false,
+    isSearchDrawerFocusLockEnabled: true,
+    unmountOnExit: true,
+    isCreateDrawerOpen: false,
+    isCreateDrawerFocusLockEnabled: true,
+  };
 
   // Search drawer methods
   openSearchDrawer = () => this.setState({ isSearchDrawerOpen: true });
@@ -46,6 +45,7 @@ class LSGlobalNavigation extends React.Component<{}, LSGlobalNavigationState> {
     this.setState({ isCreateDrawerOpen: false });
   };
 
+  // Universal methods
   onCloseComplete = (node) => console.log("onCloseComplete", node);
 
   toggleUnmountBehaviour = () => {
