@@ -34,6 +34,7 @@ const Layout = ({children}: ILayoutProps) => (
           <PageLayout>
             <Content>
               <Main>
+                <div style={{ marginTop: '40px' }} />
                 {children}
               </Main>
             </Content>
