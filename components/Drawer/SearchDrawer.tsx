@@ -7,6 +7,7 @@ import React from "react";
 import {
   ObjectResult,
   ResultItemGroup,
+  QuickSearch,
 } from "@atlaskit/quick-search";
 
 import Avatar from "@atlaskit/avatar";
@@ -37,7 +38,7 @@ class SearchDrawer extends React.Component<
     };
   }
 
-  search(value) {
+  search(value?: string) {
     this.setState({
       query: value,
     });
@@ -45,43 +46,47 @@ class SearchDrawer extends React.Component<
 
   render() {
     return (
-      // <QuickSearch
-      //   isLoading={this.state.isLoading}
-      //   onSearchInput={({ target }) => {
-      //     this.search(target.value);
-      //   }}
-      //   value={this.state.query}
-      // >
-          <ResultItemGroup title=" Object examples">
-            <ObjectResult
-              {...defaultProps}
-              name="quick-search is too hilarious!"
-              avatarUrl={avatarUrl}
-              objectKey="AK-007"
-              containerName="Search'n'Smarts"
-            />
-            <ObjectResult
-              {...defaultProps}
-              avatarUrl={avatarUrl}
-              name="Yeah, I cut my dev loop in half, but you'll never guess what happened next!"
-              containerName="Buzzfluence"
-            />
-            <ObjectResult
-              {...defaultProps}
-              avatarUrl={avatarUrl}
-              name="Prank schedule: April 2017"
-              containerName="The Scream Team"
-              isPrivate
-            />
-            <ObjectResult
-              {...defaultProps}
-              avatar={dummyAvatarComponent}
-              name="This one has an avatar component!"
-              containerName="The Scream Team"
-              isPrivate
-            />
-          </ResultItemGroup>
-      // </QuickSearch>
+      <QuickSearch
+        isLoading={this.state.isLoading}
+        onSearchInput={({ target }) => {
+          if (!target.value) {
+            return
+          }
+
+          this.search(target.value);
+        }}
+        value={this.state.query}
+      >
+        <ResultItemGroup title="Object examples" override>
+          <ObjectResult
+            {...defaultProps}
+            name="quick-search is too hilarious!"
+            avatarUrl={avatarUrl}
+            objectKey="AK-007"
+            containerName="Search'n'Smarts"
+          />
+          <ObjectResult
+            {...defaultProps}
+            avatarUrl={avatarUrl}
+            name="Yeah, I cut my dev loop in half, but you'll never guess what happened next!"
+            containerName="Buzzfluence"
+          />
+          <ObjectResult
+            {...defaultProps}
+            avatarUrl={avatarUrl}
+            name="Prank schedule: April 2017"
+            containerName="The Scream Team"
+            isPrivate
+          />
+          <ObjectResult
+            {...defaultProps}
+            avatar={dummyAvatarComponent}
+            name="This one has an avatar component!"
+            containerName="The Scream Team"
+            isPrivate
+          />
+        </ResultItemGroup>
+      </QuickSearch>
     );
   }
 }
