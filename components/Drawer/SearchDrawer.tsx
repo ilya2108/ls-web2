@@ -57,7 +57,7 @@ class SearchDrawer extends React.Component<
         }}
         value={this.state.query}
       >
-        <ResultItemGroup title="Object examples" override>
+        <ResultItemGroup title="xObject examples" override>
           <ObjectResult
             {...defaultProps}
             name="quick-search is too hilarious!"
