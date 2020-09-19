@@ -23,6 +23,7 @@ const fetcher = async query => {
   const endpoint = "http://localhost:8000/graphql/";
 
   const graphQLClient = new GraphQLClient(endpoint, {
+    credentials: 'include',
     headers: {
       // 'Access-Control-Allow-Headers': 'X-CSRF-Token',
       // 'Access-Control-Allow-Credentials': 'true',
@@ -36,19 +37,27 @@ const fetcher = async query => {
   });
 
   const data = await graphQLClient.request(query);
-  console.log("raw data: " + data);
-  return JSON.stringify(data, undefined, 2)
+  return data
 }
 
 export default function UsersPage() {
   const { data, error } = useSWR(
     gql`{
       UserList {
-        totalCount
+          results {
+            id
+            email
+            username
+            firstName
+            lastName
+          }
       }
     }`,
     fetcher
   );
+
+  // TODO: Loading.
+  const users = data?.UserList?.results || []
 
   console.log(error);
   console.log("data: " + data);
@@ -63,6 +72,20 @@ export default function UsersPage() {
   return (
     <Layout>
       <h1>Users</h1>
+      <section>
+        {
+          users
+            .map((user) => {
+              console.log(user)
+              return (
+                <div key={user.id} className='users-container'>
+                  <a className='user' href={`/users/${user.id}`}>{user.firstName} {user.lastName} ({user.username})</a>
+                  <br />
+                </div>
+              )
+            })
+        }
+      </section>
     </Layout>
   );
 }
