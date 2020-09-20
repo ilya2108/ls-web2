@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 // atlaskit
 import Lozenge from "@atlaskit/lozenge";
+import Tag from '@atlaskit/tag';
 
 // components
 import Layout from "../../layout/Layout";
@@ -22,7 +23,6 @@ import {
   Header,
   HRow,
   HTag,
-  Button,
 } from "../../pages-styles/users/UserPage.styles";
 
 // data fetching
@@ -84,7 +84,7 @@ export default function UserPage() {
     <Layout>
       <LSBreadcrumbs>
         <BreadcrumbsItem href="/UsersPage" text="Users" />
-        <BreadcrumbsItem href={`/users/${UserPage}`} text="tonyle" />
+        <BreadcrumbsItem href={`/users/${UserPage}`} text={username} />
       </LSBreadcrumbs>
       <Table>
         <Header>
@@ -99,7 +99,11 @@ export default function UserPage() {
                   Active
                 </Lozenge>
               </HTag>
-            ) : null}
+            ) : 
+            <HTag>
+                <Lozenge isBold>Inactive</Lozenge>
+              </HTag>
+            }
             {isSuperuser ? (
               <HTag>
                 <Lozenge appearance="new" isBold>
@@ -151,7 +155,7 @@ export default function UserPage() {
           <LeftCell>Password</LeftCell>
           <RightCell>
             <strong>●●●●●●</strong>
-            <Button>Edit Password</Button>
+            <Tag text="Edit Password" href="#"/>
           </RightCell>
         </Row>
       </Table>

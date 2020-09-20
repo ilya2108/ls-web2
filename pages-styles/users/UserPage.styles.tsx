@@ -49,9 +49,3 @@ export const RightCell = styled.div`
 
     grid-column: 2;
 `;
-
-export const Button = styled.span`
-    margin-left: 20px;
-    cursor: pointer;
-    color: purple;
-`;
