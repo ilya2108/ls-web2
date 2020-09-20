@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 // atlaskit
 import Lozenge from "@atlaskit/lozenge";
-import Tag from '@atlaskit/tag';
+import Button from "@atlaskit/button";
 
 // components
 import Layout from "../../layout/Layout";
@@ -23,6 +23,7 @@ import {
   Header,
   HRow,
   HTag,
+  ButtonCell,
 } from "../../pages-styles/users/UserPage.styles";
 
 // data fetching
@@ -65,8 +66,6 @@ export default function UserPage() {
 
   const user = data?.UserDetail || [];
 
-  console.log(user);
-
   const {
     firstName,
     lastName,
@@ -79,8 +78,19 @@ export default function UserPage() {
     username,
     jobs,
     courses,
-    parallels
+    parallels,
   } = user;
+
+  // date formatting - could be better
+  // 2020-09-20T07:41:59+00:00
+  // const date = dateJoined
+  //   .split("-")
+  //   .join(",")
+  //   .split("T")
+  //   .join(",")
+  //   .split("+")
+  //   .join(",")
+  //   .split(",");
 
   return (
     <Layout>
@@ -101,11 +111,11 @@ export default function UserPage() {
                   Active
                 </Lozenge>
               </HTag>
-            ) : 
-            <HTag>
+            ) : (
+              <HTag>
                 <Lozenge isBold>Inactive</Lozenge>
               </HTag>
-            }
+            )}
             {isSuperuser ? (
               <HTag>
                 <Lozenge appearance="new" isBold>
@@ -156,7 +166,10 @@ export default function UserPage() {
         <Row>
           <LeftCell>Date joined</LeftCell>
           <RightCell>
-            <strong>{dateJoined}</strong>
+            <strong>
+              {/* {date[2]}. {date[1]}. {date[0]} */}
+              {dateJoined}
+            </strong>
           </RightCell>
         </Row>
         <Row>
@@ -164,13 +177,22 @@ export default function UserPage() {
           <RightCell>
             <strong>{email}</strong>
           </RightCell>
+          <ButtonCell>
+            <Button appearance="primary" spacing="compact">
+              Change email
+            </Button>
+          </ButtonCell>
         </Row>
         <Row>
           <LeftCell>Password</LeftCell>
           <RightCell>
             <strong>●●●●●●</strong>
-            <Tag text="Edit Password" href="#"/>
           </RightCell>
+          <ButtonCell>
+            <Button appearance="primary" spacing="compact">
+              Change password
+            </Button>
+          </ButtonCell>
         </Row>
       </Table>
     </Layout>

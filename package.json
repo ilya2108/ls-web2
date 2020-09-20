@@ -18,6 +18,7 @@
     "@atlaskit/lozenge": "^10.0.4",
     "@atlaskit/navigation-next": "^9.0.5",
     "@atlaskit/page": "^12.0.1",
+    "@atlaskit/page-header": "^10.0.3",
     "@atlaskit/page-layout": "^0.9.3",
     "@atlaskit/quick-search": "^8.0.2",
     "@atlaskit/side-navigation": "^0.7.6",
