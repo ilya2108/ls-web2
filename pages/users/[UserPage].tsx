@@ -35,7 +35,7 @@ export default function UserPage() {
   const { data, error } = useSWR(
     gql`
       {
-        UserDetail(id: ${UserPage}) {
+        UserDetail(id: "${UserPage}") {
           firstName
           lastName
           email
@@ -64,7 +64,9 @@ export default function UserPage() {
   );
 
   const user = data?.UserDetail || [];
+
   console.log(user);
+
   const {
     firstName,
     lastName,
@@ -119,17 +121,29 @@ export default function UserPage() {
               </HTag>
             ) : null}
           </HRow>
-          <HTag>
-            <strong>{/*assignments.totalCount*/}0</strong> assignments
+          {/* <HTag>
+            <strong>{assignments.totalCount}</strong> assignments
           </HTag>
           <HTag>
-            <strong>{/*jobs.totalCount*/}0</strong> jobs
+            <strong>{jobs}</strong> jobs
           </HTag>
           <HTag>
-            <strong>{/*courses.totalCount*/}0</strong> courses
+            <strong>{courses}</strong> courses
           </HTag>
           <HTag>
-            <strong>{/*parallels.totalCount*/}0</strong> parallels
+            <strong>{parallels}</strong> parallels
+          </HTag> */}
+          <HTag>
+            <strong>0</strong> assignments
+          </HTag>
+          <HTag>
+            <strong>0</strong> jobs
+          </HTag>
+          <HTag>
+            <strong>0</strong> courses
+          </HTag>
+          <HTag>
+            <strong>0</strong> parallels
           </HTag>
         </Header>
 
