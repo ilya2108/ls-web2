@@ -6,9 +6,8 @@ import { gql } from "graphql-request";
 // atlaskit
 import DynamicTable from "@atlaskit/dynamic-table";
 
-// styles
-
 // components
+import {LSBreadcrumbs, BreadcrumbsItem} from "../components/LSBreadcrumbs/LSBreadcrumbs";
 import Layout from "../layout/Layout";
 
 // data fetching
@@ -51,37 +50,45 @@ export default function UsersPage() {
   };
 
   // Generating user table rows
-  const tableRows = users.map((user, i) => ({
+  const tableRows = users.map(({lastName, firstName, id, username, email}, i) => ({
     cells: [
       {
         // Name
-        key: user.lastName + user.firstName,
+        key: lastName + firstName,
         content: (
-          <Link href={`/users/${encodeURIComponent(user.id)}`}>
+          <Link href={`/users/${encodeURIComponent(id)}`}>
             <a>
-              {user.lastName} {user.firstName}
+              {lastName} {firstName}
             </a>
           </Link>
         ),
       },
       {
         // Username
-        key: user.username,
-        content: user.username,
+        key: username,
+        content: (
+          <Link href={`/users/${encodeURIComponent(id)}`}>
+            <a>
+              {username}
+            </a>
+          </Link>
+        ),
       },
       {
         // Email
-        key: user.email,
-        content: user.email,
+        key: email,
+        content: email,
       },
     ],
-    key: user.username,
+    key: username,
   }));
 
   // TODO: Come up with a prettier design, this is really ugly.
   return (
     <Layout>
-      <h1>Users</h1>
+      <LSBreadcrumbs>
+        <BreadcrumbsItem href="/UsersPage" text="Users"/>
+      </LSBreadcrumbs>
       <section>
         <DynamicTable
           caption={null}
