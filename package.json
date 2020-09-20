@@ -9,10 +9,13 @@
   },
   "dependencies": {
     "@atlaskit/atlassian-navigation": "^0.11.4",
+    "@atlaskit/breadcrumbs": "^10.0.5",
     "@atlaskit/css-reset": "^6.0.1",
+    "@atlaskit/dynamic-table": "^14.1.2",
     "@atlaskit/global-navigation": "^10.0.3",
     "@atlaskit/icon": "^21.0.3",
     "@atlaskit/logo": "^13.0.3",
+    "@atlaskit/lozenge": "^10.0.4",
     "@atlaskit/navigation-next": "^9.0.5",
     "@atlaskit/page": "^12.0.1",
     "@atlaskit/page-layout": "^0.9.3",
