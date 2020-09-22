@@ -1,16 +1,10 @@
-// dependencies
 import Link from "next/link";
 import useSWR from "swr";
 import { gql } from "graphql-request";
-
-// atlaskit
 import DynamicTable from "@atlaskit/dynamic-table";
-
-// components
-import {LSBreadcrumbs, BreadcrumbsItem} from "../components/LSBreadcrumbs/LSBreadcrumbs";
+import PageHeader from '@atlaskit/page-header';
 import Layout from "../layout/Layout";
-
-// data fetching
+import { BreadcrumbsItem, BreadcrumbsStateless } from '@atlaskit/breadcrumbs';
 import { fetcher } from "../modules/api";
 
 export default function UsersPage() {
@@ -42,7 +36,6 @@ export default function UsersPage() {
     isSortable: true,
     shouldTurncate: false,
     content: headerNames,
-    // testId: headerNames,
   }));
 
   const tableHeadRow = {
@@ -83,26 +76,28 @@ export default function UsersPage() {
     key: username,
   }));
 
+  const breadcrumbs = (
+    <BreadcrumbsStateless onExpand={() => {}}>
+      <BreadcrumbsItem text="Users" href="/UsersPage" />
+    </BreadcrumbsStateless>
+  );
+
   // TODO: Come up with a prettier design, this is really ugly.
   return (
     <Layout>
-      <LSBreadcrumbs>
-        <BreadcrumbsItem href="/UsersPage" text="Users"/>
-      </LSBreadcrumbs>
+      <PageHeader breadcrumbs={breadcrumbs}>
+        User list
+      </PageHeader>
       <section>
         <DynamicTable
           caption={null}
           head={tableHeadRow}
           rows={tableRows}
-          // rowsPerPage={10}
-          // defaultPage={1}
           loadingSpinnerSize="large"
           isLoading={false}
           isFixedSize
           defaultSortKey="Name"
           defaultSortOrder="ASC"
-          onSort={() => console.log("onSort")}
-          onSetPage={() => console.log("onSetPage")}
         />
       </section>
     </Layout>

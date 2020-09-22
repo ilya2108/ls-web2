@@ -5,12 +5,10 @@ import React, { useState, Fragment } from "react";
 import Lozenge from "@atlaskit/lozenge";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import Form, { Field, FormFooter, ErrorMessage } from "@atlaskit/form";
+import PageHeader from "@atlaskit/page-header";
 import TextField from "@atlaskit/textfield";
 import Layout from "../../layout/Layout";
-import {
-  LSBreadcrumbs,
-  BreadcrumbsItem,
-} from "../../components/LSBreadcrumbs/LSBreadcrumbs";
+import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
 import {
   Table,
   Row,
@@ -101,7 +99,7 @@ export default function UserPage() {
           : undefined,
     };
 
-    if(!error.repeatPassword) {
+    if (!error.repeatPassword) {
       fetcher(gql`mutation {
         UserSetPassword(data: {id: "${UserPage}", password: "${data.password}" }) {
           object {
@@ -112,7 +110,7 @@ export default function UserPage() {
           }
         }
       
-      }`).catch(e => console.log(e));
+      }`).catch((e) => console.log(e));
 
       setEditPasswordState(!editPasswordState);
     }
@@ -120,18 +118,20 @@ export default function UserPage() {
     return error;
   };
 
+  const breadcrumbs = (
+    <BreadcrumbsStateless onExpand={() => {}}>
+      <BreadcrumbsItem text="Users" href="/UsersPage" />
+      <BreadcrumbsItem href={`/users/${UserPage}`} text={username} />
+    </BreadcrumbsStateless>
+  );
+
   return (
     <Layout>
-      <LSBreadcrumbs>
-        <BreadcrumbsItem href="/UsersPage" text="Users" />
-        <BreadcrumbsItem href={`/users/${UserPage}`} text={username} />
-      </LSBreadcrumbs>
+      <PageHeader breadcrumbs={breadcrumbs}>
+        {firstName} {lastName}
+      </PageHeader>
       <Table>
         <Header>
-          <h1>
-            {firstName} {lastName}
-          </h1>
-
           <HRow>
             {isActive ? (
               <HTag>
@@ -159,8 +159,8 @@ export default function UserPage() {
               </HTag>
             ) : null}
           </HRow>
-          {/* The following elements cant be rendered for some reason */ }
-          {/* Getting assignments.totalCount undefined */ }
+          {/* The following elements cant be rendered for some reason */}
+          {/* Getting assignments.totalCount undefined */}
           {/* <HTag>
             <strong>{assignments.totalCount}</strong> assignments
           </HTag> */}
@@ -196,9 +196,7 @@ export default function UserPage() {
         <Row>
           <LeftCell>Date joined</LeftCell>
           <RightCell>
-            <strong>
-              {formatDate(dateJoined)}
-            </strong>
+            <strong>{formatDate(dateJoined)}</strong>
           </RightCell>
         </Row>
         <Row>

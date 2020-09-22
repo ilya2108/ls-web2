@@ -12,10 +12,6 @@ export const Header = styled.article`
     margin-bottom: 30px;
 
     grid-column: 1 / -1;
-
-    h1 {
-        margin-bottom: 20px;
-    }
 `;
 
 export const HTag = styled.span`
