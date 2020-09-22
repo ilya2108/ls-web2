@@ -2,10 +2,13 @@
 import useSWR from "swr";
 import { gql } from "graphql-request";
 import { useRouter } from "next/router";
+import React, { useState, Fragment } from "react";
 
 // atlaskit
 import Lozenge from "@atlaskit/lozenge";
-import Button from "@atlaskit/button";
+import Button, { ButtonGroup } from "@atlaskit/button";
+import Form, { Field, FormFooter, ErrorMessage } from "@atlaskit/form";
+import TextField from "@atlaskit/textfield";
 
 // components
 import Layout from "../../layout/Layout";
@@ -83,14 +86,48 @@ export default function UserPage() {
 
   // date formatting - could be better
   // 2020-09-20T07:41:59+00:00
-  // const date = dateJoined
-  //   .split("-")
-  //   .join(",")
-  //   .split("T")
-  //   .join(",")
-  //   .split("+")
-  //   .join(",")
-  //   .split(",");
+  const formatDate = (rawDate) => {
+    const date = String(rawDate)
+      .split("-")
+      .join(",")
+      .split("T")
+      .join(",")
+      .split("+")
+      .join(",")
+      .split(",");
+
+    return `${date[2]}. ${date[1]}. ${date[0]}`;
+  };
+
+  // handle password edit event
+  const [editPasswordState, setEditPasswordState] = useState(false);
+
+  const handleSubmit = (data: { password: string; repeatPassword: string }) => {
+    const error = {
+      repeatPassword:
+        data.password !== data.repeatPassword
+          ? "Your passwords do not match."
+          : undefined,
+    };
+
+    if(!error.repeatPassword) {
+      fetcher(gql`mutation {
+        UserSetPassword(data: {id: "${UserPage}", password: "${data.password}" }) {
+          object {
+            id
+            username
+            firstName
+            lastName
+          }
+        }
+      
+      }`).catch(e => console.log(e));
+
+      setEditPasswordState(!editPasswordState);
+    }
+
+    return error;
+  };
 
   return (
     <Layout>
@@ -167,8 +204,7 @@ export default function UserPage() {
           <LeftCell>Date joined</LeftCell>
           <RightCell>
             <strong>
-              {/* {date[2]}. {date[1]}. {date[0]} */}
-              {dateJoined}
+              {formatDate(dateJoined)}
             </strong>
           </RightCell>
         </Row>
@@ -177,21 +213,73 @@ export default function UserPage() {
           <RightCell>
             <strong>{email}</strong>
           </RightCell>
-          <ButtonCell>
-            <Button appearance="primary" spacing="compact">
-              Change email
-            </Button>
-          </ButtonCell>
         </Row>
         <Row>
           <LeftCell>Password</LeftCell>
           <RightCell>
-            <strong>●●●●●●</strong>
+            {editPasswordState ? (
+              <Form onSubmit={handleSubmit}>
+                {({ formProps, submitting }) => (
+                  <form {...formProps}>
+                    <Field
+                      name="password"
+                      defaultValue=""
+                      label="New Password"
+                      isRequired
+                    >
+                      {({ fieldProps }) => (
+                        <TextField type="password" {...fieldProps} />
+                      )}
+                    </Field>
+                    <Field
+                      name="repeatPassword"
+                      defaultValue=""
+                      label="Repeat Password"
+                      isRequired
+                    >
+                      {({ fieldProps, error }) => (
+                        <Fragment>
+                          <TextField type="password" {...fieldProps} />
+                          {error && <ErrorMessage>{error}</ErrorMessage>}
+                        </Fragment>
+                      )}
+                    </Field>
+                    <FormFooter>
+                      <ButtonGroup>
+                        <Button
+                          appearance="subtle"
+                          onClick={() =>
+                            setEditPasswordState(!editPasswordState)
+                          }
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          appearance="primary"
+                          type="submit"
+                          isLoading={submitting}
+                        >
+                          Save
+                        </Button>
+                      </ButtonGroup>
+                    </FormFooter>
+                  </form>
+                )}
+              </Form>
+            ) : (
+              <strong>●●●●●●</strong>
+            )}
           </RightCell>
           <ButtonCell>
-            <Button appearance="primary" spacing="compact">
-              Change password
-            </Button>
+            {editPasswordState ? null : (
+              <Button
+                appearance="primary"
+                spacing="compact"
+                onClick={() => setEditPasswordState(!editPasswordState)}
+              >
+                Change password
+              </Button>
+            )}
           </ButtonCell>
         </Row>
       </Table>

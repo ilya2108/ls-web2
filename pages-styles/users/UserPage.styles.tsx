@@ -14,7 +14,7 @@ export const Header = styled.article`
     grid-column: 1 / -1;
 
     h1 {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 `;
 
