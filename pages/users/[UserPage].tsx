@@ -1,23 +1,16 @@
-// dependencies
 import useSWR from "swr";
 import { gql } from "graphql-request";
 import { useRouter } from "next/router";
 import React, { useState, Fragment } from "react";
-
-// atlaskit
 import Lozenge from "@atlaskit/lozenge";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import Form, { Field, FormFooter, ErrorMessage } from "@atlaskit/form";
 import TextField from "@atlaskit/textfield";
-
-// components
 import Layout from "../../layout/Layout";
 import {
   LSBreadcrumbs,
   BreadcrumbsItem,
 } from "../../components/LSBreadcrumbs/LSBreadcrumbs";
-
-// styles
 import {
   Table,
   Row,
@@ -27,9 +20,7 @@ import {
   HRow,
   HTag,
   ButtonCell,
-} from "../../pages-styles/users/UserPage.styles";
-
-// data fetching
+} from "../../pages-styles/UserPage/UserPage.styles";
 import { fetcher } from "../../modules/api";
 
 export default function UserPage() {
@@ -86,7 +77,7 @@ export default function UserPage() {
 
   // date formatting - could be better
   // 2020-09-20T07:41:59+00:00
-  const formatDate = (rawDate) => {
+  const formatDate = (rawDate: string) => {
     const date = String(rawDate)
       .split("-")
       .join(",")
@@ -99,7 +90,7 @@ export default function UserPage() {
     return `${date[2]}. ${date[1]}. ${date[0]}`;
   };
 
-  // handle password edit event
+  // handle password-edit event
   const [editPasswordState, setEditPasswordState] = useState(false);
 
   const handleSubmit = (data: { password: string; repeatPassword: string }) => {
