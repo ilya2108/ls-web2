@@ -159,10 +159,12 @@ export default function UserPage() {
               </HTag>
             ) : null}
           </HRow>
+          {/* The following elements cant be rendered for some reason */ }
+          {/* Getting assignments.totalCount undefined */ }
           {/* <HTag>
             <strong>{assignments.totalCount}</strong> assignments
-          </HTag>
-          <HTag>
+          </HTag> */}
+          {/* <HTag>
             <strong>{jobs}</strong> jobs
           </HTag>
           <HTag>
