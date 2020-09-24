@@ -92,14 +92,14 @@ export default function UserPage() {
   const [editPasswordState, setEditPasswordState] = useState(false);
 
   const handleSubmit = (data: { password: string; repeatPassword: string }) => {
-    const error = {
+    const err = {
       repeatPassword:
         data.password !== data.repeatPassword
           ? "Your passwords do not match."
           : undefined,
     };
 
-    if (!error.repeatPassword) {
+    if (!err.repeatPassword) {
       fetcher(gql`mutation {
         UserSetPassword(data: {id: "${UserPage}", password: "${data.password}" }) {
           object {
@@ -115,19 +115,33 @@ export default function UserPage() {
       setEditPasswordState(!editPasswordState);
     }
 
-    return error;
+    return err;
   };
 
-  const breadcrumbs = (
-    <BreadcrumbsStateless onExpand={() => {}}>
-      <BreadcrumbsItem text="Users" href="/UsersPage" />
-      <BreadcrumbsItem href={`/users/${UserPage}`} text={username} />
-    </BreadcrumbsStateless>
-  );
+  // render spinner
+  if(!error && !data) {
+    return (
+      <div>Loading...</div>
+    )
+  }
+
+  // render Error component
+  if(error) {
+    return (
+      <div>Error brah</div>
+    )
+  }
 
   return (
     <Layout>
-      <PageHeader breadcrumbs={breadcrumbs}>
+      <PageHeader breadcrumbs={
+        (
+          <BreadcrumbsStateless onExpand={() => {}}>
+            <BreadcrumbsItem text="Users" href="/UsersPage" />
+            <BreadcrumbsItem href={`/users/${UserPage}`} text={username} />
+          </BreadcrumbsStateless>
+        )
+      }>
         {firstName} {lastName}
       </PageHeader>
       <Table>
@@ -159,31 +173,17 @@ export default function UserPage() {
               </HTag>
             ) : null}
           </HRow>
-          {/* The following elements cant be rendered for some reason */}
-          {/* Getting assignments.totalCount undefined */}
-          {/* <HTag>
+          <HTag>
             <strong>{assignments.totalCount}</strong> assignments
-          </HTag> */}
-          {/* <HTag>
-            <strong>{jobs}</strong> jobs
           </HTag>
           <HTag>
-            <strong>{courses}</strong> courses
+            <strong>{jobs.totalCount}</strong> jobs
           </HTag>
           <HTag>
-            <strong>{parallels}</strong> parallels
-          </HTag> */}
-          <HTag>
-            <strong>0</strong> assignments
+            <strong>{courses.totalCount}</strong> courses
           </HTag>
           <HTag>
-            <strong>0</strong> jobs
-          </HTag>
-          <HTag>
-            <strong>0</strong> courses
-          </HTag>
-          <HTag>
-            <strong>0</strong> parallels
+            <strong>{parallels.totalCount}</strong> parallels
           </HTag>
         </Header>
 
