@@ -94,7 +94,7 @@ export default function UserPage() {
     const err = {
       repeatPassword:
         data.password !== data.repeatPassword
-          ? "Your passwords do not match."
+          ? "Entered passwords do not match."
           : undefined,
     };
 
