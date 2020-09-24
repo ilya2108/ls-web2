@@ -34,14 +34,12 @@ export const Row = styled.article`
 
 export const LeftCell = styled.div`
     text-align: left;
-    /* padding: 0 5px 0 5px; */
 
     grid-column: 1;
 `;
 
 export const RightCell = styled.div`
     text-align: left;
-    /* padding: 0 5px 0 5px; */
 
     grid-column: 2;
 `;
