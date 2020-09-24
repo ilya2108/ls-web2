@@ -23,6 +23,7 @@
     "@atlaskit/page-layout": "^0.9.3",
     "@atlaskit/quick-search": "^8.0.2",
     "@atlaskit/side-navigation": "^0.7.6",
+    "@atlaskit/spinner": "^15.0.3",
     "@atlaskit/table-tree": "^9.0.4",
     "@atlaskit/tag": "^10.0.4",
     "@atlaskit/textarea": "^3.0.3",

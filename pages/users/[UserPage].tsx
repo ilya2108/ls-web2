@@ -8,6 +8,7 @@ import Form, { Field, FormFooter, ErrorMessage } from "@atlaskit/form";
 import PageHeader from "@atlaskit/page-header";
 import TextField from "@atlaskit/textfield";
 import Layout from "../../layout/Layout";
+import HugeSpinner from "../../components/HugeSpinner/HugeSpinner";
 import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
 import {
   Table,
@@ -56,8 +57,6 @@ export default function UserPage() {
     fetcher
   );
 
-  const user = data?.UserDetail || [];
-
   const {
     firstName,
     lastName,
@@ -71,7 +70,7 @@ export default function UserPage() {
     jobs,
     courses,
     parallels,
-  } = user;
+  } = data?.UserDetail || [];
 
   // date formatting - could be better
   // 2020-09-20T07:41:59+00:00
@@ -119,29 +118,37 @@ export default function UserPage() {
   };
 
   // render spinner
-  if(!error && !data) {
+  if (!error && !data) {
     return (
-      <div>Loading...</div>
-    )
+      <Layout>
+        <PageHeader
+          breadcrumbs={
+            <BreadcrumbsStateless onExpand={() => {}}>
+              <BreadcrumbsItem text="Users" href="/UsersPage" />
+            </BreadcrumbsStateless>
+          }
+        ></PageHeader>
+        <HugeSpinner />
+      </Layout>
+    );
   }
 
+  // TODO: use a banner instead
   // render Error component
-  if(error) {
-    return (
-      <div>Error brah</div>
-    )
+  if (error) {
+    return <div>Error brah</div>;
   }
 
   return (
     <Layout>
-      <PageHeader breadcrumbs={
-        (
+      <PageHeader
+        breadcrumbs={
           <BreadcrumbsStateless onExpand={() => {}}>
             <BreadcrumbsItem text="Users" href="/UsersPage" />
             <BreadcrumbsItem href={`/users/${UserPage}`} text={username} />
           </BreadcrumbsStateless>
-        )
-      }>
+        }
+      >
         {firstName} {lastName}
       </PageHeader>
       <Table>
