@@ -14,14 +14,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.users-container {
-  margin-top: 20px;
-  display: flex;
-}
-
-.user {
-  line-height: 16px;
-  font-size: 1.2rem;
-  padding: 5px 0;
-}

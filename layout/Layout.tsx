@@ -4,14 +4,12 @@
 // Page Layout: https://atlaskit.atlassian.com/packages/design-system/page-layout
 
 // dependencies
-import React from 'react';
-import {
-  LayoutManager,
-  NavigationProvider,
-} from "@atlaskit/navigation-next";
+import React from "react";
+import { LayoutManager, NavigationProvider } from "@atlaskit/navigation-next";
+import styled from "styled-components";
 
 // grid and layout
-import Page, { Grid } from "@atlaskit/page";
+import Page from "@atlaskit/page";
 import { Content, PageLayout, Main } from "@atlaskit/page-layout";
 
 // navigation components
@@ -19,10 +17,15 @@ import ContainerNavigation from "../components/ContainerNavigation/ContainerNavi
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
 
 interface ILayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-const Layout = ({children}: ILayoutProps) => (
+// styling <Main/>
+const Padding = styled.div`
+  padding: 40px;
+`;
+
+const Layout = ({ children }: ILayoutProps) => (
   <Page>
     <NavigationProvider>
       <LayoutManager
@@ -30,16 +33,13 @@ const Layout = ({children}: ILayoutProps) => (
         productNavigation={() => null}
         containerNavigation={ContainerNavigation}
       >
-        <Grid>
-          <PageLayout>
-            <Content>
-              <Main>
-                <div style={{ marginTop: '40px' }} />
-                {children}
-              </Main>
-            </Content>
-          </PageLayout>
-        </Grid>
+        <PageLayout>
+          <Content>
+            <Main>
+              <Padding>{children}</Padding>
+            </Main>
+          </Content>
+        </PageLayout>
       </LayoutManager>
     </NavigationProvider>
   </Page>
