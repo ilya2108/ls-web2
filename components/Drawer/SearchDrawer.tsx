@@ -48,16 +48,18 @@ class SearchDrawer extends React.Component<
     return (
       <QuickSearch
         isLoading={this.state.isLoading}
-        onSearchInput={({ target }) => {
-          if (!target.value) {
-            return
-          }
+        onSearchInput={({ target }: React.FormEvent<HTMLInputElement>) => {
+          // if (!target.value) {
+          //   return
+          // }
 
+
+          // @ts-ignore
           this.search(target.value);
         }}
         value={this.state.query}
       >
-        <ResultItemGroup title="xObject examples" override>
+        <ResultItemGroup title="xObject examples">
           <ObjectResult
             {...defaultProps}
             name="quick-search is too hilarious!"
