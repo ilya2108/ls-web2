@@ -1,0 +1,44 @@
+# exams basic listing
+query {
+ ExamList {
+  	results {
+      id
+      
+      template {
+        name
+      }
+      startTime
+      hasStarted
+    }
+	} 
+}
+
+
+# UCITEL VYROBI PRIKLAD
+
+# -> assignment template (hardcoded, it's PS1)
+# -> CREATE assignment (and PUBLISH)
+
+mutation CreateAssignment {
+  AssignmentCreate(data: {
+    courseId: 1,
+    templateId: 2, 
+    name: "Hello, {{ name }}!",
+    description: "Vypiste svoje **FIT** uzivatelske jmeno ({{ env.username }})."
+    generatorData: "{\"lidl\": \"name='{{ env.username }}'\"}"
+    correctionData: "{\"solution\": \"echo {{ env.username }}\", \"testcases\": []}"
+  }){
+    object{
+      id
+    }
+  }
+}
+
+# UCITEL ZADA PRIKLAD
+
+
+# STUDENT HO VIDI
+
+
+# STUDENT HO SPUSTI
+
