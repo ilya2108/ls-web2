@@ -44,7 +44,7 @@ export default function UserPage() {
   return (
     <User
       userId={userId}
-      data={data}
+      userData={data?.UserDetail}
       error={error}
     />
   )

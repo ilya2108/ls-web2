@@ -24,11 +24,12 @@ import { formatDate } from '../../utils/date-utils'
 type Props = {
   userId: string,
   error: Error,
-  data: any,
+  userData: any,
 }
 
 export default function UserPage(props: Props) {
-  const { userId, error, data } = props
+  const { userId, error, userData } = props
+
   const {
     firstName,
     lastName,
@@ -42,8 +43,7 @@ export default function UserPage(props: Props) {
     jobs,
     courses,
     parallels,
-  } = data?.UserDetail || [];
-
+  } = userData || [];
 
 
   // handle password-edit event
@@ -77,7 +77,7 @@ export default function UserPage(props: Props) {
   };
 
   // render spinner
-  if (!error && !data) {
+  if (!error && !userData) {
     return (
       <Layout>
         <PageHeader

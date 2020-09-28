@@ -1,11 +1,10 @@
-// documentation
-// https://atlaskit.atlassian.com/packages/design-system/table-tree
+import useSWR from "swr";
+import { gql } from "graphql-request";
 
-// atlaskit
 import TableTree, { Headers, Header, Rows, Row, Cell } from '@atlaskit/table-tree';
 
-// layout components
-import Layout from "../layout/Layout";
+import { fetcher } from "../modules/api";
+import User from '../components/users/User'
 
 const results = [
   {
@@ -58,42 +57,44 @@ const results = [
 ]
 
 export default function ProfilePage() {
-  return (
-    <Layout>
-      <h1>Profile name</h1>
-        <section>
-          Username: <strong>username</strong><br />
-          Email: <strong>email</strong><br />
-          Role: <strong>role</strong>
-        </section>
-        <br />
 
-        <section>
-          <div>
-            <TableTree>
-              <Headers>
-                <Header width={300}>Task</Header>
-                <Header width={100}>Points</Header>
-              </Headers>
-              <Rows
-                items={results}
-                render={({ task, points, id, children }) => (
-                  <Row
-                    isDefaultExpanded
-                    expandLabel="Expand"
-                    collapseLabel="Collapse"
-                    itemId={id}
-                    items={children}
-                    hasChildren={children && children.length > 0}
-                  >
-                    <Cell singleLine>{task}</Cell>
-                    <Cell singleLine>{points}</Cell>
-                  </Row>
-                )}
-              />
-            </TableTree>
-          </div>
-        </section>
-    </Layout>
+  const { data, error } = useSWR(
+    gql`
+      {
+        UserMyself {
+          id
+          firstName
+          lastName
+          email
+          assignments {
+            totalCount
+          }
+          dateJoined
+          ipAddress
+          isActive
+          isStaff
+          isSuperuser
+          username
+          courses {
+            totalCount
+          }
+          parallels {
+            totalCount
+          }
+          jobs{
+            totalCount
+          }
+        }
+      }
+    `,
+    fetcher
+  );
+
+  return (
+    <User
+      userId={data?.UserMyself.id}
+      userData={data?.UserMyself}
+      error={error}
+    />
   );
 }
