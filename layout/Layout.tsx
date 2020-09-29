@@ -8,10 +8,10 @@ import { LayoutManager, NavigationProvider } from "@atlaskit/navigation-next";
 import Login from "../components/Login";
 import ContainerNavigation from "../components/ContainerNavigation/ContainerNavigation";
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
-import { auth, fetcher } from "../modules/api"
+import { auth } from "../modules/api"
 import CustomBanner from "../components/CustomBanner/CustomBanner";
-import WarningIcon from "@atlaskit/icon/glyph/warning";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { closeBanner } from '../modules/core/redux/banner/banner.actions';
 
 
 type ILayoutProps = {
@@ -50,18 +50,23 @@ export default function Layout({ children }: ILayoutProps) {
 }
 
 function LoggedInLayout({ children, admin }: ILoggedInLayoutProps) {
-  const banner = useSelector((state) => state.user.banner);
+  const { showBanner } = useSelector((state) => state.banner);
+
+  const dispatch = useDispatch();
+  const dispatchCloseBanner = () => dispatch(closeBanner());
+
+  (showBanner) ? setTimeout(() =>
+    dispatchCloseBanner(), 1800) : null;
+
   return (
     <Page>
       <NavigationProvider>
-        {banner ? (
-          <CustomBanner icon={<WarningIcon label="" />}>Hello</CustomBanner>
-        ) : null}
+          <CustomBanner/>
         <LayoutManager
           globalNavigation={LSGlobalNavigation}
           productNavigation={() => null}
           containerNavigation={() => <ContainerNavigation admin={admin} />}
-          topOffset={banner ? 52 : 0}
+          topOffset={(showBanner) ? 52 : 0}
         >
           <PageLayout>
             <Content>
