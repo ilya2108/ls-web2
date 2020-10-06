@@ -1,3 +1,4 @@
+import { gql } from "graphql-request";
 import { GraphQLClient } from "graphql-request";
 
 const createClient = (): GraphQLClient => {
@@ -16,4 +17,17 @@ export async function fetcher (query: string) {
   const client = createClient()
   const data = await client.request(query);
   return data
+}
+
+export async function auth() {
+  return fetcher(
+    gql`
+      query auth {
+        UserMyself {
+          id
+          username
+        }
+      }
+    `
+  )
 }
