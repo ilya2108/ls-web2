@@ -34,8 +34,6 @@ export default function ExamsPage() {
   const exams = data?.UserMyself?.studentsInExam.results || []
   const exam = exams[0] || null
 
-  // const { data: exam } =
-
   return (
     <Layout>
       <h1>Exam</h1>
