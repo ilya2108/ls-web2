@@ -1,8 +1,6 @@
 import useSWR from "swr";
 import { gql } from "graphql-request";
 
-import TableTree, { Headers, Header, Rows, Row, Cell } from '@atlaskit/table-tree';
-
 import { fetcher } from "../modules/api";
 import User from '../components/users/User'
 import React from "react";
