@@ -34,11 +34,34 @@ mutation CreateAssignment {
   }
 }
 
-# UCITEL ZADA PRIKLAD
+# UCITEL ZADA PRIKLAD (ASSIGNMENT)
 
 
-# STUDENT HO VIDI
+# STUDENT HO VIDI v TASKS
+# -> assignment view for students
+{
+  AssignmentList {
+    results {
+      id
+      name
+      description
+      published
+      forExam
+    }
+  }
+}
+
+# STUDENT HO SPUSTI A VYRIESI a VYHODNOTI SA (skuskovy vs. testovaci)
 
 
-# STUDENT HO SPUSTI
+# UCITEL VYROBI SKUSKOVU SABLONU (assignment exam template)
+
+# UCITEL VYROBI SKUSKU PRE STUDENTOV ZO SABLONY
+
+# UCITEL SPUSTI SKUSKU
+
+
+# STUDENT SKUSKU VIDI
+# -> zacne pisat (student writes exam)
+# -> vidi vsetky assignments
 
