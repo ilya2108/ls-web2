@@ -6,6 +6,7 @@ import Page from "@atlaskit/page";
 import { Content, PageLayout, Main } from "@atlaskit/page-layout";
 import { LayoutManager, NavigationProvider } from "@atlaskit/navigation-next";
 
+import Login from "../components/Login";
 import ContainerNavigation from "../components/ContainerNavigation/ContainerNavigation";
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
 import { auth, fetcher } from "../modules/api"
@@ -30,9 +31,7 @@ export default function Layout({ children }: IProps) {
     return <LoggedInLayout>{children}</LoggedInLayout>
   }
 
-  return (
-    <div className="loading">unauthorized</div>
-  )
+  return <Login />
 }
 
 function LoggedInLayout({ children }: IProps) {

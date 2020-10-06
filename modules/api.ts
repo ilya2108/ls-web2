@@ -14,9 +14,13 @@ const createClient = (): GraphQLClient => {
 
 // actual fetcher
 export async function fetcher (query: string) {
-  const client = createClient()
-  const data = await client.request(query);
-  return data
+  try {
+    const client = createClient()
+    const data = await client.request(query);
+    return data
+  } catch (e) {
+    return e
+  }
 }
 
 export async function auth() {

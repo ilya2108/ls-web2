@@ -5,6 +5,8 @@ import TableTree, { Headers, Header, Rows, Row, Cell } from '@atlaskit/table-tre
 
 import { fetcher } from "../modules/api";
 import User from '../components/users/User'
+import React from "react";
+import Login from "../components/Login";
 
 const results = [
   {
@@ -90,9 +92,13 @@ export default function ProfilePage() {
     fetcher
   );
 
+  if (error) {
+    return <Login />
+  }
+
   return (
     <User
-      userId={data?.UserMyself.id}
+      userId={data?.UserMyself?.id}
       userData={data?.UserMyself}
       error={error}
     />
