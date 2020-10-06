@@ -1,0 +1,19 @@
+{
+  "solution": "mkdir \"$DIR\"; touch \"$DIR/$FILE\"",
+  "testcases": [
+    {
+      "name": "test",
+      "num_repetitions": 5,
+      "check_stdout": true,
+      "check_stderr": true,
+      "check_files": false,
+      "check_excessive_files": false,
+      "check_files_content": false,
+      "check_hardlinks": false,
+      "check_return_code": false,
+      "check_permissions": false,
+      "lidl": "Student {}",
+      "score": 1
+    }
+  ]
+}
