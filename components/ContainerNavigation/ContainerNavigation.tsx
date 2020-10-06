@@ -46,20 +46,20 @@ const ContainerNavigation: React.FunctionComponent = () => {
           <Link href="/">
             <Item before={HomeIcon} text="Home" isSelected={router.pathname === "/"} />
           </Link>
-          <Link href="/ProfilePage">
-            <Item before={PersonIcon} text="Profile" isSelected={router.pathname === "/ProfilePage"} />
+          <Link href="/profile">
+            <Item before={PersonIcon} text="Profile" isSelected={router.pathname === "/profile"} />
           </Link>
-          <Link href="/HelpPage">
-            <Item before={QuestionIcon} text="Help" isSelected={router.pathname === "/HelpPage"} />
+          <Link href="/help">
+            <Item before={QuestionIcon} text="Help" isSelected={router.pathname === "/help"} />
           </Link>
-          <Link href="/TasksPage">
-            <Item before={LabsIcon} text="Tasks" isSelected={router.pathname === "/TasksPage"} />
+          <Link href="/assignments">
+            <Item before={LabsIcon} text="Assignments" isSelected={router.pathname === "/assignments"} />
           </Link>
-          <Link href="/ExamsPage">
-            <Item before={TestIcon} text="Exams" isSelected={router.pathname === "/ExamsPage"} />
+          <Link href="/exam">
+            <Item before={TestIcon} text="Exam" isSelected={router.pathname === "/exam"} />
           </Link>
-          <Link href="/UsersPage">
-            <Item before={UsersIcon} text="Users" isSelected={router.pathname === "/UsersPage"} />
+          <Link href="/users">
+            <Item before={UsersIcon} text="Users" isSelected={router.pathname === "/users"} />
           </Link>
         </div>
       )}

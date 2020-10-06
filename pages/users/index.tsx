@@ -3,10 +3,10 @@ import useSWR from "swr";
 import { gql } from "graphql-request";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
-import Layout from "../layout/Layout";
+import Layout from "../../layout/Layout";
 import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
-import { fetcher } from "../modules/api";
-import HugeSpinner from "../components/HugeSpinner/HugeSpinner";
+import { fetcher } from "../../modules/api";
+import HugeSpinner from "../../components/HugeSpinner/HugeSpinner";
 
 export default function UsersPage() {
   const { data, error } = useSWR(
