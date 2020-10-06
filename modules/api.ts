@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 import { GraphQLClient } from "graphql-request";
 
 const createClient = (): GraphQLClient => {
-  const endpoint = "http://localhost:8000/graphql/";
+  const endpoint = "/graphql/";
 
   return new GraphQLClient(endpoint, {
     credentials: 'include',
