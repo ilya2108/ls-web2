@@ -21,6 +21,7 @@ import LabsIcon from "@atlaskit/icon/glyph/jira/labs";
 import TestIcon from "@atlaskit/icon/glyph/jira/test-session";
 import UsersIcon from "@atlaskit/icon/glyph/people-group";
 import ReposIcon from "@atlaskit/icon/glyph/bitbucket/repos";
+import SelectClearIcon from '@atlaskit/icon/glyph/select-clear';
 
 // currently using
 // jsx version of the old container navigation
@@ -60,6 +61,9 @@ const ContainerNavigation: React.FunctionComponent = () => {
           </Link>
           <Link href="/users">
             <Item before={UsersIcon} text="Users" isSelected={router.pathname === "/users"} />
+          </Link>
+          <Link href={`${process.env.BACKEND_ROOT_URI}/auth/logout`}>
+            <Item before={SelectClearIcon} text="Logout" />
           </Link>
         </div>
       )}
