@@ -6,6 +6,19 @@ import React, { useEffect, useState } from "react";
 import { auth, fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
 
+const calculateScore = (results: any) => {
+  try {
+    const submissionResults = results?.UserDetail?.assignments?.results[0]?.submissions?.results
+    const success = submissionResults.some((submissionResult) => {
+      return submissionResult?.correction.score === 1
+    })
+
+    return success ? 1 : 0
+  } catch (e) {
+    return 0
+  }
+}
+
 
 export default function Assignment() {
   const router = useRouter();
@@ -51,7 +64,7 @@ export default function Assignment() {
     fetcher
   )
 
-  const resultScore = results?.UserDetail?.assignments?.results[0] && 1 || 0
+  const resultScore = calculateScore(results)
 
 
   const handleSubmit = () => {
