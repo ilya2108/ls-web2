@@ -13,13 +13,17 @@ import {
   import EmojiNatureIcon from "@atlaskit/icon/glyph/emoji/nature";
 
 
+const forbidden = () => {
+  alert("Not available yet")
+}
+
 // New SideNavigation
 const CreateDrawer: React.FunctionComponent = () => (
     <SideNavigation label="project">
     <NavigationContent>
-      <ButtonItem iconBefore={<CalendarIcon label=""/>}>Start Exam <strong>right now</strong></ButtonItem>
-      <ButtonItem iconBefore={<EmojiObjectsIcon label=""/>}>Create Exam</ButtonItem>
-      <ButtonItem iconBefore={<EmojiNatureIcon label=""/>}>Create Assignment</ButtonItem>
+      <ButtonItem onClick={forbidden} iconBefore={<CalendarIcon label=""/>}>Start Exam <strong>right now</strong></ButtonItem>
+      <ButtonItem onClick={forbidden} iconBefore={<EmojiObjectsIcon label=""/>}>Create Exam</ButtonItem>
+      <ButtonItem onClick={forbidden} iconBefore={<EmojiNatureIcon label=""/>}>Create Assignment</ButtonItem>
     </NavigationContent>
   </SideNavigation>
 );

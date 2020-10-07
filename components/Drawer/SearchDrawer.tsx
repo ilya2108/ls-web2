@@ -59,8 +59,8 @@ class SearchDrawer extends React.Component<
         }}
         value={this.state.query}
       >
-        <ResultItemGroup title="xObject examples">
-          <ObjectResult
+        <ResultItemGroup title="xSearch examples">
+          {/* <ObjectResult
             {...defaultProps}
             name="quick-search is too hilarious!"
             avatarUrl={avatarUrl}
@@ -86,7 +86,7 @@ class SearchDrawer extends React.Component<
             name="This one has an avatar component!"
             containerName="The Scream Team"
             isPrivate
-          />
+          /> */}
         </ResultItemGroup>
       </QuickSearch>
     );
