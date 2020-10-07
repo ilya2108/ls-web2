@@ -19,7 +19,7 @@ const CreateDrawer: React.FunctionComponent = () => (
     <NavigationContent>
       <ButtonItem iconBefore={<CalendarIcon label=""/>}>Start Exam <strong>right now</strong></ButtonItem>
       <ButtonItem iconBefore={<EmojiObjectsIcon label=""/>}>Create Exam</ButtonItem>
-      <ButtonItem iconBefore={<EmojiNatureIcon label=""/>}>Create Task</ButtonItem>
+      <ButtonItem iconBefore={<EmojiNatureIcon label=""/>}>Create Assignment</ButtonItem>
     </NavigationContent>
   </SideNavigation>
 );

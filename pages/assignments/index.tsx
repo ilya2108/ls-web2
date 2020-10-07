@@ -28,7 +28,7 @@ export default function TasksPage() {
 
   return (
     <Layout>
-      <h1>Tasks</h1>
+      <h1>Assignments</h1>
       <div className='exams-container'>
         {
           tasks.map((task) => {
