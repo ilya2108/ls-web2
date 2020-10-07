@@ -43,7 +43,7 @@ export default function HelpPage() {
 
         <h2>Reporting bugs and asking questions</h2>
         <p>
-          Please, report any issues or improvement ideas <a href="https://gitlab.fit.cvut.cz/zitnyjak/learnshell-2-issues/issues">on GitLab.</a>
+          Please, report any issues or improvement ideas <a href="https://gitlab.fit.cvut.cz/learnshell-2.0/learnshell-2-issues/issues">on GitLab.</a>
         </p>
 
         {/* <section>
