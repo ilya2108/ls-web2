@@ -88,7 +88,7 @@ export default function UsersPage() {
       <PageHeader
         breadcrumbs={
           <BreadcrumbsStateless onExpand={() => {}}>
-            <BreadcrumbsItem text="Users" href="/UsersPage" />
+            <BreadcrumbsItem text="Users" href="/users" />
           </BreadcrumbsStateless>
         }
       >
