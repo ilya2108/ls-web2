@@ -4,14 +4,10 @@ export default function HelpPage() {
   return (
     <Layout>
         <h1>Help</h1>
-        <h2>Scoring</h2>
+        <h2>Assignment Scoring</h2>
         <br />
 
         <section>
-          <p>
-            <b>Status:</b> Published
-          </p>
-
           <p>
             Max points without penalisation: <b>1.0</b> without bonus,{" "}
             <b>1.0</b> with bonus
@@ -43,14 +39,14 @@ export default function HelpPage() {
           <p>
             Total penalisation: <strong>0%</strong>
           </p>
-
-          <br />
-          <strong>Best result: 1.000</strong>
         </section>
 
-        <h2>Info</h2>
-        <br />
-        <section>
+        <h2>Reporting bugs and asking questions</h2>
+        <p>
+          Please, report any issues or improvement ideas <a href="https://gitlab.fit.cvut.cz/zitnyjak/learnshell-2-issues/issues">on GitLab.</a>
+        </p>
+
+        {/* <section>
           <p>
             <a href="http://127.0.0.1:8000/admin">Django admin</a>
           </p>
@@ -69,7 +65,7 @@ export default function HelpPage() {
               gitlab.fit.cvut.cz/jilekka2/ls
             </a>
           </p>
-        </section>
+        </section> */}
     </Layout>
   );
 }
