@@ -3,5 +3,6 @@ module.exports = {
     API_ENDPOINT: process.env.API_ENDPOINT,
     CLIENT_ID: process.env.CLIENT_ID,
     REDIRECT_URI: process.env.REDIRECT_URI,
+    BACKEND_ROOT_URI: process.env.BACKEND_ROOT_URI,
   },
 }
