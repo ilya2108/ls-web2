@@ -1,0 +1,8 @@
+module.exports = {
+  env: {
+    DEV: true,
+    API_ENDPOINT: "http://localhost:8000/graphql/",
+    CLIENT_ID: "82fc6577-b0c8-4cbb-82a2-c0318ff3743a",
+    REDIRECT_URI: "http://localhost:8000/auth"
+  },
+}
