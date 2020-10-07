@@ -4,7 +4,7 @@ import { gql } from "graphql-request";
 import React, { useEffect, useState } from "react";
 
 import { auth, fetcher } from "../../modules/api";
-import Layout, { UserMyself } from "../../layout/Layout";
+import Layout from "../../layout/Layout";
 
 
 export default function Assignment() {
