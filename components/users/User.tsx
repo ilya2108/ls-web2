@@ -83,7 +83,7 @@ export default function UserPage(props: Props) {
         <PageHeader
           breadcrumbs={
             <BreadcrumbsStateless onExpand={() => {}}>
-              <BreadcrumbsItem text="Users" href="/UsersPage" />
+              <BreadcrumbsItem text="Users" href="/users" />
             </BreadcrumbsStateless>
           }
         ></PageHeader>
@@ -103,7 +103,7 @@ export default function UserPage(props: Props) {
       <PageHeader
         breadcrumbs={
           <BreadcrumbsStateless onExpand={() => {}}>
-            <BreadcrumbsItem text="Users" href="/UsersPage" />
+            <BreadcrumbsItem text="Users" href="/users" />
             <BreadcrumbsItem href={`/users/${userId}`} text={username} />
           </BreadcrumbsStateless>
         }
