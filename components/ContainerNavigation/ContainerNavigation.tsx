@@ -2,7 +2,7 @@
 // https://atlaskit.atlassian.com/packages/design-system/navigation-next
 
 // dependencies
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -33,10 +33,6 @@ const ContainerNavigation: React.FunctionComponent = () => {
     <HeaderSection>
       {({ className }) => (
         <div className={className}>
-          {/* <ContainerHeader
-            before={(s) => <ReposIcon label="" size="large" />}
-            text="Learn Shell 2.0"
-          /> */}
           <Item before={ReposIcon} text="Learn Shell 2.0" onClick={()=>router.push("/")} />
         </div>
       )}
