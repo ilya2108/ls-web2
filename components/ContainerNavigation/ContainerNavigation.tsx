@@ -13,7 +13,6 @@ import {
   MenuSection,
 } from "@atlaskit/navigation-next";
 
-// ICONS
 import HomeIcon from "@atlaskit/icon/glyph/home";
 import PersonIcon from "@atlaskit/icon/glyph/person";
 import QuestionIcon from "@atlaskit/icon/glyph/question-circle";
@@ -23,9 +22,11 @@ import UsersIcon from "@atlaskit/icon/glyph/people-group";
 import ReposIcon from "@atlaskit/icon/glyph/bitbucket/repos";
 import SelectClearIcon from '@atlaskit/icon/glyph/select-clear';
 
-// currently using
-// jsx version of the old container navigation
-const ContainerNavigation: React.FunctionComponent = () => {
+type IProps = {
+  admin: boolean
+}
+
+export default function ContainerNavigation({ admin }: IProps) {
   const router = useRouter();
 
   return (
@@ -46,9 +47,11 @@ const ContainerNavigation: React.FunctionComponent = () => {
           <Link href="/profile">
             <Item before={PersonIcon} text="Profile" isSelected={router.pathname === "/profile"} />
           </Link>
-          <Link href="/users">
-            <Item before={UsersIcon} text="Users" isSelected={router.pathname === "/users"} />
-          </Link>
+          {admin &&
+            <Link href="/users">
+              <Item before={UsersIcon} text="Users" isSelected={router.pathname === "/users"} />
+            </Link>
+          }
 
           <Link href="/assignments">
             <Item before={LabsIcon} text="Assignments" isSelected={router.pathname === "/assignments"} />
@@ -68,5 +71,3 @@ const ContainerNavigation: React.FunctionComponent = () => {
   </Fragment>
   )
 }
-
-export default ContainerNavigation;

@@ -30,6 +30,11 @@ export async function auth() {
         UserMyself {
           id
           username
+          isStaff
+          isSuperuser
+          coursesAsTeacher {
+            totalCount
+          }
         }
       }
     `

@@ -11,7 +11,12 @@ import ContainerNavigation from "../components/ContainerNavigation/ContainerNavi
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
 import { auth, fetcher } from "../modules/api"
 
-interface IProps {
+type ILayoutProps = {
+  children: React.ReactNode;
+}
+
+type ILoggedInLayoutProps = {
+  admin: boolean
   children: React.ReactNode;
 }
 
@@ -19,7 +24,7 @@ const Padding = styled.div`
   padding: 40px;
 `;
 
-export default function Layout({ children }: IProps) {
+export default function Layout({ children }: ILayoutProps) {
   const { data, error } = useSWR('/api/user', auth)
   if (!data && !error) {
     return (
@@ -28,20 +33,26 @@ export default function Layout({ children }: IProps) {
   }
 
   if (data?.UserMyself?.id) {
-    return <LoggedInLayout>{children}</LoggedInLayout>
+    const admin = (
+      data.UserMyself.coursesAsTeacher?.totalCount >= 1 ||
+      data.UserMyself.isStaff ||
+      data.UserMyself.isSuperuser
+    )
+
+    return <LoggedInLayout admin={admin}>{children}</LoggedInLayout>
   }
 
   return <Login />
 }
 
-function LoggedInLayout({ children }: IProps) {
+function LoggedInLayout({ children, admin }: ILoggedInLayoutProps) {
   return (
     <Page>
       <NavigationProvider>
         <LayoutManager
           globalNavigation={LSGlobalNavigation}
           productNavigation={() => null}
-          containerNavigation={ContainerNavigation}
+          containerNavigation={() => <ContainerNavigation admin={admin} />}
         >
           <PageLayout>
             <Content>
