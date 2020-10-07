@@ -33,30 +33,31 @@ const ContainerNavigation: React.FunctionComponent = () => {
     <HeaderSection>
       {({ className }) => (
         <div className={className}>
-          <Item before={ReposIcon} text="Learn Shell 2.0" onClick={()=>router.push("/")} />
+          <Item before={ReposIcon} text="Learn Shell 2.0" onClick={()=>router.push("/profile")} />
         </div>
       )}
     </HeaderSection>
     <MenuSection>
       {({ className }) => (
         <div className={className}>
-          <Link href="/">
+          {/* <Link href="/">
             <Item before={HomeIcon} text="Home" isSelected={router.pathname === "/"} />
-          </Link>
+          </Link> */}
           <Link href="/profile">
             <Item before={PersonIcon} text="Profile" isSelected={router.pathname === "/profile"} />
           </Link>
-          <Link href="/help">
-            <Item before={QuestionIcon} text="Help" isSelected={router.pathname === "/help"} />
+          <Link href="/users">
+            <Item before={UsersIcon} text="Users" isSelected={router.pathname === "/users"} />
           </Link>
+
           <Link href="/assignments">
             <Item before={LabsIcon} text="Assignments" isSelected={router.pathname === "/assignments"} />
           </Link>
-          <Link href="/exam">
+          {/* <Link href="/exam">
             <Item before={TestIcon} text="Exam" isSelected={router.pathname === "/exam"} />
-          </Link>
-          <Link href="/users">
-            <Item before={UsersIcon} text="Users" isSelected={router.pathname === "/users"} />
+          </Link> */}
+          <Link href="/help">
+            <Item before={QuestionIcon} text="Help" isSelected={router.pathname === "/help"} />
           </Link>
           <Link href={`${process.env.BACKEND_ROOT_URI}/auth/logout`}>
             <Item before={SelectClearIcon} text="Logout" />
