@@ -10,7 +10,6 @@ import ContainerNavigation from "../components/ContainerNavigation/ContainerNavi
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
 import { auth } from "../modules/api"
 import { useSelector, useDispatch } from "react-redux";
-import { closeBanner } from '../modules/core/redux/banner/banner.actions';
 import Loading from "../components/Loading";
 
 
@@ -50,14 +49,6 @@ export default function Layout({ children }: ILayoutProps) {
 }
 
 function LoggedInLayout({ children, admin }: ILoggedInLayoutProps) {
-  const { showBanner } = useSelector((state) => state.banner);
-
-  const dispatch = useDispatch();
-  const dispatchCloseBanner = () => dispatch(closeBanner());
-
-  (showBanner) ? setTimeout(() =>
-    dispatchCloseBanner(), 1800) : null;
-
   return (
     <Page>
       <NavigationProvider>
@@ -65,7 +56,6 @@ function LoggedInLayout({ children, admin }: ILoggedInLayoutProps) {
           globalNavigation={() => <LSGlobalNavigation admin={admin}/> }
           productNavigation={() => null}
           containerNavigation={() => <ContainerNavigation admin={admin} />}
-          topOffset={(showBanner) ? 52 : 0}
         >
           <PageLayout>
             <Content>
