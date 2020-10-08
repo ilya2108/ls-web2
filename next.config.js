@@ -4,5 +4,6 @@ module.exports = {
     CLIENT_ID: process.env.CLIENT_ID,
     REDIRECT_URI: process.env.REDIRECT_URI,
     BACKEND_ROOT_URI: process.env.BACKEND_ROOT_URI,
+    PROD: process.env.PROD,
   },
 }
