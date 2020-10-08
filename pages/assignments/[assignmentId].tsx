@@ -4,11 +4,12 @@ import { gql } from "graphql-request";
 import React, { useEffect, useState } from "react";
 import dayjs from 'dayjs'
 import pluralize from 'pluralize'
+import debounce from 'lodash/debounce'
 
 import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
-import DefaultErrorPage from 'next/error'
 
+const MAX_CORRECTIONS_SHOWN = 5
 
 const calculateScore = (results: any) => {
   try {
@@ -27,6 +28,7 @@ export default function Assignment() {
   const router = useRouter();
   const { assignmentId } = router.query;
   const [solution, updateSolution] = useState('')
+  const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const { data, error } = useSWR(
     gql`
       query {
@@ -64,6 +66,10 @@ export default function Assignment() {
 
   const resultScore = calculateScore(data)
   const handleSubmit = () => {
+    if (!solution) {
+      return
+    }
+
     fetcher(gql`mutation submit {
       SubmissionCreate(data: {
         generatedAssignmentId: "${assignmentId}",
@@ -76,9 +82,16 @@ export default function Assignment() {
     }`).catch((e) => console.log(e));
   }
 
+  const updateSolutionDebounced = debounce(updateSolution, 500)
   const handleSolutionChange = (event) => {
-    updateSolution(event.target.value)
+    updateSolutionDebounced(event.target.value)
   }
+
+  const handleExtraAttemptsShow = () => {
+    updateExtraAttemptsHidden(false)
+  }
+
+  const corrections = assignment?.submissions?.results.map(({ correction }) => correction).reverse()
 
   return (
     <Layout>
@@ -97,8 +110,9 @@ export default function Assignment() {
           spellCheck="false"
           defaultValue={solution}
           onBlur={handleSolutionChange}
+          onChange={handleSolutionChange}
         />
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleSubmit} disabled={!solution}>Submit</button>
       </div>
       <br />
       <br />
@@ -109,26 +123,36 @@ export default function Assignment() {
         Remaining attempts: unlimited
         <br />
       </div>
-      <h2>Attempts</h2>
-      <div>
-        <ul>
-          {assignment?.submissions?.results.reverse().map(({ correction }) => {
-            if (!correction || correction.score == null) {
-              return (
-                <li>
-                  {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — in progress
-                </li>
-              )
-            }
+      {Boolean(corrections.length) &&
+        <div>
+          <br />
+          <h2>Attempts</h2>
+          <div className='attempts-container'>
+            <ul>
+              {corrections.map((correction, i) => {
+                if (i > MAX_CORRECTIONS_SHOWN && extraAttemptsHidden) {
+                  return
+                }
 
-            return (
-              <li>
-                {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — {correction?.score} {pluralize('point', correction?.score)}
-              </li>
-            )
-          })}
-        </ul>
-      </div>
+                if (!correction || correction.score == null) {
+                  return (
+                    <li>
+                      {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — in progress
+                    </li>
+                  )
+                }
+
+                return (
+                  <li>
+                    {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — {correction?.score} {pluralize('point', correction?.score)}
+                  </li>
+                )
+              })}
+              {extraAttemptsHidden && corrections.length > MAX_CORRECTIONS_SHOWN && <a href='#' onClick={handleExtraAttemptsShow}>show more</a>}
+            </ul>
+          </div>
+        </div>
+      }
     </Layout>
   )
 }

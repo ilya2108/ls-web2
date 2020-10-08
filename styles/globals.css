@@ -65,3 +65,9 @@ a {
 .textarea {
   margin: 20px 0;
 }
+
+.attempts-container {
+  height: 400px;
+  overflow: scroll;
+  margin-top: 10px;
+}
