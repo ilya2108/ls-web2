@@ -54,8 +54,6 @@ export default function Assignment() {
     fetcher
   )
 
-  console.log(data)
-
   const assignment = data?.UserMyself?.assignments?.results?.find((a) => {
       return `${a.id}` === assignmentId
     })

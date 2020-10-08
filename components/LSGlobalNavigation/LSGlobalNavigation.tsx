@@ -46,7 +46,7 @@ class LSGlobalNavigation extends React.Component<{}, ILSGlobalNavigationState> {
   };
 
   // Universal methods
-  onCloseComplete = (node) => console.log("onCloseComplete", node);
+  onCloseComplete = (node) => {}
 
   toggleUnmountBehaviour = () => {
     this.setState(({ shouldUnmountOnExit: unmountOnExitValue }) => ({
