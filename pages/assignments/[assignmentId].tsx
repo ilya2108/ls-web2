@@ -61,7 +61,7 @@ export default function Assignment() {
     })
 
   if (!assignment) {
-    return <DefaultErrorPage statusCode={404} />
+    return <div className="loading">loading</div>
   }
 
   const resultScore = calculateScore(data)
