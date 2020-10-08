@@ -113,7 +113,7 @@ export default function Assignment() {
       <div>
         <ul>
           {assignment?.submissions?.results.reverse().map(({ correction }) => {
-            if (!correction || !correction.score) {
+            if (!correction || correction.score == null) {
               return (
                 <li>
                   {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — in progress
