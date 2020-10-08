@@ -2,13 +2,17 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { gql } from "graphql-request";
 import React, { useEffect, useState } from "react";
+import dayjs from 'dayjs'
+import pluralize from 'pluralize'
 
-import { auth, fetcher } from "../../modules/api";
+import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
+import DefaultErrorPage from 'next/error'
+
 
 const calculateScore = (results: any) => {
   try {
-    const submissionResults = results?.UserDetail?.assignments?.results[0]?.submissions?.results
+    const submissionResults = results?.UserMyself?.assignments?.results[0]?.submissions?.results
     const success = submissionResults.some((submissionResult) => {
       return submissionResult?.correction.score === 1
     })
@@ -19,7 +23,6 @@ const calculateScore = (results: any) => {
   }
 }
 
-
 export default function Assignment() {
   const router = useRouter();
   const { assignmentId } = router.query;
@@ -27,32 +30,19 @@ export default function Assignment() {
   const { data, error } = useSWR(
     gql`
       query {
-        AssignmentDetail(id: "${assignmentId}") {
-          name
-          description
-        }
-      }
-    `,
-    fetcher
-    );
-
-  const { data: userData, error: userError } = useSWR('/api/user', auth)
-  let userId = null
-  if (userData?.UserMyself?.id) {
-    userId = userData.UserMyself.id
-  }
-
-  const { data: results, error: resultError } = useSWR(
-    gql`
-      query {
-        UserDetail(id: "${userId}")  {
+        UserMyself {
           assignments {
+            totalCount
             results {
+              id
+              name
+              descriptionHtml
               submissions {
                 results {
                   correction {
                     id
                     score
+                    createdAt
                   }
                 }
               }
@@ -64,12 +54,24 @@ export default function Assignment() {
     fetcher
   )
 
-  const resultScore = calculateScore(results)
+  console.log(data)
 
+  const assignment = data?.UserMyself?.assignments?.results?.find((a) => {
+      return `${a.id}` === assignmentId
+    })
 
+  if (!assignment) {
+    return <DefaultErrorPage statusCode={404} />
+  }
+
+  const resultScore = calculateScore(data)
   const handleSubmit = () => {
-    fetcher(gql`mutation submission {
-      SubmissionCreate(data: {generatedAssignmentId: "${assignmentId}", submissionData: "{ \"script\": \"${solution}\" }" }) {
+    const data = JSON.stringify({ script: `"${solution}"` })
+    fetcher(gql`mutation {
+      SubmissionCreate(data: {
+        generatedAssignmentId: ${assignmentId},
+        submissionData: \"${data}\",
+      }) {
         job {
           id
         }
@@ -83,9 +85,13 @@ export default function Assignment() {
 
   return (
     <Layout>
-      <h1>Assignment: {data?.AssignmentDetail?.name}</h1>
+      <h1>Assignment: {assignment.name}</h1>
       <br />
-      <div>{data?.AssignmentDetail?.description}</div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: assignment.descriptionHtml
+        }}
+      />
       <h2>Solution</h2>
       <div className="textarea-wrapper">
         <textarea
@@ -104,6 +110,19 @@ export default function Assignment() {
         Score: {resultScore}
         <br />
         Remaining attempts: unlimited
+        <br />
+      </div>
+      <h2>Attempts</h2>
+      <div>
+        <ul>
+          {assignment?.submissions?.results.map(({ correction }) => {
+            return (
+              <li>
+                {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — {correction?.score} {pluralize('point', correction?.score)}
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </Layout>
   )

@@ -8,15 +8,31 @@ import { fetcher } from '../../modules/api';
 
 
 export default function TasksPage() {
+  // const { data, error } = useSWR(
+  //   gql`{
+  //     AssignmentList {
+  //       results {
+  //         id
+  //         name
+  //         description
+  //         published
+  //         forExam
+  //       }
+  //     }
+  //   }`,
+  //   fetcher
+  // );
   const { data, error } = useSWR(
     gql`{
-      AssignmentList {
-        results {
-          id
-          name
-          description
-          published
-          forExam
+      UserMyself {
+        id
+        assignments {
+          totalCount
+          results {
+            id
+            name
+            descriptionHtml
+          }
         }
       }
     }`,
@@ -24,7 +40,7 @@ export default function TasksPage() {
   );
 
   // TODO: Loading.
-  const tasks = data?.AssignmentList?.results || []
+  const tasks = data?.UserMyself?.assignments?.results || []
 
   return (
     <Layout>
