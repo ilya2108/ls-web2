@@ -67,10 +67,10 @@ export default function Assignment() {
   const resultScore = calculateScore(data)
   const handleSubmit = () => {
     const data = JSON.stringify({ script: `"${solution}"` })
-    fetcher(gql`mutation {
+    fetcher(gql`mutation submit {
       SubmissionCreate(data: {
-        generatedAssignmentId: ${assignmentId},
-        submissionData: \"${data}\",
+        generatedAssignmentId: "${assignmentId}",
+        submissionData: "{ \\"script\\": \\"echo\\" }",
       }) {
         job {
           id
