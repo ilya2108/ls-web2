@@ -114,7 +114,15 @@ export default function Assignment() {
       <h2>Attempts</h2>
       <div>
         <ul>
-          {assignment?.submissions?.results.map(({ correction }) => {
+          {assignment?.submissions?.results.reverse().map(({ correction }) => {
+            if (!correction || !correction.score) {
+              return (
+                <li>
+                  {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — in progress
+                </li>
+              )
+            }
+
             return (
               <li>
                 {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — {correction?.score} {pluralize('point', correction?.score)}
