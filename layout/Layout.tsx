@@ -9,7 +9,6 @@ import Login from "../components/Login";
 import ContainerNavigation from "../components/ContainerNavigation/ContainerNavigation";
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
 import { auth } from "../modules/api"
-import CustomBanner from "../components/CustomBanner/CustomBanner";
 import { useSelector, useDispatch } from "react-redux";
 import { closeBanner } from '../modules/core/redux/banner/banner.actions';
 import Loading from "../components/Loading";
@@ -62,7 +61,6 @@ function LoggedInLayout({ children, admin }: ILoggedInLayoutProps) {
   return (
     <Page>
       <NavigationProvider>
-          <CustomBanner/>
         <LayoutManager
           globalNavigation={() => <LSGlobalNavigation admin={admin}/> }
           productNavigation={() => null}

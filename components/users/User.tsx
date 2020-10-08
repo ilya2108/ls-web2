@@ -25,9 +25,16 @@ import {
 import UserCoursesInfoSection from "./UserCoursesInfoSection";
 import UserPointsInfoSection from "./UserPointsInfoSection";
 import { fetcher } from "../../modules/api";
-import { formatDate } from '../../utils/date-utils'
-import { useDispatch } from 'react-redux';
-import { passwordChangeSuccess, passwordChangeError } from '../../modules/core/redux/banner/banner.actions';
+import { formatDate } from "../../utils/date-utils";
+import { useDispatch } from "react-redux";
+import {
+  addFlag,
+  dismissFlag,
+} from "../../modules/core/redux/flag/flag.actions";
+import {
+  PasswordChangeSuccessFlag,
+  PasswordChangeErrorFlag,
+} from "../LSFlags/LSFlags";
 
 type Props = {
   userId: string,
@@ -54,8 +61,11 @@ export default function UserPage(props: Props) {
   } = userData || [];
 
   const dispatch = useDispatch();
-  const dispatchPasswordChangeSuccess = () => dispatch(passwordChangeSuccess());
-  const dispatchPasswordChangeError = (e) => dispatch(passwordChangeError(e));
+  const dispatchDismissFlag = () => dispatch(dismissFlag());
+  const dispatchPasswordChangeSuccess = () =>
+    dispatch(addFlag(PasswordChangeSuccessFlag(dispatchDismissFlag)));
+  const dispatchPasswordChangeError = (e) =>
+    dispatch(addFlag(PasswordChangeErrorFlag(e, dispatchDismissFlag)));
 
   // handle password-edit event
   const [editPasswordState, setEditPasswordState] = useState(false);
