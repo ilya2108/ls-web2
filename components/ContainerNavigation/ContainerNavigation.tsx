@@ -1,23 +1,15 @@
-// documentation
-// https://atlaskit.atlassian.com/packages/design-system/navigation-next
-
-// dependencies
 import React, { Fragment } from "react";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-// old SideNavigation dependencies
 import {
   HeaderSection,
   Item,
   MenuSection,
 } from "@atlaskit/navigation-next";
-
-import HomeIcon from "@atlaskit/icon/glyph/home";
 import PersonIcon from "@atlaskit/icon/glyph/person";
 import QuestionIcon from "@atlaskit/icon/glyph/question-circle";
 import LabsIcon from "@atlaskit/icon/glyph/jira/labs";
-import TestIcon from "@atlaskit/icon/glyph/jira/test-session";
 import UsersIcon from "@atlaskit/icon/glyph/people-group";
 import ReposIcon from "@atlaskit/icon/glyph/bitbucket/repos";
 import SelectClearIcon from '@atlaskit/icon/glyph/select-clear';
