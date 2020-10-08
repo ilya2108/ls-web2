@@ -1,13 +1,16 @@
 import { gql } from "graphql-request";
 import React, { useState, Fragment } from "react";
+import pluralize from 'pluralize'
+
 import Lozenge from "@atlaskit/lozenge";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import Form, { Field, FormFooter, ErrorMessage } from "@atlaskit/form";
 import PageHeader from "@atlaskit/page-header";
 import TextField from "@atlaskit/textfield";
+import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
+
 import Layout from "../../layout/Layout";
 import HugeSpinner from "../HugeSpinner/HugeSpinner";
-import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
 import {
   Table,
   Row,
@@ -140,16 +143,13 @@ export default function UserPage(props: Props) {
             ) : null}
           </HRow>
           <HTag>
-            <strong>{assignments.totalCount}</strong> assignments
+            <strong>{assignments.totalCount}</strong> {pluralize('assignment', assignments.totalCount)}
           </HTag>
           <HTag>
-            <strong>{jobs.totalCount}</strong> jobs
+            <strong>{courses.totalCount}</strong> {pluralize('course', courses.totalCount)}
           </HTag>
           <HTag>
-            <strong>{courses.totalCount}</strong> courses
-          </HTag>
-          <HTag>
-            <strong>{parallels.totalCount}</strong> parallels
+            <strong>{parallels.totalCount}</strong> {pluralize('parallel', parallels.totalCount)}
           </HTag>
         </Header>
 
