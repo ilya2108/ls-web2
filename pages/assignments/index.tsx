@@ -8,20 +8,6 @@ import { fetcher } from '../../modules/api';
 
 
 export default function TasksPage() {
-  // const { data, error } = useSWR(
-  //   gql`{
-  //     AssignmentList {
-  //       results {
-  //         id
-  //         name
-  //         description
-  //         published
-  //         forExam
-  //       }
-  //     }
-  //   }`,
-  //   fetcher
-  // );
   const { data, error } = useSWR(
     gql`{
       UserMyself {
