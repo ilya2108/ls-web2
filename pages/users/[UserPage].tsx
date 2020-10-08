@@ -46,6 +46,7 @@ export default function UserPage() {
       userId={userId}
       userData={data?.UserDetail}
       error={error}
+      profile={false}
     />
   )
 }

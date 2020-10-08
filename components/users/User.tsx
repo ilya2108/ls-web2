@@ -28,10 +28,11 @@ type Props = {
   userId: string,
   error: Error,
   userData: any,
+  profile: boolean
 }
 
 export default function UserPage(props: Props) {
-  const { userId, error, userData } = props
+  const { userId, error, userData, profile } = props
 
   const {
     firstName,
@@ -86,7 +87,7 @@ export default function UserPage(props: Props) {
         <PageHeader
           breadcrumbs={
             <BreadcrumbsStateless onExpand={() => {}}>
-              <BreadcrumbsItem text="Users" href="/users" />
+              {!profile && <BreadcrumbsItem text="Users" href="/users" />}
             </BreadcrumbsStateless>
           }
         ></PageHeader>
@@ -106,8 +107,9 @@ export default function UserPage(props: Props) {
       <PageHeader
         breadcrumbs={
           <BreadcrumbsStateless onExpand={() => {}}>
-            <BreadcrumbsItem text="Users" href="/users" />
-            <BreadcrumbsItem href={`/users/${userId}`} text={username} />
+            {!profile && <BreadcrumbsItem text="Users" href="/users" />}
+            {!profile && <BreadcrumbsItem href={`/users/${userId}`} text={username} />}
+            {profile && <BreadcrumbsItem href="/profile" text={username} />}
           </BreadcrumbsStateless>
         }
       >

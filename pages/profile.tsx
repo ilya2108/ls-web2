@@ -99,6 +99,7 @@ export default function ProfilePage() {
       userId={data?.UserMyself?.id}
       userData={data?.UserMyself}
       error={error}
+      profile
     />
   );
 }
