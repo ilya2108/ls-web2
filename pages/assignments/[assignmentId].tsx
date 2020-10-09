@@ -80,7 +80,7 @@ export default function Assignment() {
     fetcher(gql`mutation submit {
       SubmissionCreate(data: {
         generatedAssignmentId: "${assignmentId}",
-        submissionData: "{ \\"script\\": \\"${solution}\\" }",
+        submissionData: "{ \\"script\\": \\"${btoa(solution)}\\" }",
       }) {
         job {
           id
