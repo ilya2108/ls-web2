@@ -11,14 +11,20 @@ import Layout from "../../layout/Layout";
 
 const MAX_CORRECTIONS_SHOWN = 5
 
-const calculateScore = (results: any) => {
+const calculateScore = (assignmentId: string, results: any) => {
   try {
-    const submissionResults = results?.UserMyself?.assignments?.results[0]?.submissions?.results
-    const success = submissionResults.some((submissionResult) => {
-      return submissionResult?.correction.score === 1
+    const assignment = results?.UserMyself?.assignments?.results?.find((result) => {
+      return `${result.id}` === assignmentId
     })
+    if (!assignment) {
+      return 0
+    }
 
-    return success ? 1 : 0
+    const submissionResults = assignment.submissions?.results
+    return submissionResults.reduce((max: number, result: any) => {
+      const resultScore = result?.correction?.score || 0
+      return resultScore <= max ? max : resultScore
+    }, 0)
   } catch (e) {
     return 0
   }
@@ -26,7 +32,8 @@ const calculateScore = (results: any) => {
 
 export default function Assignment() {
   const router = useRouter();
-  const { assignmentId } = router.query;
+  const { assignmentId: assignmentIdRaw } = router.query;
+  const assignmentId = typeof assignmentIdRaw === 'string' ? assignmentIdRaw : (assignmentIdRaw[0] || null)
   const [solution, updateSolution] = useState('')
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const { data, error } = useSWR(
@@ -64,7 +71,7 @@ export default function Assignment() {
     return <div className="loading">loading</div>
   }
 
-  const resultScore = calculateScore(data)
+  const resultScore = calculateScore(assignmentId, data)
   const handleSubmit = () => {
     if (!solution) {
       return
