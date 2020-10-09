@@ -11,7 +11,7 @@ import Layout from "../../layout/Layout";
 
 const MAX_CORRECTIONS_SHOWN = 5
 
-const calculateScore = (assignmentId: string, results: any) => {
+const calculateScore = (assignmentId: string | string[], results: any) => {
   try {
     const assignment = results?.UserMyself?.assignments?.results?.find((result) => {
       return `${result.id}` === assignmentId
