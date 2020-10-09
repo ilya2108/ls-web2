@@ -32,8 +32,7 @@ const calculateScore = (assignmentId: string, results: any) => {
 
 export default function Assignment() {
   const router = useRouter();
-  const { assignmentId: assignmentIdRaw } = router.query;
-  const assignmentId = typeof assignmentIdRaw === 'string' ? assignmentIdRaw : (assignmentIdRaw[0] || null)
+  const { assignmentId } = router.query;
   const [solution, updateSolution] = useState('')
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const { data, error } = useSWR(
