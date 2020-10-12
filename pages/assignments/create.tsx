@@ -1,8 +1,11 @@
-import check from '@atlaskit/icon/glyph/check'
 import { gql } from 'graphql-request'
 import React, { ChangeEvent, useState } from 'react'
+import { useDispatch } from "react-redux";
+
 import Layout from '../../layout/Layout'
 import { fetcher } from '../../modules/api'
+import { assignmentCreatedBanner } from '../../modules/core/redux/banner/banner.actions';
+
 
 
 type Props = {
@@ -11,6 +14,7 @@ type Props = {
 
 
 export default function CreateAssignment(props: Props) {
+  const dispatch = useDispatch();
   const [description, updateDescription] = useState('')
   const [solution, updateSolution] = useState('')
   const [name, updateName] = useState('')
@@ -60,7 +64,7 @@ export default function CreateAssignment(props: Props) {
 
   const handleTestcaseNameChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
     updateTestCases(testCases.reduce((cases, testCase, i) => {
-      if (index === i) {
+      if (index !== i) {
         cases.push(testCase)
         return cases
       }
@@ -76,7 +80,7 @@ export default function CreateAssignment(props: Props) {
 
   const handleTestcaseLidlChange = (index: number, e: ChangeEvent<HTMLTextAreaElement>) => {
     updateTestCases(testCases.reduce((cases, testCase, i) => {
-      if (index === i) {
+      if (index !== i) {
         cases.push(testCase)
         return cases
       }
@@ -92,7 +96,7 @@ export default function CreateAssignment(props: Props) {
 
   const handleTestcaseScoreChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
     updateTestCases(testCases.reduce((cases, testCase, i) => {
-      if (index === i) {
+      if (index !== i) {
         cases.push(testCase)
         return cases
       }
@@ -108,7 +112,7 @@ export default function CreateAssignment(props: Props) {
 
   const handleTestcaseRepetitionsChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
     updateTestCases(testCases.reduce((cases, testCase, i) => {
-      if (index === i) {
+      if (index !== i) {
         cases.push(testCase)
         return cases
       }
@@ -124,7 +128,7 @@ export default function CreateAssignment(props: Props) {
 
   const handleTestcaseCheckboxToggle = (index: number, checkboxName: string) => {
     updateTestCases(testCases.reduce((cases, testCase, i) => {
-      if (index === i) {
+      if (index !== i) {
         cases.push(testCase)
         return cases
       }
@@ -139,7 +143,7 @@ export default function CreateAssignment(props: Props) {
   }
 
   const handleSubmit = () => {
-    console.log("Creating assignment", testCases)
+    console.log("Creating assignment", solution, testCases)
 
     const encodedSolution = btoa(solution)
     const testCasesJson = JSON.stringify(testCases).replace(/"/g, '\\"')
@@ -159,10 +163,17 @@ export default function CreateAssignment(props: Props) {
       }
     }`)
     .then((response) => {
-      const assignmentTemplateId = response.AssignmentCreate.object.id
+      const assignmentTemplateId = response.AssignmentCreate?.object?.id
+      if (!assignmentTemplateId) {
+        dispatch(assignmentCreatedBanner('Failed to create assignment', 'error'))
+        return
+      }
+
       console.log("Created assignment", {assignmentTemplateId})
+      dispatch(assignmentCreatedBanner('Created assignment', 'success'))
     })
     .catch((error) => {
+      dispatch(assignmentCreatedBanner('Failed to create assignment', 'error'))
       console.error(error)
     })
   }

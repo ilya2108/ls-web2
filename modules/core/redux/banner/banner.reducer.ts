@@ -15,6 +15,14 @@ const bannerReducer = (state = INITIAL_STATE, {type, payload}) => {
         ...state,
         error: payload,
       };
+    case BannerActionTypes.GENERIC_MSG:
+      return {
+        ...state,
+        showBanner: payload.showBanner,
+        type: payload.type,
+        content: payload.content,
+        error: payload.error,
+      };
     case BannerActionTypes.CLOSE_BANNER:
       return {
         ...INITIAL_STATE

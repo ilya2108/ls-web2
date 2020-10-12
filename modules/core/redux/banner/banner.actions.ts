@@ -23,3 +23,13 @@ export const passwordChangeError = (e) => ({
         error: e
     }
 });
+
+export const assignmentCreatedBanner = (message: string, type: 'error' | 'success') => ({
+    type: BannerActionTypes.GENERIC_MSG,
+    payload: {
+        showBanner: true,
+        type,
+        content: type === 'error' ? null : message,
+        error: type === 'error' ? message : null,
+    }
+});
