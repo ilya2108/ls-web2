@@ -6,6 +6,8 @@ import User from '../components/users/User'
 import React from "react";
 import Login from "../components/Login";
 
+import getMyProfile from '../queries/profile.gql'
+
 const results = [
   {
     id: 1,
@@ -57,36 +59,8 @@ const results = [
 ]
 
 export default function ProfilePage() {
-
   const { data, error } = useSWR(
-    gql`
-      {
-        UserMyself {
-          id
-          firstName
-          lastName
-          email
-          assignments {
-            totalCount
-          }
-          dateJoined
-          ipAddress
-          isActive
-          isStaff
-          isSuperuser
-          username
-          courses {
-            totalCount
-          }
-          parallels {
-            totalCount
-          }
-          jobs{
-            totalCount
-          }
-        }
-      }
-    `,
+    gql`${getMyProfile.loc.source.body}`,
     fetcher
   );
 

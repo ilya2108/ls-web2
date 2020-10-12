@@ -6,4 +6,20 @@ module.exports = {
     BACKEND_ROOT_URI: process.env.BACKEND_ROOT_URI,
     PROD: process.env.PROD,
   },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    return {
+      ...config,
+      module: {
+        ...config.module,
+        rules: [
+          ...config.module.rules,
+          {
+            test: /\.(graphql|gql)$/,
+            exclude: /node_modules/,
+            loader: 'graphql-tag/loader'
+          }
+        ]
+      }
+    }
+  },
 }

@@ -1,0 +1,46 @@
+{
+  UserMyself {
+    id
+    firstName
+    lastName
+    email
+    assignments {
+      totalCount
+    }
+    dateJoined
+    ipAddress
+    isActive
+    isStaff
+    isSuperuser
+    username
+    courses {
+      totalCount
+    }
+    parallels {
+      totalCount
+    }
+    jobs{
+      totalCount
+    }
+
+    parallelsAsTeacher {
+      totalCount
+      results {
+        name
+        course {
+          name
+        }
+      }
+    }
+
+    parallelsAsStudent {
+      totalCount
+      results {
+        name
+        course {
+          name
+        }
+      }
+    }
+  }
+}
