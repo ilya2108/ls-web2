@@ -11,7 +11,8 @@ export default function Login() {
       <img className="logo-img" src="/logo.svg" />
       <div className="title">Learnshell</div>
       <br />
-      <a href={`https://auth.fit.cvut.cz/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`}>Please, login with your CTU account</a>
+      {/* <a href={`https://auth.fit.cvut.cz/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`}>Please, login with your CTU account</a> */}
+      <a href='#'>We're doing maintenance. We'll be back online soon. Sorry about that.</a>
     </div>
   )
 }
