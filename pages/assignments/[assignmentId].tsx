@@ -11,6 +11,7 @@ import Layout from "../../layout/Layout";
 import Loading from "../../components/Loading";
 import { formatSubmissionCreateTime } from '../../utils/date-utils'
 import mySubmissions from '../../queries/mySubmissions.gql';
+import CorrectionHints from "./CorrectionHints";
 
 
 const MAX_CORRECTIONS_SHOWN = 5
@@ -21,6 +22,7 @@ export default function Assignment() {
   const { assignmentId } = router.query;
   const [solution, updateSolution] = useState('')
   const [loadingCorrection, updateLoadingCorrection] = useState(null)
+  const [toggledHint, updateToggledHint] = useState(null)
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const { data, error } = useSWR(
     gql`${mySubmissions.loc.source.body}`,
@@ -71,6 +73,15 @@ export default function Assignment() {
 
   const handleExtraAttemptsShow = () => {
     updateExtraAttemptsHidden(false)
+  }
+
+  const handleHintsToggle = (hintId: number) => {
+    if (toggledHint === hintId) {
+      updateToggledHint(null)
+      return
+    }
+
+    updateToggledHint(hintId)
   }
 
   const corrections = assignment?.submissions?.results.map(({ correction }) => correction).reverse()
@@ -128,6 +139,8 @@ export default function Assignment() {
                 return (
                   <li>
                     {formatSubmissionCreateTime(correction?.createdAt)} — {correction?.score} {pluralize('point', correction?.score)}
+                    { }- <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>(show hints)</i>
+                    {toggledHint === i && <CorrectionHints data={correction?.data} />}
                   </li>
                 )
               })}

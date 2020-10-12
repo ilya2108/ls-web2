@@ -71,3 +71,7 @@ a {
   overflow: scroll;
   margin-top: 10px;
 }
+
+.hints-toggle-handle {
+  cursor: pointer;
+}
