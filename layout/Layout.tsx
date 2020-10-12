@@ -64,7 +64,7 @@ function LoggedInLayout({ children, admin }: ILoggedInLayoutProps) {
       <NavigationProvider>
           <CustomBanner/>
         <LayoutManager
-          globalNavigation={LSGlobalNavigation}
+          globalNavigation={() => <LSGlobalNavigation admin={admin}/> }
           productNavigation={() => null}
           containerNavigation={() => <ContainerNavigation admin={admin} />}
           topOffset={(showBanner) ? 52 : 0}

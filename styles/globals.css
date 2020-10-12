@@ -75,3 +75,21 @@ a {
 .hints-toggle-handle {
   cursor: pointer;
 }
+
+.assignment-name-input {
+  width: 450px;
+  height: 20px;
+}
+
+.testcases-container input {
+  width: 50px;
+}
+
+.testcases-container input[type="checkbox"] {
+  width: 20px;
+}
+
+.testcase-name-input {
+  width: 300px !important;
+  height: 20px !important;
+}

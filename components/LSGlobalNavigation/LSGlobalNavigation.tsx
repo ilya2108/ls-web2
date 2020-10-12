@@ -21,7 +21,12 @@ interface ILSGlobalNavigationState {
   isCreateDrawerFocusLockEnabled: boolean;
 };
 
-class LSGlobalNavigation extends React.Component<{}, ILSGlobalNavigationState> {
+
+type Props = {
+  admin: boolean
+}
+
+class LSGlobalNavigation extends React.Component<Props, ILSGlobalNavigationState> {
   state: ILSGlobalNavigationState = {
     isSearchDrawerOpen: false,
     shouldUnmountOnExit: false,
@@ -63,6 +68,19 @@ class LSGlobalNavigation extends React.Component<{}, ILSGlobalNavigationState> {
       isCreateDrawerFocusLockEnabled,
     } = this.state;
 
+    const createDrawerProps = this.props.admin ?
+      {
+        onCreateClick: this.openCreateDrawer,
+        createTooltip: "Create",
+        isCreateDrawerOpen: isCreateDrawerOpen,
+        createDrawerContents: CreateDrawer,
+        onCreateDrawerClose: this.closeCreatehDrawer,
+        onCreateDrawerCloseComplete: this.onCloseComplete,
+        shouldCreateDrawerUnmountOnExist: unmountOnExit,
+        isCreateDrawerFocusLockEnabled: isCreateDrawerFocusLockEnabled,
+        createDrawerWidth: "narrow",
+      } : null
+
     return (
       <GlobalNavigation
         productIcon={() => <ReposIcon label="" size="xlarge" />}
@@ -79,15 +97,7 @@ class LSGlobalNavigation extends React.Component<{}, ILSGlobalNavigationState> {
         isSearchDrawerFocusLockEnabled={isSearchDrawerFocusLockEnabled}
         searchDrawerWidth="medium"
         // Create Drawer
-        onCreateClick={this.openCreateDrawer}
-        createTooltip="Create"
-        isCreateDrawerOpen={isCreateDrawerOpen}
-        createDrawerContents={CreateDrawer}
-        onCreateDrawerClose={this.closeCreatehDrawer}
-        onCreateDrawerCloseComplete={this.onCloseComplete}
-        shouldCreateDrawerUnmountOnExist={unmountOnExit}
-        isCreateDrawerFocusLockEnabled={isCreateDrawerFocusLockEnabled}
-        createDrawerWidth="narrow"
+        {...createDrawerProps}
       />
     );
   }

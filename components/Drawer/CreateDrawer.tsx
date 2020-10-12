@@ -17,13 +17,17 @@ const forbidden = () => {
   alert("Not available yet")
 }
 
+const navigate = (where: string) => {
+  window.location.pathname = `${where}`
+}
+
 // New SideNavigation
 const CreateDrawer: React.FunctionComponent = () => (
     <SideNavigation label="project">
     <NavigationContent>
       <ButtonItem onClick={forbidden} iconBefore={<CalendarIcon label=""/>}>Start Exam <strong>right now</strong></ButtonItem>
       <ButtonItem onClick={forbidden} iconBefore={<EmojiObjectsIcon label=""/>}>Create Exam</ButtonItem>
-      <ButtonItem onClick={forbidden} iconBefore={<EmojiNatureIcon label=""/>}>Create Assignment</ButtonItem>
+      <ButtonItem onClick={() => navigate('/assignments/create')} iconBefore={<EmojiNatureIcon label=""/>}>Create Assignment</ButtonItem>
     </NavigationContent>
   </SideNavigation>
 );
