@@ -10,6 +10,7 @@ import TextField from "@atlaskit/textfield";
 import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
 
 import Layout from "../../layout/Layout";
+import Error from "../Error";
 import HugeSpinner from "../HugeSpinner/HugeSpinner";
 import {
   Table,
@@ -102,10 +103,8 @@ export default function UserPage(props: Props) {
     );
   }
 
-  // TODO: use a banner instead
-  // render Error component
   if (error) {
-    return <div>Error brah</div>;
+    return <Error />
   }
 
   return (

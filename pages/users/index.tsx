@@ -1,12 +1,15 @@
 import Link from "next/link";
 import useSWR from "swr";
 import { gql } from "graphql-request";
+
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
-import Layout from "../../layout/Layout";
 import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
+
+import Layout from "../../layout/Layout";
 import { fetcher } from "../../modules/api";
 import HugeSpinner from "../../components/HugeSpinner/HugeSpinner";
+import Error from "../../components/Error";
 
 export default function UsersPage() {
   const { data, error } = useSWR(
@@ -77,10 +80,8 @@ export default function UsersPage() {
     })
   );
 
-  // TODO: use a banner instead
-  // render Error component
   if (error) {
-    return <div>Error brah</div>;
+    return <Error />
   }
 
   return (
