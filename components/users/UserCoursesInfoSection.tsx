@@ -1,0 +1,41 @@
+import React from "react"
+import pluralize from "pluralize"
+
+type Props = {
+  userData: any,
+}
+
+export default function UserCoursesInfoSection(props: Props) {
+  const { parallelsAsTeacher, parallelsAsStudent } = props.userData
+  if (!parallelsAsTeacher && !parallelsAsStudent ) {
+    return <></>
+  }
+
+
+
+  if (parallelsAsTeacher.totalCount > 0) {
+    return (
+      <div>
+        <b>Teaching parallels</b>
+        <ul>
+          {parallelsAsTeacher?.results.map(({ name, course }) => {
+            return <li>no. {name} ({course.kosTag})</li>
+          })}
+        </ul>
+      </div>
+    )
+  }
+
+  if (parallelsAsStudent?.totalCount > 0) {
+    const parallelsString = parallelsAsStudent.results.map(({ name, course }) => {
+      return `${name} (${course.kosTag})`
+    }).join(' ')
+    return (
+      <div>
+        <b>Studying in {pluralize("parallel", parallelsAsStudent.totalCount)} {parallelsString}</b>
+      </div>
+    )
+  }
+
+  return <></>
+}

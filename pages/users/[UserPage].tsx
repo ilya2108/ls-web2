@@ -32,6 +32,26 @@ export default function UserPage() {
           parallels {
             totalCount
           }
+
+          parallelsAsTeacher {
+            totalCount
+            results {
+              name
+              course {
+                kosTag
+              }
+            }
+          }
+
+          parallelsAsStudent {
+            totalCount
+            results {
+              name
+              course {
+                kosTag
+              }
+            }
+          }
         }
       }
     `,

@@ -22,6 +22,7 @@ import {
   HTag,
   ButtonCell,
 } from "../../pages-styles/UserPage/UserPage.styles";
+import UserCoursesInfoSection from "./UserCoursesInfoSection";
 import { fetcher } from "../../modules/api";
 import { formatDate } from '../../utils/date-utils'
 import { useDispatch } from 'react-redux';
@@ -158,6 +159,10 @@ export default function UserPage(props: Props) {
             <strong>{parallels.totalCount}</strong> {pluralize('parallel', parallels.totalCount)}
           </HTag>
         </Header>
+
+        <Row>
+          <UserCoursesInfoSection userData={userData} />
+        </Row>
 
         <Row>
           <LeftCell>Username</LeftCell>
