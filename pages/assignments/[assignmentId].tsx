@@ -6,30 +6,13 @@ import dayjs from 'dayjs'
 import pluralize from 'pluralize'
 import debounce from 'lodash/debounce'
 
+import { calculateScore } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
 import Loading from "../../components/Loading";
 
+
 const MAX_CORRECTIONS_SHOWN = 5
-
-const calculateScore = (assignmentId: string | string[], results: any) => {
-  try {
-    const assignment = results?.UserMyself?.assignments?.results?.find((result) => {
-      return `${result.id}` === assignmentId
-    })
-    if (!assignment) {
-      return 0
-    }
-
-    const submissionResults = assignment.submissions?.results
-    return submissionResults.reduce((max: number, result: any) => {
-      const resultScore = result?.correction?.score || 0
-      return resultScore <= max ? max : resultScore
-    }, 0)
-  } catch (e) {
-    return 0
-  }
-}
 
 export default function Assignment() {
   const router = useRouter();
