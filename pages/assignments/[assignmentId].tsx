@@ -8,6 +8,7 @@ import debounce from 'lodash/debounce'
 
 import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
+import Loading from "../../components/Loading";
 
 const MAX_CORRECTIONS_SHOWN = 5
 
@@ -67,7 +68,7 @@ export default function Assignment() {
     })
 
   if (!assignment) {
-    return <div className="loading">loading</div>
+    return <Loading />
   }
 
   const resultScore = calculateScore(assignmentId, data)

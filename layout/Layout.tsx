@@ -12,6 +12,7 @@ import { auth } from "../modules/api"
 import CustomBanner from "../components/CustomBanner/CustomBanner";
 import { useSelector, useDispatch } from "react-redux";
 import { closeBanner } from '../modules/core/redux/banner/banner.actions';
+import Loading from "../components/Loading";
 
 
 type ILayoutProps = {
@@ -32,7 +33,7 @@ export default function Layout({ children }: ILayoutProps) {
   const { data, error } = useSWR('/api/user', auth)
   if (!data && !error) {
     return (
-      <div className="loading">loading</div>
+      <Loading />
     )
   }
 
