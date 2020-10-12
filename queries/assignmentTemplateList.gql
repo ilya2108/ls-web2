@@ -1,0 +1,10 @@
+query AssignmentTemplateList {
+  AssignmentList {
+    results {
+      name
+      id
+      published
+      forExam
+    }
+  }
+}

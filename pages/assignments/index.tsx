@@ -1,3 +1,4 @@
+import React from "react";
 import useSWR from "swr";
 import { gql } from "graphql-request";
 import { v4 } from 'uuid';
@@ -5,6 +6,7 @@ import { v4 } from 'uuid';
 import Layout from "../../layout/Layout";
 import TasksPageTaskItem from "../../components/TasksPageTaskItem";
 import { fetcher } from '../../modules/api';
+import AssignmentTemplatesList from "./AssignmentTemplatesList"
 
 
 export default function TasksPage() {
@@ -12,6 +14,7 @@ export default function TasksPage() {
     gql`{
       UserMyself {
         id
+        isStaff
         assignments {
           totalCount
           results {
@@ -26,6 +29,7 @@ export default function TasksPage() {
   );
 
   // TODO: Loading.
+  const admin = data?.UserMyself?.isStaff
   const tasks = data?.UserMyself?.assignments?.results || []
 
   return (
@@ -43,6 +47,7 @@ export default function TasksPage() {
           })
         }
       </div>
+      {admin && <AssignmentTemplatesList />}
     </Layout>
   )
 }

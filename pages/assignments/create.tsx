@@ -7,7 +7,6 @@ import { fetcher } from '../../modules/api'
 import { assignmentCreatedBanner } from '../../modules/core/redux/banner/banner.actions';
 
 
-
 type Props = {
 
 }

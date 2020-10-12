@@ -24,7 +24,7 @@ a {
   line-height: 16px;
   font-size: 1.2rem;
   padding: 5px 0;
-  display: block;
+  display: inline-block;
 }
 
 .exams-container {
