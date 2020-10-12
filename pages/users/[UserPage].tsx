@@ -32,9 +32,6 @@ export default function UserPage() {
           parallels {
             totalCount
           }
-          jobs{
-            totalCount
-          }
         }
       }
     `,

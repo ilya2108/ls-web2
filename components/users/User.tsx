@@ -47,7 +47,6 @@ export default function UserPage(props: Props) {
     isStaff,
     isSuperuser,
     username,
-    jobs,
     courses,
     parallels,
   } = userData || [];

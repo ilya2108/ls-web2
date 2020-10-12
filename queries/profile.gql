@@ -19,9 +19,6 @@
     parallels {
       totalCount
     }
-    jobs{
-      totalCount
-    }
 
     parallelsAsTeacher {
       totalCount
