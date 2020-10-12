@@ -2,7 +2,6 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { gql } from "graphql-request";
 import React, { useEffect, useState } from "react";
-import dayjs from 'dayjs'
 import pluralize from 'pluralize'
 import debounce from 'lodash/debounce'
 
@@ -106,14 +105,14 @@ export default function Assignment() {
                 if (!correction || correction.score == null) {
                   return (
                     <li>
-                      {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — in progress
+                      {formatSubmissionCreateTime(correction?.createdAt)} — in progress
                     </li>
                   )
                 }
 
                 return (
                   <li>
-                    {dayjs(correction?.createdAt).format('D.MM. HH:mm')} — {correction?.score} {pluralize('point', correction?.score)}
+                    {formatSubmissionCreateTime(correction?.createdAt)} — {correction?.score} {pluralize('point', correction?.score)}
                   </li>
                 )
               })}

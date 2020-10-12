@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 // date formatting - could be better
 // 2020-09-20T07:41:59+00:00
 export const formatDate = (rawDate: string) => {
@@ -12,3 +14,7 @@ export const formatDate = (rawDate: string) => {
 
   return `${date[2]}. ${date[1]}. ${date[0]}`;
 };
+
+export const formatSubmissionCreateTime = (raw: string) => {
+  return dayjs(raw).format('D.MM. HH:mm')
+}
