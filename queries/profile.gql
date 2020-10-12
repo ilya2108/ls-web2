@@ -39,5 +39,12 @@
         }
       }
     }
+
+    # TODO: Fix permissions on backend for this
+    # assignments {
+    #   results {
+    #     score
+    #   }
+    # }
   }
 }

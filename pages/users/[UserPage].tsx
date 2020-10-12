@@ -52,6 +52,12 @@ export default function UserPage() {
               }
             }
           }
+
+          assignments {
+            results {
+              score
+            }
+          }
         }
       }
     `,

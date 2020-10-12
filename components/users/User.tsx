@@ -23,6 +23,7 @@ import {
   ButtonCell,
 } from "../../pages-styles/UserPage/UserPage.styles";
 import UserCoursesInfoSection from "./UserCoursesInfoSection";
+import UserPointsInfoSection from "./UserPointsInfoSection";
 import { fetcher } from "../../modules/api";
 import { formatDate } from '../../utils/date-utils'
 import { useDispatch } from 'react-redux';
@@ -162,6 +163,10 @@ export default function UserPage(props: Props) {
 
         <Row>
           <UserCoursesInfoSection userData={userData} />
+        </Row>
+
+        <Row>
+          <UserPointsInfoSection userData={userData} />
         </Row>
 
         <Row>
