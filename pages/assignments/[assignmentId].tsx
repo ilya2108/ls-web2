@@ -9,15 +9,18 @@ import { calculateScore } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
 import Loading from "../../components/Loading";
-import mySubmissions from '../queries/mySubmissions.gql';
+import { formatSubmissionCreateTime } from '../../utils/date-utils'
+import mySubmissions from '../../queries/mySubmissions.gql';
 
 
 const MAX_CORRECTIONS_SHOWN = 5
+const POLL_CORRECTION_TIMEOUT = 5000
 
 export default function Assignment() {
   const router = useRouter();
   const { assignmentId } = router.query;
   const [solution, updateSolution] = useState('')
+  const [loadingCorrection, updateLoadingCorrection] = useState(null)
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const { data, error } = useSWR(
     gql`${mySubmissions.loc.source.body}`,
@@ -45,9 +48,20 @@ export default function Assignment() {
       }) {
         job {
           id
+          createTime
         }
       }
-    }`).catch((e) => console.log(e));
+    }`)
+    .then((response) => {
+      const submissionJob = response.SubmissionCreate.job
+      updateLoadingCorrection(submissionJob)
+
+      setTimeout(() => {
+        updateLoadingCorrection(null)
+        window.location.reload()
+      }, POLL_CORRECTION_TIMEOUT)
+    })
+    .catch((e) => console.error(e));
   }
 
   const updateSolutionDebounced = debounce(updateSolution, 500)
@@ -80,7 +94,7 @@ export default function Assignment() {
           onBlur={handleSolutionChange}
           onChange={handleSolutionChange}
         />
-        <button onClick={handleSubmit} disabled={!solution}>Submit</button>
+        <button onClick={handleSubmit} disabled={!solution || loadingCorrection}>Submit</button>
       </div>
       <br />
       <br />
@@ -97,6 +111,7 @@ export default function Assignment() {
           <h2>Attempts</h2>
           <div className='attempts-container'>
             <ul>
+              {loadingCorrection && <li>{formatSubmissionCreateTime(loadingCorrection.createTime)} — submitted</li>}
               {corrections.map((correction, i) => {
                 if (i > MAX_CORRECTIONS_SHOWN && extraAttemptsHidden) {
                   return
