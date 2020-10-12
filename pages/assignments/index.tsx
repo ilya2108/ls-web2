@@ -15,6 +15,7 @@ export default function TasksPage() {
       UserMyself {
         id
         isStaff
+        isSuperuser
         assignments {
           totalCount
           results {
@@ -29,7 +30,7 @@ export default function TasksPage() {
   );
 
   // TODO: Loading.
-  const admin = data?.UserMyself?.isStaff
+  const admin = data?.UserMyself?.isSuperuser
   const tasks = data?.UserMyself?.assignments?.results || []
 
   return (
