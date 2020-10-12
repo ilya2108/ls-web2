@@ -47,7 +47,7 @@ export default function TasksPageTaskItem(props: Props) {
 
   return (
     <div>
-      <a className='exam' href={`/assignments/${task.id}`}>
+      <a className='exam' href={admin ? '/assignments/' : `/assignments/${task.id}`}>
         {task.name} {}
         {(task.forExam ? `(exam)` : '(homework)')} {(task.published && admin) ? '[PUBLISHED]' : ''}
       </a>
