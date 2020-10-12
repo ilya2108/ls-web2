@@ -4,6 +4,7 @@ import { gql } from "graphql-request";
 import React, { useEffect, useState } from "react";
 import pluralize from 'pluralize'
 import debounce from 'lodash/debounce'
+import { encode } from "js-base64"
 
 import { calculateScore } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
@@ -43,10 +44,11 @@ export default function Assignment() {
       return
     }
 
+    const encodedSolution = encode(solution)
     fetcher(gql`mutation submit {
       SubmissionCreate(data: {
         generatedAssignmentId: "${assignmentId}",
-        submissionData: "{ \\"script\\": \\"${btoa(solution)}\\" }",
+        submissionData: "{ \\"script\\": \\"${encodedSolution}\\" }",
       }) {
         job {
           id

@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 import React, { ChangeEvent, useState } from 'react'
 import { useDispatch } from "react-redux";
+import { encode } from "js-base64"
 
 import Layout from '../../layout/Layout'
 import { fetcher } from '../../modules/api'
@@ -144,7 +145,7 @@ export default function CreateAssignment(props: Props) {
   const handleSubmit = () => {
     console.log("Creating assignment", solution, testCases)
 
-    const encodedSolution = btoa(solution)
+    const encodedSolution = encode(solution)
     const testCasesJson = JSON.stringify(testCases).replace(/"/g, '\\"')
 
     fetcher(gql`mutation submit {
