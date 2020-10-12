@@ -59,7 +59,6 @@ export default function Assignment() {
       updateLoadingCorrection(submissionJob)
 
       setTimeout(() => {
-        updateLoadingCorrection(null)
         window.location.reload()
       }, POLL_CORRECTION_TIMEOUT)
     })
@@ -116,7 +115,7 @@ export default function Assignment() {
         Remaining attempts: unlimited
         <br />
       </div>
-      {Boolean(corrections.length) &&
+      {(corrections.length || loadingCorrection) &&
         <div>
           <br />
           <h2>Attempts</h2>
@@ -138,8 +137,8 @@ export default function Assignment() {
 
                 return (
                   <li>
-                    {formatSubmissionCreateTime(correction?.createdAt)} — {correction?.score} {pluralize('point', correction?.score)}
-                    { }- <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>(show hints)</i>
+                    {formatSubmissionCreateTime(correction?.createdAt)} — <b>{correction?.score} {pluralize('point', correction?.score)}</b>
+                    { } — <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>(show hints)</i>
                     {toggledHint === i && <CorrectionHints data={correction?.data} />}
                   </li>
                 )
