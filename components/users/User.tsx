@@ -150,7 +150,7 @@ export default function UserPage(props: Props) {
             ) : null}
           </HRow>
           <HTag>
-            <strong>{assignments.totalCount}</strong> {pluralize('assignment', assignments.totalCount)}
+            <strong>{assignments.totalCount}</strong> <a href="/assignments">{pluralize('assignment', assignments.totalCount)}</a>
           </HTag>
           <HTag>
             <strong>{courses.totalCount}</strong> {pluralize('course', courses.totalCount)}
