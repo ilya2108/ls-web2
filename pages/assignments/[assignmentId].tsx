@@ -129,7 +129,7 @@ export default function Assignment() {
                   return
                 }
 
-                if (!correction || correction.score == null) {
+                if (!correction || correction?.score == null) {
                   return (
                     <li>
                       {formatSubmissionCreateTime(correction?.createdAt)} — in progress
