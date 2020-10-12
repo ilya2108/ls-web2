@@ -1,0 +1,21 @@
+query {
+  UserMyself {
+    assignments {
+      totalCount
+      results {
+        id
+        name
+        descriptionHtml
+        submissions {
+          results {
+            correction {
+              id
+              score
+              createdAt
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ import { calculateScore } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
 import Loading from "../../components/Loading";
+import mySubmissions from '../queries/mySubmissions.gql';
 
 
 const MAX_CORRECTIONS_SHOWN = 5
@@ -20,29 +21,7 @@ export default function Assignment() {
   const [solution, updateSolution] = useState('')
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const { data, error } = useSWR(
-    gql`
-      query {
-        UserMyself {
-          assignments {
-            totalCount
-            results {
-              id
-              name
-              descriptionHtml
-              submissions {
-                results {
-                  correction {
-                    id
-                    score
-                    createdAt
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
+    gql`${mySubmissions.loc.source.body}`,
     fetcher
   )
 
