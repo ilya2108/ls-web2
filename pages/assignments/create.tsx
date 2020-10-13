@@ -146,7 +146,13 @@ export default function CreateAssignment(props: Props) {
     console.log("Creating assignment", solution, testCases)
 
     const encodedSolution = encode(solution)
-    const testCasesJson = JSON.stringify(testCases).replace(/"/g, '\\"')
+    const encodedTestCases = testCases.map((testCase) => {
+      return {
+        ...testCase,
+        lidl: encode(testCase.lidl),
+      }
+    })
+    const testCasesJson = JSON.stringify(encodedTestCases).replace(/"/g, '\\"')
 
     fetcher(gql`mutation submit {
       AssignmentCreate(data: {
