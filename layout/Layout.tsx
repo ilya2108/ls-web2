@@ -9,8 +9,8 @@ import Login from "../components/Login";
 import ContainerNavigation from "../components/ContainerNavigation/ContainerNavigation";
 import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigation";
 import { auth } from "../modules/api"
-import { useSelector, useDispatch } from "react-redux";
 import Loading from "../components/Loading";
+import FlagGroup from "../components/FlagGroup/FlagGroup"
 
 
 type ILayoutProps = {
@@ -51,6 +51,7 @@ export default function Layout({ children }: ILayoutProps) {
 function LoggedInLayout({ children, admin }: ILoggedInLayoutProps) {
   return (
     <Page>
+      <FlagGroup/>
       <NavigationProvider>
         <LayoutManager
           globalNavigation={() => <LSGlobalNavigation admin={admin}/> }
