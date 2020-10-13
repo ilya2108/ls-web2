@@ -31,8 +31,8 @@ export default function Assignment() {
   )
 
   const assignment = data?.UserMyself?.assignments?.results?.find((a) => {
-      return `${a.id}` === assignmentId
-    })
+    return `${a.id}` === assignmentId
+  })
 
   if (!assignment) {
     return <Loading />
