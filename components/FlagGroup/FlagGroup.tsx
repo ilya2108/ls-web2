@@ -19,10 +19,6 @@ const FlagGroup = () => {
     <AKFlagGroup onDismissed={dispatchDismissFlag}>
       {flags.map((flag) => {
         const { type, key, id } = flag;
-        console.log("flag: " + flag.id);
-        console.log("content: " + flag.content);
-        console.log("error: " + flag.error);
-
         switch (type) {
           case FlagActionTypes.CHANGE_PASSWORD_SUCCESS:
             return <PasswordChangeSuccessFlag id={id} key={key} />;
