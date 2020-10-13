@@ -163,6 +163,14 @@ export default function UserPage(props: Props) {
           </Header>
 
           <Row>
+            <UserCoursesInfoSection userData={userData} />
+          </Row>
+
+          <Row>
+            <UserPointsInfoSection userData={userData} />
+          </Row>
+
+          <Row>
             <LeftCell>Username</LeftCell>
             <RightCell>
               <strong>{username}</strong>
