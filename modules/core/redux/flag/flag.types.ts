@@ -1,6 +1,7 @@
 const FlagActionTypes = {
     DISMISS_FLAG: "DISMISS_FLAG",
-    ADD_FLAG: "ADD_FLAG",
+    CHANGE_PASSWORD_SUCCESS: "CHANGE_PASSWORD_SUCCESS",
+    CHANGE_PASSWORD_ERROR: "CHANGE_PASSWORD_ERROR"
 };
 
 export default FlagActionTypes;

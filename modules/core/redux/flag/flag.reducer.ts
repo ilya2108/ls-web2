@@ -9,7 +9,8 @@ const flagReducer = (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         flags: removeFlagFromFlagGroup(state.flags)
       }
-    case FlagActionTypes.ADD_FLAG:
+    case FlagActionTypes.CHANGE_PASSWORD_SUCCESS:
+    case FlagActionTypes.CHANGE_PASSWORD_ERROR:
       return {
         ...state,
         flags: addFlagToFlagGroup(state.flags, payload)

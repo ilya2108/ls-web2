@@ -4,7 +4,17 @@ export const dismissFlag = () => ({
     type: FlagActionTypes.DISMISS_FLAG
 })
 
-export const addFlag = (flag) => ({
-    type: FlagActionTypes.ADD_FLAG,
-    payload: flag
-});
+export const passwordChangeSuccessFlag = () => ({
+    type: FlagActionTypes.CHANGE_PASSWORD_SUCCESS,
+    payload: {
+        type: FlagActionTypes.CHANGE_PASSWORD_SUCCESS
+    }
+})
+
+export const passwordChangeErrorFlag = (e) => ({
+    type: FlagActionTypes.CHANGE_PASSWORD_ERROR,
+    payload: {
+        type: FlagActionTypes.CHANGE_PASSWORD_ERROR,
+        error: e
+    }
+})
