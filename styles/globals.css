@@ -15,6 +15,10 @@ a {
   box-sizing: border-box;
 }
 
+.login-hints {
+  height: 20px;
+}
+
 .users-container {
   margin-top: 20px;
   display: flex;
