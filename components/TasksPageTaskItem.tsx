@@ -3,8 +3,7 @@ import { gql } from "graphql-request";
 import { useDispatch } from "react-redux";
 
 import { fetcher } from "../modules/api";
-import { assignmentCreatedBanner } from '../modules/core/redux/banner/banner.actions';
-
+import { assignmentCreatedFlag } from "../modules/core/redux/flag/flag.actions";
 type Props = {
   task: {
     id: number,
@@ -32,15 +31,15 @@ export default function TasksPageTaskItem(props: Props) {
     .then((response) => {
       const jobId = response.AssignmentPublish?.job?.id
       if (!jobId) {
-        dispatch(assignmentCreatedBanner('Failed to publish assignment', 'error'))
+        dispatch(assignmentCreatedFlag('error', 'Failed to publish assignment'))
         return
       }
 
       console.log("Published assignment", {jobId})
-      dispatch(assignmentCreatedBanner('Published assignment — please wait few minutes', 'success'))
+      dispatch(assignmentCreatedFlag('success', 'Published assignment', 'Please wait a few minutes...'))
     })
     .catch((error) => {
-      dispatch(assignmentCreatedBanner('Failed to create assignment', 'error'))
+      dispatch(assignmentCreatedFlag('error', 'Failed to create assignment'))
       console.error(error)
     })
   }

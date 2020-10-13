@@ -5,7 +5,7 @@ import { encode } from "js-base64"
 
 import Layout from '../../layout/Layout'
 import { fetcher } from '../../modules/api'
-import { assignmentCreatedBanner } from '../../modules/core/redux/banner/banner.actions';
+import { assignmentCreatedFlag } from "../../modules/core/redux/flag/flag.actions";
 
 
 type Props = {
@@ -171,15 +171,15 @@ export default function CreateAssignment(props: Props) {
     .then((response) => {
       const assignmentTemplateId = response.AssignmentCreate?.object?.id
       if (!assignmentTemplateId) {
-        dispatch(assignmentCreatedBanner('Failed to create assignment', 'error'))
+        dispatch(assignmentCreatedFlag('error', 'Failed to create assignment'))
         return
       }
 
       console.log("Created assignment", {assignmentTemplateId})
-      dispatch(assignmentCreatedBanner('Created assignment', 'success'))
+      dispatch(assignmentCreatedFlag('success', 'Created assignment'))
     })
     .catch((error) => {
-      dispatch(assignmentCreatedBanner('Failed to create assignment', 'error'))
+      dispatch(assignmentCreatedFlag('error', 'Failed to create assignment'))
       console.error(error)
     })
   }
