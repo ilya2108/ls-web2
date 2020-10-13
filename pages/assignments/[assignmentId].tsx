@@ -129,6 +129,7 @@ export default function Assignment() {
       <h1>Assignment: {assignment.name}</h1>
       <br />
       <div
+        className="assignment"
         dangerouslySetInnerHTML={{
           __html: assignment.descriptionHtml
         }}

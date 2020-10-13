@@ -24,6 +24,10 @@ a {
   display: flex;
 }
 
+.assignment code {
+  background-color: #dbe6ff
+}
+
 .user, .exam {
   line-height: 16px;
   font-size: 1.2rem;
