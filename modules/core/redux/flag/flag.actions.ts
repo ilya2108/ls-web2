@@ -18,3 +18,13 @@ export const passwordChangeErrorFlag = (e) => ({
         error: e
     }
 })
+
+export const assignmentCreatedFlag = (flagType: 'error' | 'success', title: string, description = "") => ({
+    type: FlagActionTypes.ASSIGNMENT_CREATED_MSG,
+    payload: {
+        type: FlagActionTypes.ASSIGNMENT_CREATED_MSG,
+        title: flagType === 'error' ? null : title,
+        error: flagType === 'error' ? title : null,
+        description: description
+    }
+});

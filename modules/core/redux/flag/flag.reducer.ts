@@ -11,6 +11,7 @@ const flagReducer = (state = INITIAL_STATE, { type, payload }) => {
       }
     case FlagActionTypes.CHANGE_PASSWORD_SUCCESS:
     case FlagActionTypes.CHANGE_PASSWORD_ERROR:
+    case FlagActionTypes.ASSIGNMENT_CREATED_MSG:
       return {
         ...state,
         flags: addFlagToFlagGroup(state.flags, payload)
