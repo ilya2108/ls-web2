@@ -36,6 +36,7 @@
     "@sentry/tracing": "^5.25.0",
     "dayjs": "^1.9.1",
     "graphql": "^15.3.0",
+    "graphql-hooks": "^5.0.0",
     "graphql-request": "^3.1.0",
     "immutable": "^4.0.0-rc.12",
     "js-base64": "^3.5.2",

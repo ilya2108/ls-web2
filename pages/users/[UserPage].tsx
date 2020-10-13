@@ -37,6 +37,7 @@ export default function UserPage() {
             totalCount
             results {
               name
+              id
               course {
                 kosTag
               }
@@ -47,6 +48,7 @@ export default function UserPage() {
             totalCount
             results {
               name
+              id
               course {
                 kosTag
               }

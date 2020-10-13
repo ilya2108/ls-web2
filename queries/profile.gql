@@ -23,6 +23,7 @@
     parallelsAsTeacher {
       totalCount
       results {
+        id
         name
         course {
           kosTag
@@ -34,6 +35,7 @@
       totalCount
       results {
         name
+        id
         course {
           kosTag
         }

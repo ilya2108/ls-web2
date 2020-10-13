@@ -18,8 +18,8 @@ export default function UserCoursesInfoSection(props: Props) {
       <div>
         <b>Teaching parallels</b>
         <ul>
-          {parallelsAsTeacher?.results.map(({ name, course }) => {
-            return <li>no. {name} ({course.kosTag})</li>
+          {parallelsAsTeacher?.results.map(({ id, name, course }) => {
+            return <li><a href={`parallels/${id}`}>no. {name} ({course.kosTag})</a></li>
           })}
         </ul>
       </div>
