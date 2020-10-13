@@ -37,7 +37,7 @@ export default function CreateAssignment(props: Props) {
   const handleTestCaseAdd = () => {
     updateTestCases(testCases.concat([{
       name: '',
-      num_repetitions: 3,
+      num_repetitions: 1,
       check_stdout: true,
       check_stderr: false,
       check_files: true,
@@ -46,7 +46,7 @@ export default function CreateAssignment(props: Props) {
       check_hardlinks: false,
       check_return_code: true,
       check_permissions: false,
-      lidl: '',
+      lidl: '{}',
       score: 1,
     }]))
   }
