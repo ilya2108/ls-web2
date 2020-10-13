@@ -1,7 +1,7 @@
 import { gql } from "graphql-request";
-import { useRouter } from "next/router";
 import React, { useState, Fragment } from "react";
-import pluralize from 'pluralize'
+import pluralize from "pluralize";
+import { useDispatch } from "react-redux";
 
 import Lozenge from "@atlaskit/lozenge";
 import Button, { ButtonGroup } from "@atlaskit/button";
@@ -27,27 +27,20 @@ import UserCoursesInfoSection from "./UserCoursesInfoSection";
 import UserPointsInfoSection from "./UserPointsInfoSection";
 import { fetcher } from "../../modules/api";
 import { formatDate } from "../../utils/date-utils";
-import { useDispatch } from "react-redux";
 import {
-  addFlag,
-  dismissFlag,
+  passwordChangeErrorFlag,
+  passwordChangeSuccessFlag,
 } from "../../modules/core/redux/flag/flag.actions";
-import {
-  PasswordChangeSuccessFlag,
-  PasswordChangeErrorFlag,
-  ConnectionIssuesFlag,
-} from "../LSFlags/LSFlags";
 
 type Props = {
-  userId: string,
-  error: Error,
-  userData: any,
-  profile: boolean
-}
+  userId: string;
+  error: Error;
+  userData: any;
+  profile: boolean;
+};
 
 export default function UserPage(props: Props) {
-  const { userId, error, userData, profile } = props
-  const router = useRouter();
+  const { userId, error, userData, profile } = props;
 
   const {
     firstName,
@@ -65,18 +58,10 @@ export default function UserPage(props: Props) {
   } = userData || [];
 
   const dispatch = useDispatch();
-  const dispatchDismissFlag = () => dispatch(dismissFlag());
   const dispatchPasswordChangeSuccess = () =>
-    dispatch(addFlag(PasswordChangeSuccessFlag(dispatchDismissFlag)));
+    dispatch(passwordChangeSuccessFlag());
   const dispatchPasswordChangeError = (e) =>
-    dispatch(addFlag(PasswordChangeErrorFlag(e, dispatchDismissFlag)));
-
-  const forceRefresh = () => {
-    router.push(`/users/${encodeURIComponent(id)}`);
-    // dispatch dismiss flag
-  };
-  const dispatchConnectionIssues = () =>
-    dispatch(addFlag(ConnectionIssuesFlag(forceRefresh)));
+    dispatch(passwordChangeErrorFlag(e));
 
   // handle password-edit event
   const [editPasswordState, setEditPasswordState] = useState(false);
@@ -113,7 +98,7 @@ export default function UserPage(props: Props) {
   const renderSpinner = !error && !userData;
 
   if (error) {
-    return <Error />
+    return <Error />;
   }
 
   return (
@@ -122,7 +107,9 @@ export default function UserPage(props: Props) {
         breadcrumbs={
           <BreadcrumbsStateless onExpand={() => {}}>
             {!profile && <BreadcrumbsItem text="Users" href="/users" />}
-            {!profile && !renderSpinner && <BreadcrumbsItem href={`/users/${userId}`} text={username} />}
+            {!profile && !renderSpinner && (
+              <BreadcrumbsItem href={`/users/${userId}`} text={username} />
+            )}
             {profile && <BreadcrumbsItem href="/profile" text={username} />}
           </BreadcrumbsStateless>
         }
@@ -162,13 +149,16 @@ export default function UserPage(props: Props) {
               ) : null}
             </HRow>
             <HTag>
-              <strong>{assignments.totalCount}</strong> {pluralize('assignment', assignments.totalCount)}
+              <strong>{assignments.totalCount}</strong>{" "}
+              {pluralize("assignment", assignments.totalCount)}
             </HTag>
             <HTag>
-              <strong>{courses.totalCount}</strong> {pluralize('course', courses.totalCount)}
+              <strong>{courses.totalCount}</strong>{" "}
+              {pluralize("course", courses.totalCount)}
             </HTag>
             <HTag>
-              <strong>{parallels.totalCount}</strong> {pluralize('parallel', parallels.totalCount)}
+              <strong>{parallels.totalCount}</strong>{" "}
+              {pluralize("parallel", parallels.totalCount)}
             </HTag>
           </Header>
 
