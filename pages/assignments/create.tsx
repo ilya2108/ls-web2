@@ -103,7 +103,7 @@ export default function CreateAssignment(props: Props) {
 
       cases.push({
         ...testCase,
-        score: e.target.value,
+        score: parseInt(e.target.value),
       })
 
       return cases
@@ -119,7 +119,7 @@ export default function CreateAssignment(props: Props) {
 
       cases.push({
         ...testCase,
-        num_repetitions: e.target.value, // TODO: number
+        num_repetitions: parseInt(e.target.value),
       })
 
       return cases
