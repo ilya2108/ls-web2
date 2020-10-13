@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import pluralize from 'pluralize'
 import debounce from 'lodash/debounce'
 import { encode } from "js-base64"
+import { v4 } from 'uuid'
 
 import { calculateScore } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
@@ -16,7 +17,12 @@ import CorrectionHints from "./CorrectionHints";
 
 
 const MAX_CORRECTIONS_SHOWN = 5
-const POLL_CORRECTION_TIMEOUT = 5000
+const POLL_CORRECTION_TIMEOUT = 3000
+const POLL_RELOAD_TIMEOUT = 20000
+
+const queryIdGenerator = () => {
+  return v4().substr(0, 3).replace(/\d/g, 'x')
+}
 
 export default function Assignment() {
   const router = useRouter();
@@ -25,8 +31,31 @@ export default function Assignment() {
   const [loadingCorrection, updateLoadingCorrection] = useState(null)
   const [toggledHint, updateToggledHint] = useState(null)
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
+  const [queryId, updateQueryId] = useState(queryIdGenerator())
+
   const { data, error } = useSWR(
-    gql`${mySubmissions.loc.source.body}`,
+    gql`query ${queryId} {
+      UserMyself {
+        assignments {
+          totalCount
+          results {
+            id
+            name
+            descriptionHtml
+            submissions {
+              results {
+                correction {
+                  id
+                  score
+                  createdAt
+                  data
+                }
+              }
+            }
+          }
+        }
+      }
+    }`,
     fetcher
   )
 
@@ -61,7 +90,8 @@ export default function Assignment() {
       updateLoadingCorrection(submissionJob)
 
       setTimeout(() => {
-        window.location.reload()
+        updateQueryId(queryIdGenerator())
+        updateLoadingCorrection(null)
       }, POLL_CORRECTION_TIMEOUT)
     })
     .catch((e) => console.error(e));
@@ -86,6 +116,13 @@ export default function Assignment() {
   }
 
   const corrections = assignment?.submissions?.results.map(({ correction }) => correction).reverse()
+  const queryInProgress = corrections.some((correction) => !correction)
+
+  if (queryInProgress) {
+    setTimeout(() => {
+      updateQueryId(queryIdGenerator())
+    }, POLL_RELOAD_TIMEOUT)
+  }
 
   return (
     <Layout>
