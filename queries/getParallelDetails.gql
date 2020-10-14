@@ -1,0 +1,15 @@
+query getParallelDetails ($parallelId: ID!) {
+  ParallelDetail(id: $parallelId) {
+    id
+    course {
+      id
+    }
+    students {
+      totalCount
+      results {
+        username
+        id
+      }
+    }
+  }
+}

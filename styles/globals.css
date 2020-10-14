@@ -101,3 +101,8 @@ a {
   width: 300px !important;
   height: 20px !important;
 }
+
+.parallels {
+  width: 500px;
+  overflow: scroll;
+}
