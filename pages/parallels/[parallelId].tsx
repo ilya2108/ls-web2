@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState, useRef } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { gql } from "graphql-request";
@@ -18,8 +18,9 @@ export default function Parallel() {
     return <Loading />
   }
 
-  const [chosenExamId, updateExamId] = useState(null)
   const [status, setStatus] = useState('')
+  const textareaRef = useRef(null)
+  const selectRef = useRef(null)
 
   const { data, error } = useSWR(
     gql`
@@ -67,8 +68,11 @@ export default function Parallel() {
   }
 
   const students = data?.ParallelDetail?.students?.results
+  const studentIdsMap = students.reduce((map, { username, id }) => {
+    map[username] = id
+    return map
+  }, {})
   const usernames = students.map(({ username }) => username)
-  const ids = students.map(({ id }) => id)
   const availableExams = dataExams?.ExamList?.results.map(({ id, template }) => {
     return {
       id,
@@ -76,14 +80,14 @@ export default function Parallel() {
     }
   })
 
-  const handleExamChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    updateExamId(e.target.value)
-  }
 
   const handleExamStudentAdd = () => {
-    // TODO: add students 1 by 1 to the exam
-
-    const jobs = ids.map((id) => {
+    const chosenExamId = selectRef.current.value
+    const students = textareaRef.current.value.split(" ")
+    const effectiveIds = students.map((username) => {
+      return studentIdsMap[username]
+    }).filter((x) => x)
+    const jobs = effectiveIds.map((id) => {
       return fetcher(gql`mutation addStudentToExam{
         StudentWritesExamCreate(data: {examId: ${chosenExamId}, studentId: ${id}}){
           object{
@@ -109,6 +113,7 @@ export default function Parallel() {
   }
   
   const handleExamComplete = () => {
+    const chosenExamId = selectRef.current.value
     return fetcher(gql`mutation completeEnrollment{
       ExamCompleteEnrollment(data: {id: ${chosenExamId}}){
         job{
@@ -141,6 +146,7 @@ export default function Parallel() {
     })
   }
 
+
   return (
     <Layout>
       <h1>Parallel: {parallelId}</h1>
@@ -148,23 +154,25 @@ export default function Parallel() {
       <h3>Usernames:</h3>
       <div className="textarea-wrapper">
         <textarea
+          ref={textareaRef}
           className="textarea"
           rows={10}
           spellCheck="false"
           placeholder="student usernames"
           defaultValue={usernames.join(" ")}
+          // onChange={handleUsernamesChange}
         />
       </div>
       <br />
       <br />
-      <select onChange={handleExamChange}>
+      <select ref={selectRef} defaultValue={availableExams[0].id}>
         {availableExams.map((exam) => {
           return <option value={exam.id}>{exam.name}</option>
         })}
       </select>
-      <button className="butt" onClick={() => handleExamStudentAdd()}>Add selected students to this Exam</button>
-      <button className="butt" onClick={() => handleExamComplete()}>Complete enrollment</button>
-      <button className="butt" onClick={() => handleExamStart()}>Start exam</button>
+      <button className="butt" onClick={handleExamStudentAdd}>Add selected students to this Exam</button>
+      <button className="butt" onClick={handleExamComplete}>Complete enrollment</button>
+      <button className="butt" onClick={handleExamStart}>Start exam</button>
       <br />
       <br />
       <br />
@@ -173,17 +181,6 @@ export default function Parallel() {
         {status}
       </div>
       <br />
-      <br />
-      <h3>IDs:</h3>
-      <div className="textarea-wrapper">
-        <textarea
-          className="textarea"
-          rows={10}
-          spellCheck="false"
-          placeholder="student ids"
-          defaultValue={ids.join(" ")}
-        />
-      </div>
     </Layout>
   )
 }
