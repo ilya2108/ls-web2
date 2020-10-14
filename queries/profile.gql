@@ -6,9 +6,9 @@
     email
     assignments {
       totalCount
-      results {
-        score
-      }
+      # results {
+      #   score
+      # }
     }
     dateJoined
     ipAddress
