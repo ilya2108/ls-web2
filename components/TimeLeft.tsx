@@ -10,7 +10,12 @@ export default function TimeLeft(props: Props) {
 
   useEffect(() => {
     setTimeout(() => {
-      setTimeLeft(timeLeft-1)
+      if (timeLeft <= 0) {
+        window.location.reload()
+        return
+      }
+
+      setTimeLeft(timeLeft - 1)
     }, 1000)
   })
 
