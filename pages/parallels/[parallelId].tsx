@@ -57,8 +57,14 @@ export default function Parallel() {
     <Layout>
       <h1>Parallel: {parallelId}</h1>
       <br />
-      <div className="parallels">
-        {students.join(" ")}
+      <div className="textarea-wrapper">
+        <textarea
+          className="textarea"
+          rows={10}
+          spellCheck="false"
+          placeholder="student usernames"
+          defaultValue={students.join(" ")}
+        />
       </div>
     </Layout>
   )
