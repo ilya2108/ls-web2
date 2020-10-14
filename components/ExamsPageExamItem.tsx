@@ -2,20 +2,40 @@
 type Props = {
   exam: {
     id: number,
-    template: {
+    exam: {
       name: string,
+      id: string,
+      hasStarted: boolean
+      template: {
+        name: string
+      }
     },
     startTime: string,
-    hasStarted: boolean
+    timeLeft: number,
   }
 }
 
 export default function ExamsPageExamItem(props: Props) {
   const { exam } = props
 
+  if (!exam) {
+    return <div>No exams</div>
+  }
+
+  const getStatus = () => {
+    if (exam?.timeLeft === 0) {
+      return '(finished)'
+    }
+    if (exam?.exam?.hasStarted) {
+      return '(started)'
+    }
+
+    return ''
+  }
+
   return (
     <a className='exam' href={`/exams/${exam.id}`}>
-      {exam.template.name} {(exam.hasStarted ? `(started)` : '')}
+      {exam.exam.template.name} {getStatus()}
     </a>
   )
 }

@@ -8,6 +8,7 @@ import {
   MenuSection,
 } from "@atlaskit/navigation-next";
 import PersonIcon from "@atlaskit/icon/glyph/person";
+import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import QuestionIcon from "@atlaskit/icon/glyph/question-circle";
 import LabsIcon from "@atlaskit/icon/glyph/jira/labs";
 import UsersIcon from "@atlaskit/icon/glyph/people-group";
@@ -48,9 +49,9 @@ export default function ContainerNavigation({ admin }: IProps) {
           <Link href="/assignments">
             <Item before={LabsIcon} text="Assignments" isSelected={router.pathname === "/assignments"} />
           </Link>
-          {/* <Link href="/exam">
-            <Item before={TestIcon} text="Exam" isSelected={router.pathname === "/exam"} />
-          </Link> */}
+          <Link href="/exams">
+            <Item before={EditFilledIcon} text="Exam" isSelected={router.pathname === "/exams"} />
+          </Link>
           <Link href="/help">
             <Item before={QuestionIcon} text="Help" isSelected={router.pathname === "/help"} />
           </Link>
