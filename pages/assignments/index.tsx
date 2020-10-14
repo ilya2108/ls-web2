@@ -22,6 +22,9 @@ export default function TasksPage() {
             id
             name
             descriptionHtml
+            exam {
+              id
+            }
           }
         }
       }

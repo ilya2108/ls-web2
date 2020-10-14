@@ -130,8 +130,9 @@ export default function Parallel() {
   }
   
   const handleExamStart = () => {
+    const chosenExamId = selectRef.current.value
     return fetcher(gql`mutation startExam{
-      ExamStart(data: {id: 1}){
+      ExamStart(data: {id: ${chosenExamId}}){
         object{
           id
           startTime

@@ -14,6 +14,7 @@ import Loading from "../../components/Loading";
 import { formatSubmissionCreateTime } from '../../utils/date-utils'
 import mySubmissions from '../../queries/mySubmissions.gql';
 import CorrectionHints from "../assignments/CorrectionHints";
+import TimeLeft from "../../components/TimeLeft";
 
 
 const MAX_CORRECTIONS_SHOWN = 5
@@ -69,15 +70,8 @@ export default function Exam() {
   )
 
   const exam = data?.UserMyself?.studentsInExam?.results[0]
-  console.log(data, exam)
-  if (!exam) {
-    return <Loading />
-  }
-
-
   const assignment = exam?.assigmnentsOfStudentInExam?.results[0]
-  // console.log({assignment})
-  if (!assignment || !exam.timeLeft) {
+  if (!exam || !assignment || !exam.timeLeft) {
     return <Layout>no exams</Layout>
   }
 
@@ -140,7 +134,7 @@ export default function Exam() {
 
   return (
     <Layout>
-      <h1>Exam: {assignment.name}</h1>
+      <h1>Exam: {assignment.name} <TimeLeft timeLeft={exam.timeLeft} /></h1>
       <br />
       <div
         className="assignment"

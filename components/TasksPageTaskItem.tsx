@@ -10,7 +10,9 @@ type Props = {
     name: string,
     description: string,
     published: boolean,
-    forExam: boolean
+    exam: {
+      id: string,
+    }
   }
   admin?: boolean
 }
@@ -18,6 +20,9 @@ type Props = {
 export default function TasksPageTaskItem(props: Props) {
   const dispatch = useDispatch()
   const { admin, task } = props
+  if (task.exam?.id) {
+    return null
+  }
 
   const handlePublish = () => {
     console.log("Publishing assignment", task.id)
@@ -48,7 +53,7 @@ export default function TasksPageTaskItem(props: Props) {
     <div>
       <a className='exam' href={admin ? '/assignments/' : `/assignments/${task.id}`}>
         {task.name} {}
-        {(task.forExam ? `(exam)` : '(homework)')} {(task.published && admin) ? '[PUBLISHED]' : ''}
+        {(task.exam?.id ? `(exam)` : '(homework)')} {(task.published && admin) ? '[PUBLISHED]' : ''}
       </a>
       {admin && <span> — <i className="hints-toggle-handle" onClick={handlePublish}>publish</i></span>}
     </div>
