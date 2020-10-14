@@ -27,6 +27,7 @@ export default function Parallel() {
       query getParallelDetails {
         ParallelDetail(id: ${parallelId}) {
           id
+          name
           course {
             id
           }
@@ -67,6 +68,7 @@ export default function Parallel() {
     return <Layout><Error errors={{ error, errorExams }} /></Layout>
   }
 
+  const parallelName = data?.ParallelDetail?.name
   const students = data?.ParallelDetail?.students?.results
   const studentIdsMap = students.reduce((map, { username, id }) => {
     map[username] = id
@@ -150,7 +152,7 @@ export default function Parallel() {
 
   return (
     <Layout>
-      <h1>Parallel: {parallelId}</h1>
+      <h1>Parallel: {parallelName || parallelId} </h1>
       <br />
       <h3>Usernames:</h3>
       <div className="textarea-wrapper">
