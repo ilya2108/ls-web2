@@ -17,7 +17,7 @@ import CorrectionHints from "./CorrectionHints";
 
 
 const MAX_CORRECTIONS_SHOWN = 5
-const POLL_CORRECTION_TIMEOUT = 3000
+const POLL_CORRECTION_TIMEOUT = 5000
 const POLL_RELOAD_TIMEOUT = 20000
 
 const queryIdGenerator = () => {
@@ -116,13 +116,13 @@ export default function Assignment() {
   }
 
   const corrections = assignment?.submissions?.results.map(({ correction }) => correction).reverse()
-  const queryInProgress = corrections.some((correction) => !correction)
+  // const queryInProgress = corrections.some((correction) => !correction)
 
-  if (queryInProgress) {
-    setTimeout(() => {
-      updateQueryId(queryIdGenerator())
-    }, POLL_RELOAD_TIMEOUT)
-  }
+  // if (queryInProgress) {
+  //   setTimeout(() => {
+  //     updateQueryId(queryIdGenerator())
+  //   }, POLL_RELOAD_TIMEOUT)
+  // }
 
   return (
     <Layout>
