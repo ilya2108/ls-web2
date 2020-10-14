@@ -15,7 +15,7 @@ a {
   box-sizing: border-box;
 }
 
-.login-hints {
+.login-hints, .status {
   height: 20px;
 }
 
@@ -105,4 +105,8 @@ a {
 .parallels {
   width: 500px;
   overflow: scroll;
+}
+
+.butt {
+  margin: 0 10px;
 }
