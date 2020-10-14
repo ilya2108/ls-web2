@@ -16,6 +16,6 @@ export default function UserPointsInfoSection(props: Props) {
   }, 0)
 
   return (
-    <div>Total score in current semester: {scoreSum}</div>
+    <div>Semester Score: <b>{scoreSum}</b></div>
   )
 }
