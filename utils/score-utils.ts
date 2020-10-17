@@ -1,9 +1,6 @@
 
-export const calculateScore = (assignmentId: string | string[], results: any) => {
+export const calculateScore = (assignment: any) => {
   try {
-    const assignment = results?.UserMyself?.assignments?.results?.find((result) => {
-      return `${result.id}` === assignmentId
-    })
     if (!assignment) {
       return 0
     }

@@ -70,7 +70,7 @@ export default function Exam() {
     return <Layout>no exams</Layout>
   }
 
-  const resultScore = calculateScore(assignment.id, data)
+  const resultScore = calculateScore(assignment)
   const handleSubmit = () => {
     if (!solution) {
       return

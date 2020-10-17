@@ -67,7 +67,7 @@ export default function Assignment() {
     return <Loading />
   }
 
-  const resultScore = calculateScore(assignmentId, data)
+  const resultScore = calculateScore(assignment)
   const handleSubmit = () => {
     if (!solution) {
       return
