@@ -36,32 +36,27 @@ export default function Exam() {
     gql`{
       UserMyself {
         id
-        studentsInExam {
-          totalCount
-          results {
-            id
-            timeLeft
-            student {
-              username
-            }
-            assigmnentsOfStudentInExam {
-              results {
-                id
-                name
-                descriptionHtml
-                submissions {
-                  results {
-                    correction {
-                      score
-                    }
+        activeExam {
+          id
+          timeLeft
+          startTime
+          timeLeft
+          assigmnentsOfStudentInExam {
+            results {
+              id
+              name
+              descriptionHtml
+              submissions {
+                results {
+                  correction {
+                    score
                   }
                 }
               }
             }
-            exam {
-              id
-              hasStarted
-            }
+          }
+          exam {
+            id
           }
         }
       }
@@ -69,7 +64,7 @@ export default function Exam() {
     fetcher
   )
 
-  const exam = data?.UserMyself?.studentsInExam?.results[0]
+  const exam = data?.UserMyself?.activeExam
   const assignment = exam?.assigmnentsOfStudentInExam?.results[0]
   if (!exam || !assignment || !exam.timeLeft) {
     return <Layout>no exams</Layout>
