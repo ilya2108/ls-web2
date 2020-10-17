@@ -167,19 +167,19 @@ export default function Exam() {
               {loadingCorrection && <li>{formatSubmissionCreateTime(loadingCorrection.createTime)} — submitted</li>}
               {corrections.map((correction, i) => {
                 if (i > MAX_CORRECTIONS_SHOWN && extraAttemptsHidden) {
-                  return
+                  return null
                 }
 
                 if (!correction || correction?.score == null) {
                   return (
-                    <li>
+                    <li key={`correction-${v4()}`}>
                       {formatSubmissionCreateTime(correction?.createdAt)} — in progress
                     </li>
                   )
                 }
 
                 return (
-                  <li>
+                  <li key={`correction-${v4()}`}>
                     {formatSubmissionCreateTime(correction?.createdAt)} — <b>{correction?.score} {pluralize('point', correction?.score)}</b>
                     { } — <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>(show hints)</i>
                     {toggledHint === i && <CorrectionHints data={correction?.data} />}
