@@ -1,3 +1,5 @@
+import { decode } from "js-base64"
+
 
 export const calculateScore = (assignment: any) => {
   try {
@@ -12,5 +14,16 @@ export const calculateScore = (assignment: any) => {
     }, 0)
   } catch (e) {
     return 0
+  }
+}
+
+export const decodeAttemptScript = (submissionDataRaw: any) => {
+  try {
+    const submissionData = JSON.parse(submissionDataRaw)
+    return decode(submissionData.script)
+  } catch (error) {
+    console.error(error)
+
+    return 'not available'
   }
 }
