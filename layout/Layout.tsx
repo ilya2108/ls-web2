@@ -11,6 +11,7 @@ import LSGlobalNavigation from "../components/LSGlobalNavigation/LSGlobalNavigat
 import { auth } from "../modules/api"
 import Loading from "../components/Loading";
 import FlagGroup from "../components/FlagGroup/FlagGroup"
+import { isAdmin } from "../utils/user-utils";
 
 
 type ILayoutProps = {
@@ -36,12 +37,7 @@ export default function Layout({ children }: ILayoutProps) {
   }
 
   if (data?.UserMyself?.id) {
-    const admin = (
-      data.UserMyself.coursesAsTeacher?.totalCount >= 1 ||
-      data.UserMyself.isStaff ||
-      data.UserMyself.isSuperuser
-    )
-
+    const admin = isAdmin(data.UserMyself)
     return <LoggedInLayout admin={admin}>{children}</LoggedInLayout>
   }
 
