@@ -19,6 +19,11 @@ export async function fetcher (query: string) {
     const data = await client.request(query);
     return data
   } catch (e) {
+    if (e?.response?.data) {
+      console.error(e)
+      return(e.response.data)
+    }
+
     return e
   }
 }
