@@ -127,6 +127,10 @@ export default function Assignment() {
   }
 
   const corrections = assignment?.submissions?.results.map(({ correction, submissionData }) => ({ ...correction, submissionData })).reverse()
+
+  const maxPoints = corrections.reduce((sum, correction) => {
+    return sum + (correction?.score ?? 0)
+  }, 0)
   // const queryInProgress = corrections.some((correction) => !correction)
 
   // if (queryInProgress) {
@@ -162,6 +166,10 @@ export default function Assignment() {
       <h2>Results</h2>
       <div>
         Score: {resultScore}
+        <br />
+        {Boolean(maxPoints) &&
+          <span>Max points: {maxPoints}</span>
+        }
         <br />
         Remaining attempts: unlimited
         <br />
