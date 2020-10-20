@@ -40,7 +40,7 @@ export default function UsersPage() {
   const users = data?.UserList?.results || [];
 
   // Generating user table header
-  const tableHeaderNames = ["Name", "Username", "Email", "Total score"];
+  const tableHeaderNames = ["#", "Name", "Username", "Email", "Total score"];
 
   const mappedTableHead = tableHeaderNames.map((headerNames, i) => ({
     key: headerNames,
@@ -55,40 +55,47 @@ export default function UsersPage() {
 
   // Generating user table rows
   const tableRows = users.map(
-    ({ lastName, firstName, id, username, email, assignments }, i) => ({
-      cells: [
-        {
-          // Name
-          key: lastName + firstName,
-          content: (
-            <Link href={`/users/${encodeURIComponent(id)}`}>
-              <a>
-                {lastName} {firstName}
-              </a>
-            </Link>
-          ),
-        },
-        {
-          // Username
-          key: username,
-          content: (
-            <Link href={`/users/${encodeURIComponent(id)}`}>
-              <a>{username}</a>
-            </Link>
-          ),
-        },
-        {
-          // Email
-          key: email,
-          content: email,
-        },
-        {
-          key: v4(),
-          content: calculateSemesterScore(assignments)
-        },
-      ],
-      key: username,
-    })
+    ({ lastName, firstName, id, username, email, assignments }, i) => {
+      const score = calculateSemesterScore(assignments)
+      return {
+        cells: [
+          {
+            key: i,
+            content: i
+          },
+          {
+            // Name
+            key: lastName + firstName,
+            content: (
+              <Link href={`/users/${encodeURIComponent(id)}`}>
+                <a>
+                  {lastName} {firstName}
+                </a>
+              </Link>
+            ),
+          },
+          {
+            // Username
+            key: username,
+            content: (
+              <Link href={`/users/${encodeURIComponent(id)}`}>
+                <a>{username}</a>
+              </Link>
+            ),
+          },
+          {
+            // Email
+            key: email,
+            content: email,
+          },
+          {
+            key: score,
+            content: score
+          },
+        ],
+        key: username,
+      }
+    }
   );
 
   if (error) {
