@@ -6,9 +6,9 @@
     email
     assignments {
       totalCount
-      # results {
-      #   score
-      # }
+      results {
+        score
+      }
     }
     dateJoined
     ipAddress
@@ -44,12 +44,5 @@
         }
       }
     }
-
-    # TODO: Fix permissions on backend for this
-    # assignments {
-    #   results {
-    #     score
-    #   }
-    # }
   }
 }
