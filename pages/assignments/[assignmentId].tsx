@@ -170,9 +170,11 @@ export default function Assignment() {
         Score: {resultScore}
         <br />
         {Boolean(maxPoints) &&
-          <span>Max points: {maxPoints}</span>
+          <>
+            <span>Max points: {maxPoints}</span>
+            <br />
+          </>
         }
-        <br />
         Remaining attempts: unlimited
         <br />
       </div>
