@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import * as Sentry from "@sentry/react"
 import { GraphQLClient } from "graphql-request";
 
 const createClient = (): GraphQLClient => {
@@ -20,8 +21,7 @@ export async function fetcher (query: string) {
     return data
   } catch (e) {
     if (e?.response?.data) {
-      console.error(e)
-      return(e.response.data)
+      return e.response.data
     }
 
     return e
