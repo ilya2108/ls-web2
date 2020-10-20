@@ -188,6 +188,15 @@ export default function UserPage(props: Props) {
               <strong>{email}</strong>
             </RightCell>
           </Row>
+          {!profile &&
+            <Button
+              appearance="primary"
+              spacing="compact"
+              href={`${process.env.BACKEND_ROOT_URI}/auth/impersonate?as=${username}`}
+            >
+              Impersonate {username}
+            </Button>
+          }
           {profile &&
             <Row>
               <LeftCell>Password</LeftCell>

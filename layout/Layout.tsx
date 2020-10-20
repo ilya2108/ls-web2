@@ -27,7 +27,6 @@ const Padding = styled.div`
   padding: 40px;
 `;
 
-
 export default function Layout({ children }: ILayoutProps) {
   const { data, error } = useSWR('/api/user', auth)
   if (!data && !error) {
