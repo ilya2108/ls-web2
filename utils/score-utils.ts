@@ -17,6 +17,21 @@ export const calculateScore = (assignment: any) => {
   }
 }
 
+type Assignments = {
+  results: any[]
+}
+
+export const calculateSemesterScore = (assignments: Assignments) => {
+  return assignments?.results?.reduce((sum, assignment) => {
+    if (!assignment) {
+      return 0
+    }
+
+    const { score } = assignment
+    return sum + (score || 0)
+  }, 0) || 0
+}
+
 export const decodeAttemptScript = (submissionDataRaw: any) => {
   try {
     const submissionData = JSON.parse(submissionDataRaw)

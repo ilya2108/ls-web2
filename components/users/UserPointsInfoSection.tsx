@@ -1,5 +1,5 @@
 import React from "react"
-import pluralize from "pluralize"
+import { calculateSemesterScore } from '../../utils/score-utils'
 
 type Props = {
   userData: any,
@@ -11,9 +11,7 @@ export default function UserPointsInfoSection(props: Props) {
     return null
   }
 
-  const scoreSum = assignments.results.reduce((sum, { score }) => {
-    return sum + (score || 0)
-  }, 0)
+  const scoreSum = calculateSemesterScore(assignments)
 
   return (
     <div>Semester Score: <b>{scoreSum}</b></div>

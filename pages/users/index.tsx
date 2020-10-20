@@ -1,6 +1,7 @@
 import Link from "next/link";
 import useSWR from "swr";
 import { gql } from "graphql-request";
+import { v4 } from 'uuid';
 
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
@@ -10,6 +11,7 @@ import Layout from "../../layout/Layout";
 import { fetcher } from "../../modules/api";
 import HugeSpinner from "../../components/HugeSpinner/HugeSpinner";
 import Error from "../../components/Error";
+import { calculateSemesterScore } from '../../utils/score-utils'
 
 export default function UsersPage() {
   const { data, error } = useSWR(
@@ -22,6 +24,11 @@ export default function UsersPage() {
             username
             firstName
             lastName
+            assignments {
+              results {
+                score
+              }
+            }
           }
         }
       }
@@ -33,7 +40,7 @@ export default function UsersPage() {
   const users = data?.UserList?.results || [];
 
   // Generating user table header
-  const tableHeaderNames = ["Name", "Username", "Email"];
+  const tableHeaderNames = ["Name", "Username", "Email", "Total score"];
 
   const mappedTableHead = tableHeaderNames.map((headerNames, i) => ({
     key: headerNames,
@@ -48,7 +55,7 @@ export default function UsersPage() {
 
   // Generating user table rows
   const tableRows = users.map(
-    ({ lastName, firstName, id, username, email }, i) => ({
+    ({ lastName, firstName, id, username, email, assignments }, i) => ({
       cells: [
         {
           // Name
@@ -74,6 +81,10 @@ export default function UsersPage() {
           // Email
           key: email,
           content: email,
+        },
+        {
+          key: v4(),
+          content: calculateSemesterScore(assignments)
         },
       ],
       key: username,
