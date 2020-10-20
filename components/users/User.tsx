@@ -188,74 +188,76 @@ export default function UserPage(props: Props) {
               <strong>{email}</strong>
             </RightCell>
           </Row>
-          <Row>
-            <LeftCell>Password</LeftCell>
-            <RightCell>
-              {editPasswordState ? (
-                <Form onSubmit={handleSubmit}>
-                  {({ formProps, submitting }) => (
-                    <form {...formProps}>
-                      <Field
-                        name="password"
-                        defaultValue=""
-                        label="New Password"
-                        isRequired
-                      >
-                        {({ fieldProps }) => (
-                          <TextField type="password" {...fieldProps} />
-                        )}
-                      </Field>
-                      <Field
-                        name="repeatPassword"
-                        defaultValue=""
-                        label="Repeat Password"
-                        isRequired
-                      >
-                        {({ fieldProps, error }) => (
-                          <Fragment>
+          {profile &&
+            <Row>
+              <LeftCell>Password</LeftCell>
+              <RightCell>
+                {editPasswordState ? (
+                  <Form onSubmit={handleSubmit}>
+                    {({ formProps, submitting }) => (
+                      <form {...formProps}>
+                        <Field
+                          name="password"
+                          defaultValue=""
+                          label="New Password"
+                          isRequired
+                        >
+                          {({ fieldProps }) => (
                             <TextField type="password" {...fieldProps} />
-                            {error && <ErrorMessage>{error}</ErrorMessage>}
-                          </Fragment>
-                        )}
-                      </Field>
-                      <FormFooter>
-                        <ButtonGroup>
-                          <Button
-                            appearance="subtle"
-                            onClick={() =>
-                              setEditPasswordState(!editPasswordState)
-                            }
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            appearance="primary"
-                            type="submit"
-                            isLoading={submitting}
-                          >
-                            Save
-                          </Button>
-                        </ButtonGroup>
-                      </FormFooter>
-                    </form>
-                  )}
-                </Form>
-              ) : (
-                <strong>●●●●●●</strong>
-              )}
-            </RightCell>
-            <ButtonCell>
-              {editPasswordState ? null : (
-                <Button
-                  appearance="primary"
-                  spacing="compact"
-                  onClick={() => setEditPasswordState(!editPasswordState)}
-                >
-                  Change password
-                </Button>
-              )}
-            </ButtonCell>
-          </Row>
+                          )}
+                        </Field>
+                        <Field
+                          name="repeatPassword"
+                          defaultValue=""
+                          label="Repeat Password"
+                          isRequired
+                        >
+                          {({ fieldProps, error }) => (
+                            <Fragment>
+                              <TextField type="password" {...fieldProps} />
+                              {error && <ErrorMessage>{error}</ErrorMessage>}
+                            </Fragment>
+                          )}
+                        </Field>
+                        <FormFooter>
+                          <ButtonGroup>
+                            <Button
+                              appearance="subtle"
+                              onClick={() =>
+                                setEditPasswordState(!editPasswordState)
+                              }
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              appearance="primary"
+                              type="submit"
+                              isLoading={submitting}
+                            >
+                              Save
+                            </Button>
+                          </ButtonGroup>
+                        </FormFooter>
+                      </form>
+                    )}
+                  </Form>
+                ) : (
+                  <strong>●●●●●●</strong>
+                )}
+              </RightCell>
+              <ButtonCell>
+                {editPasswordState ? null : (
+                  <Button
+                    appearance="primary"
+                    spacing="compact"
+                    onClick={() => setEditPasswordState(!editPasswordState)}
+                  >
+                    Change password
+                  </Button>
+                )}
+              </ButtonCell>
+            </Row>
+          }
         </Table>
       )}
     </Layout>
