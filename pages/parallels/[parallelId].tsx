@@ -168,22 +168,26 @@ export default function Parallel() {
       </div>
       <br />
       <br />
-      <select ref={selectRef} defaultValue={availableExams[0].id}>
-        {availableExams.map((exam) => {
-          return <option value={exam.id}>{exam.name}</option>
-        })}
-      </select>
-      <button className="butt" onClick={handleExamStudentAdd}>Add selected students to this Exam</button>
-      <button className="butt" onClick={handleExamComplete}>Complete enrollment</button>
-      <button className="butt" onClick={handleExamStart}>Start exam</button>
-      <br />
-      <br />
-      <br />
-      <br />
-      <div className="status">
-        {status}
-      </div>
-      <br />
+      {availableExams && availableExams.length &&
+        <>
+          <select ref={selectRef} defaultValue={availableExams[0].id}>
+            {availableExams.map((exam) => {
+              return <option value={exam.id}>{exam.name}</option>
+            })}
+          </select>
+          <button className="butt" onClick={handleExamStudentAdd}>Add selected students to this Exam</button>
+          <button className="butt" onClick={handleExamComplete}>Complete enrollment</button>
+          <button className="butt" onClick={handleExamStart}>Start exam</button>
+          <br />
+          <br />
+          <br />
+          <br />
+          <div className="status">
+            {status}
+          </div>
+          <br />
+        </>
+      }
     </Layout>
   )
 }
