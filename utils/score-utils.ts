@@ -24,7 +24,7 @@ type Assignments = {
 export const calculateSemesterScore = (assignments: Assignments) => {
   return assignments?.results?.reduce((sum, assignment) => {
     if (!assignment) {
-      return 0
+      return sum
     }
 
     const { score } = assignment
