@@ -40,7 +40,6 @@ export default function Exam() {
           id
           timeLeft
           startTime
-          timeLeft
           assigmnentsOfStudentInExam {
             results {
               id
