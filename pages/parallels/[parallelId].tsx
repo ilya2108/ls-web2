@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { gql } from "graphql-request";
@@ -7,7 +7,7 @@ import { fetcher } from "../../modules/api";
 
 import Layout from "../../layout/Layout";
 import Loading from "../../components/Loading";
-import Error, { hasQueryError } from "../../components/Error";
+import Error from "../../components/Error";
 
 
 
@@ -50,6 +50,8 @@ export default function Parallel() {
         ExamList {
           results {
             id
+            enrollmentCompleted
+            hasStarted
             template {
               name
             }
@@ -60,13 +62,32 @@ export default function Parallel() {
     fetcher
   )
 
-  if ((!data && !error) || (!dataExams && !errorExams)) {
+  const { data: dataUsers, error: errorUsers } = useSWR(
+    gql`
+      query users {
+        UserList {
+          results {
+            id
+            username
+          }
+        }
+      }
+    `,
+    fetcher
+  )
+
+  if ((!data && !error) || (!dataExams && !errorExams) || (!data && !dataUsers)) {
     return <Loading />
   }
 
-  if (error || errorExams) {
-    return <Layout><Error errors={{ error, errorExams }} /></Layout>
+  if (error || errorExams || errorUsers) {
+    return <Layout><Error errors={{ error, errorExams, errorUsers }} /></Layout>
   }
+
+  const userMap = dataUsers?.UserList?.results?.reduce((map, { username, id }) => {
+    map[username] = id
+    return map
+  }, {})
 
   const parallelName = data?.ParallelDetail?.name
   const students = data?.ParallelDetail?.students?.results
@@ -75,19 +96,33 @@ export default function Parallel() {
     return map
   }, {})
   const usernames = students.map(({ username }) => username)
-  const availableExams = dataExams?.ExamList?.results.map(({ id, template }) => {
+  const availableExams = dataExams?.ExamList?.results.map(({ id, template, enrollmentCompleted, hasStarted }) => {
     return {
       id,
+      hasStarted,
+      enrollmentCompleted,
       name: template.name
     }
   })
 
 
-  const handleExamStudentAdd = () => {
-    const chosenExamId = selectRef.current.value
+  const handleExamStudentAdd = async () => {
+    const chosenExamId = selectRef.current.value || availableExams[0].id
+    const chosenExamDetail = availableExams.find((exam) => {
+      return `${exam.id}` === chosenExamId
+    })
+    if (chosenExamDetail?.hasStarted) {
+      setStatus('Cannot add studens, exam has started.')
+      return
+    }
+    if (chosenExamDetail?.enrollmentCompleted) {
+      setStatus('Cannot add studens, exam is locked, you can start it.')
+      return
+    }
+
     const students = textareaRef.current.value.split(" ")
     const effectiveIds = students.map((username) => {
-      return studentIdsMap[username]
+      return studentIdsMap[username] || userMap[username]
     }).filter((x) => x)
     const jobs = effectiveIds.map((id) => {
       return fetcher(gql`mutation addStudentToExam{
@@ -104,19 +139,31 @@ export default function Parallel() {
 
     Promise.all(jobs)
       .then(() => {
-        setStatus('All students were added')
+        setStatus('All students were added, you can Complete enrollment.')
       })
       .catch((e) => {
         setStatus('There were some errors')
         console.error(e)
       })
     
-    setStatus('Students added, wait a while and complete the enrollment')
+    setStatus('Adding students, please wait')
   }
   
   const handleExamComplete = () => {
-    const chosenExamId = selectRef.current.value
-    return fetcher(gql`mutation completeEnrollment{
+    const chosenExamId = selectRef.current.value || availableExams[0].id
+    const chosenExamDetail = availableExams.find((exam) => {
+      return `${exam.id}` === chosenExamId
+    })
+    if (chosenExamDetail?.hasStarted ) {
+      setStatus('Cannot add studens, exam has already started.')
+      return
+    }
+    if (chosenExamDetail?.enrollmentCompleted) {
+      setStatus('Cannot add studens, exam is already locked (enrollment is completed).')
+      return
+    }
+
+    fetcher(gql`mutation completeEnrollment{
       ExamCompleteEnrollment(data: {id: ${chosenExamId}}){
         job{
           id
@@ -124,15 +171,29 @@ export default function Parallel() {
       }
     }`)
     .then(() => {
-      setStatus('Exam enrollment is done, wait a while till Learnshell generates it and you can start!')
+      setStatus('Exam enrollment is done, wait a while till Learnshell generates it and you can Start!')
     })
     .catch(() => {
       setStatus('We had problems with completing enrollment')
     })
+
+    setStatus('Locking exam, please wait')
   }
   
   const handleExamStart = () => {
-    const chosenExamId = selectRef.current.value
+    const chosenExamId = selectRef.current.value || availableExams[0].id
+    const chosenExamDetail = availableExams.find((exam) => {
+      return `${exam.id}` === chosenExamId
+    })
+    if (chosenExamDetail?.hasStarted) {
+      setStatus('Exam already started.')
+      return
+    }
+    if (chosenExamDetail && !chosenExamDetail.enrollmentCompleted) {
+      setStatus('You have to Complete enrollment first!')
+      return
+    }
+
     return fetcher(gql`mutation startExam{
       ExamStart(data: {id: ${chosenExamId}}){
         object{
@@ -169,7 +230,11 @@ export default function Parallel() {
       <br />
       <br />
       {availableExams && availableExams.length &&
-        <>
+        <div className='exam-create-container'>
+          <h1>Start an exam</h1>
+          <br />
+          <br />
+          <br />
           <select ref={selectRef} defaultValue={availableExams[0].id}>
             {availableExams.map((exam) => {
               return <option value={exam.id}>{exam.name}</option>
@@ -186,7 +251,7 @@ export default function Parallel() {
             {status}
           </div>
           <br />
-        </>
+        </div>
       }
     </Layout>
   )

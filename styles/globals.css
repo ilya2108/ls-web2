@@ -108,5 +108,11 @@ a {
 }
 
 .butt {
-  margin: 0 10px;
+  margin: 10px 10px;
+}
+
+.exam-create-container {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
 }

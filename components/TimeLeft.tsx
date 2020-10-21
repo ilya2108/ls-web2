@@ -12,6 +12,7 @@ export default function TimeLeft(props: Props) {
     const timeout = setTimeout(() => {
       if (timeLeft <= 0) {
         window.location.reload()
+        clearTimeout(timeout)
         return
       }
 

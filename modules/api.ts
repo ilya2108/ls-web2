@@ -24,7 +24,7 @@ export async function fetcher (query: string) {
       return e.response.data
     }
 
-    return e
+    throw e
   }
 }
 
