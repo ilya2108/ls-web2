@@ -6,7 +6,7 @@ type Props = {
 }
 
 export default function TimeLeft(props: Props) {
-  const [timeLeft, setTimeLeft] = useState(props.timeLeft)
+  const [timeLeft, setTimeLeft] = useState(Math.round(props.timeLeft))
 
   useEffect(() => {
     const timeout = setTimeout(() => {
