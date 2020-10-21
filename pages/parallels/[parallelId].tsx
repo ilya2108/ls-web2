@@ -190,7 +190,7 @@ export default function Parallel() {
       return
     }
     if (chosenExamDetail && !chosenExamDetail.enrollmentCompleted) {
-      setStatus('You have to Complete enrollment first!')
+      setStatus('You have to Complete enrollment first. Try reloading page if you did it already.')
       return
     }
 
@@ -206,7 +206,7 @@ export default function Parallel() {
       setStatus('Exam started!')
     })
     .catch(() => {
-      setStatus('We had prolems starting exam')
+      setStatus('We had problems starting exam')
     })
   }
 
