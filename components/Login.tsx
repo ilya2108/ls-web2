@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { v4 } from "uuid";
+import Button from "@atlaskit/button";
+
 
 const CLIENT_ID = process.env.CLIENT_ID
 const REDIRECT_URI = process.env.REDIRECT_URI
@@ -17,7 +19,12 @@ export default function Login() {
       <img className="logo-img" src="/logo.svg" />
       <div className="title">Learnshell</div>
       <br />
-      <b><a href={`https://auth.fit.cvut.cz/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`}>Please, login with your CTU account</a></b>
+      <Button
+        appearance="primary"
+        href={`https://auth.fit.cvut.cz/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`}
+      >
+        Login with CTU account
+      </Button>
       {/* <a href='#'>We're doing maintenance. We'll be back online soon. Sorry about that.</a> */}
       <br />
       <br />
