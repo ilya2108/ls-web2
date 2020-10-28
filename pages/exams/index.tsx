@@ -34,7 +34,7 @@ export default function Exam() {
   const [queryId, updateQueryId] = useState(queryIdGenerator())
 
   const { data, error } = useSWR(
-    gql`{
+    gql`query ${queryId} {
       UserMyself {
         id
         activeExam {
@@ -71,6 +71,9 @@ export default function Exam() {
 
   const exam = data?.UserMyself?.activeExam
   const assignment = exam?.assigmnentsOfStudentInExam?.results[0]
+  if (!data) {
+    return <Layout>loading</Layout>
+  }
   if (!exam || !assignment || !exam.timeLeft) {
     return <Layout>no exams</Layout>
   }
@@ -134,13 +137,17 @@ export default function Exam() {
 
   const corrections = assignment?.submissions?.results.map(({ correction, submissionData }) => ({ ...correction, submissionData })).reverse()
 
-  // const queryInProgress = corrections.some((correction) => !correction)
+  const queryInProgress = corrections.some((correction) => !correction)
 
-  // if (queryInProgress) {
-  //   setTimeout(() => {
-  //     updateQueryId(queryIdGenerator())
-  //   }, POLL_RELOAD_TIMEOUT)
-  // }
+  if (queryInProgress) {
+    setTimeout(() => {
+      updateQueryId(queryIdGenerator())
+    }, POLL_RELOAD_TIMEOUT)
+  }
+
+  const handleReload = () => {
+    updateQueryId(queryIdGenerator())
+  }
 
   return (
     <Layout>
@@ -177,6 +184,7 @@ export default function Exam() {
         <div>
           <br />
           <h2>Attempts</h2>
+          <span onClick={handleReload} style={{cursor: "pointer"}}>(reload)</span>
           <div className='attempts-container'>
             <ul>
               {loadingCorrection && <li>{formatSubmissionCreateTime(loadingCorrection.createTime)} — submitted</li>}
