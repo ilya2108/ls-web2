@@ -41,6 +41,7 @@ export default function Exam() {
           id
           timeLeft
           startTime
+          endTime
           assigmnentsOfStudentInExam {
             results {
               id
@@ -143,7 +144,7 @@ export default function Exam() {
 
   return (
     <Layout>
-      <h1>Exam: {assignment.name} <TimeLeft timeLeft={exam.timeLeft} /></h1>
+      <h1>Exam: {assignment.name} <TimeLeft timeLeft={exam.timeLeft} endTime={exam.endTime} /></h1>
       <br />
       <div
         className="assignment"

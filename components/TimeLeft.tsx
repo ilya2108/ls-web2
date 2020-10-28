@@ -3,10 +3,13 @@ import { unix } from 'dayjs'
 
 type Props = {
   timeLeft: number
+  endTime: string
 }
 
 export default function TimeLeft(props: Props) {
-  const [timeLeft, setTimeLeft] = useState(Math.round(props.timeLeft))
+  const [timeLeft, setTimeLeft] = useState(
+    Math.round((new Date(props.endTime).getTime() - Date.now()) / 1000)
+  )
 
   useEffect(() => {
     const timeout = setTimeout(() => {
