@@ -7,7 +7,7 @@ import debounce from 'lodash/debounce'
 import { encode } from "js-base64"
 import { v4 } from 'uuid'
 
-import { calculateScore } from '../../utils/score-utils'
+import { calculateScore, decodeAttemptScript } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
 import Loading from "../../components/Loading";
@@ -29,6 +29,7 @@ export default function Exam() {
   const [solution, updateSolution] = useState('')
   const [loadingCorrection, updateLoadingCorrection] = useState(null)
   const [toggledHint, updateToggledHint] = useState(null)
+  const [toggledAttempt, updateToggledAttempt] = useState(null)
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const [queryId, updateQueryId] = useState(queryIdGenerator())
 
@@ -47,8 +48,12 @@ export default function Exam() {
               descriptionHtml
               submissions {
                 results {
+                  submissionData
                   correction {
+                    id
                     score
+                    createdAt
+                    data
                   }
                 }
               }
@@ -117,7 +122,17 @@ export default function Exam() {
     updateToggledHint(hintId)
   }
 
-  const corrections = assignment?.submissions?.results.map(({ correction }) => correction).reverse()
+  const handleAttemptToggle = (hintId: number) => {
+    if (toggledAttempt === hintId) {
+      updateToggledAttempt(null)
+      return
+    }
+
+    updateToggledAttempt(hintId)
+  }
+
+  const corrections = assignment?.submissions?.results.map(({ correction, submissionData }) => ({ ...correction, submissionData })).reverse()
+
   // const queryInProgress = corrections.some((correction) => !correction)
 
   // if (queryInProgress) {
@@ -177,11 +192,20 @@ export default function Exam() {
                   )
                 }
 
+                console.log(correction)
+
                 return (
                   <li key={`correction-${v4()}`}>
                     {formatSubmissionCreateTime(correction?.createdAt)} — <b>{correction?.score} {pluralize('point', correction?.score)}</b>
-                    { } — <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>(show hints)</i>
+                    { } — <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>{toggledHint === i ? '(hide hints)' : '(show hints)'}</i>
+                    { } | <i className='hints-toggle-handle' onClick={() => handleAttemptToggle(i)}>{toggledAttempt === i ? '(hide attempt)' : '(show attempt)'}</i>
                     {toggledHint === i && <CorrectionHints data={correction?.data} />}
+                    <br />
+                    {toggledAttempt === i &&
+                      <pre>
+                        {decodeAttemptScript(correction?.submissionData)}
+                      </pre>
+                    }
                   </li>
                 )
               })}

@@ -199,7 +199,7 @@ export default function Assignment() {
                 }
 
                 return (
-                  <li>
+                  <li key={`correction-${v4()}`}>
                     {formatSubmissionCreateTime(correction?.createdAt)} — <b>{correction?.score} {pluralize('point', correction?.score)}</b>
                     { } — <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>{toggledHint === i ? '(hide hints)' : '(show hints)'}</i>
                     { } | <i className='hints-toggle-handle' onClick={() => handleAttemptToggle(i)}>{toggledAttempt === i ? '(hide attempt)' : '(show attempt)'}</i>
