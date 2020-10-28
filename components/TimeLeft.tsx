@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { unix } from 'dayjs'
+import dayjs, { unix } from 'dayjs'
 
 type Props = {
   timeLeft: number
@@ -8,7 +8,8 @@ type Props = {
 
 export default function TimeLeft(props: Props) {
   const [timeLeft, setTimeLeft] = useState(
-    Math.round((new Date(props.endTime).getTime() - Date.now()) / 1000)
+    // Math.round((new Date('2020-10-28 17:27:30+00:00').getTime() - Date.now()) / 1000)
+    Math.round((dayjs(props.endTime).unix() - (Date.now()/1000)))
   )
 
   useEffect(() => {
