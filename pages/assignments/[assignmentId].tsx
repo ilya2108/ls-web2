@@ -192,7 +192,7 @@ export default function Assignment() {
 
                 if (!correction || correction?.score == null) {
                   return (
-                    <li>
+                    <li key={`correction-${v4()}`}>
                       {formatSubmissionCreateTime(correction?.createdAt)} — in progress
                     </li>
                   )

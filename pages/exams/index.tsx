@@ -193,8 +193,6 @@ export default function Exam() {
                   )
                 }
 
-                console.log(correction)
-
                 return (
                   <li key={`correction-${v4()}`}>
                     {formatSubmissionCreateTime(correction?.createdAt)} — <b>{correction?.score} {pluralize('point', correction?.score)}</b>
