@@ -6,6 +6,7 @@ import pluralize from 'pluralize'
 import debounce from 'lodash/debounce'
 import { encode } from "js-base64"
 import { v4 } from 'uuid'
+import Button from "@atlaskit/button";
 
 import { calculateScore, decodeAttemptScript } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
@@ -69,13 +70,27 @@ export default function Exam() {
     fetcher
   )
 
+  const handleReload = () => {
+    updateQueryId(queryIdGenerator())
+  }
+
   const exam = data?.UserMyself?.activeExam
   const assignment = exam?.assigmnentsOfStudentInExam?.results[0]
   if (!data) {
     return <Layout>loading</Layout>
   }
   if (!exam || !assignment || !exam.timeLeft) {
-    return <Layout>no exams</Layout>
+    return (
+      <Layout>
+        no exams
+        <br />
+        <Button
+          onClick={handleReload}
+          appearance="primary"
+        >reload</Button>
+
+      </Layout>
+    )
   }
 
   const resultScore = calculateScore(assignment)
@@ -139,15 +154,11 @@ export default function Exam() {
 
   const queryInProgress = corrections.some((correction) => !correction)
 
-  if (queryInProgress) {
-    setTimeout(() => {
-      updateQueryId(queryIdGenerator())
-    }, POLL_RELOAD_TIMEOUT)
-  }
-
-  const handleReload = () => {
-    updateQueryId(queryIdGenerator())
-  }
+  // if (queryInProgress) {
+  //   setTimeout(() => {
+  //     updateQueryId(queryIdGenerator())
+  //   }, POLL_RELOAD_TIMEOUT)
+  // }
 
   return (
     <Layout>
@@ -180,14 +191,18 @@ export default function Exam() {
         Remaining attempts: unlimited
         <br />
       </div>
+      <br />
+      <Button
+        onClick={handleReload}
+        appearance="primary"
+      >reload</Button>
       {(corrections.length || loadingCorrection) &&
         <div>
           <br />
           <h2>Attempts</h2>
-          <span onClick={handleReload} style={{cursor: "pointer"}}>(reload)</span>
           <div className='attempts-container'>
             <ul>
-              {loadingCorrection && <li>{formatSubmissionCreateTime(loadingCorrection.createTime)} — submitted</li>}
+              {loadingCorrection && <li>{formatSubmissionCreateTime(loadingCorrection.createTime)} — submitted (correcting)</li>}
               {corrections.map((correction, i) => {
                 if (i > MAX_CORRECTIONS_SHOWN && extraAttemptsHidden) {
                   return null

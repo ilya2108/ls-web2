@@ -7,9 +7,10 @@ type Props = {
 }
 
 export default function TimeLeft(props: Props) {
+  const endTime = props.endTime.replace(/\+00\:00/, '')
   const [timeLeft, setTimeLeft] = useState(
     // Math.round((new Date('2020-10-28 17:27:30+00:00').getTime() - Date.now()) / 1000)
-    Math.round((dayjs(props.endTime).unix() - (Date.now()/1000)))
+    Math.round((dayjs(endTime).unix()+120*60 - (Date.now()/1000)))
   )
 
   useEffect(() => {
