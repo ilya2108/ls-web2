@@ -210,7 +210,7 @@ export default function Exam() {
       <br />
       <h2>Results</h2>
       <div>
-        Score: {resultScore}
+        Current score: {resultScore}
         <br />
         Remaining attempts: unlimited
         <br />

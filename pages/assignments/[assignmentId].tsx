@@ -195,7 +195,7 @@ export default function Assignment() {
       <br />
       <h2>Results</h2>
       <div>
-        Score: {resultScore}
+        Current score: {resultScore}
         <br />
         {Boolean(maxPoints) &&
           <>
