@@ -14,7 +14,21 @@ export default function CorrectionHints(props: Props) {
     return (
       <ol>
         {testcases.map((testcase) => {
-          return <li key={`correction-${v4()}`}>Test {testcase.name} — {testcase.verdict}</li>
+          return (
+            <li key={`correction-${v4()}`}>
+              <div>
+              Test {testcase.name} — {testcase.verdict}
+              </div>
+              {testcase.erorrs &&
+                <>
+                  <br />
+                  <pre>
+                    {testcase.erorrs}
+                  </pre>
+                </>
+              }
+            </li>
+          )
         })}
       </ol>
     )
