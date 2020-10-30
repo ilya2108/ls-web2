@@ -17,7 +17,7 @@ export default function CorrectionHints(props: Props) {
           return (
             <li key={`correction-${v4()}`}>
               <div>
-              Test {testcase.name} — {testcase.verdict}
+              Test: {testcase.name} — {testcase.verdict.replace(/ANSWER/, 'SOLUTION')}
               </div>
               {testcase.erorrs &&
                 <>
