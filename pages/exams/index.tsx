@@ -150,7 +150,27 @@ export default function Exam() {
     updateToggledAttempt(hintId)
   }
 
-  const corrections = assignment?.submissions?.results.map(({ correction, submissionData }) => ({ ...correction, submissionData })).reverse()
+  const corrections = assignment?.submissions?.results
+    .map(({ correction, submissionData }) => ({ ...correction, submissionData }))
+
+  const sortedCorrections  = corrections.sort((c1, c2) => {
+    console.log({ c1, c2 })
+    if (!c1.createdAt) {
+      return -1
+    }
+
+    if (c1.createdAt > c2.createdAt) {
+      return -1
+    }
+
+    if (c1.createdAt === c2.createdAt) {
+      return 0
+    }
+
+    if (c1.createdAt < c2.createdAt) {
+      return 1
+    }
+  })
 
   const queryInProgress = corrections.some((correction) => !correction)
 
@@ -196,14 +216,14 @@ export default function Exam() {
         onClick={handleReload}
         appearance="primary"
       >reload</Button>
-      {(corrections.length || loadingCorrection) &&
+      {(sortedCorrections.length || loadingCorrection) &&
         <div>
           <br />
           <h2>Attempts</h2>
           <div className='attempts-container'>
             <ul>
               {loadingCorrection && <li>{formatSubmissionCreateTime(loadingCorrection.createTime)} — submitted (correcting)</li>}
-              {corrections.map((correction, i) => {
+              {sortedCorrections.map((correction, i) => {
                 if (i > MAX_CORRECTIONS_SHOWN && extraAttemptsHidden) {
                   return null
                 }
@@ -211,7 +231,7 @@ export default function Exam() {
                 if (!correction || correction?.score == null) {
                   return (
                     <li key={`correction-${v4()}`}>
-                      {formatSubmissionCreateTime(correction?.createdAt)} — in progress
+                      in progress
                     </li>
                   )
                 }
