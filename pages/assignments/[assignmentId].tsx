@@ -14,7 +14,7 @@ import Loading from "../../components/Loading";
 import { formatSubmissionCreateTime } from '../../utils/date-utils'
 import mySubmissions from '../../queries/mySubmissions.gql';
 import CorrectionHints from "./CorrectionHints";
-
+import Button from "@atlaskit/button";
 
 const MAX_CORRECTIONS_SHOWN = 5
 const POLL_CORRECTION_TIMEOUT = 5000
@@ -60,6 +60,10 @@ export default function Assignment() {
     }`,
     fetcher
   )
+
+  const handleReload = () => {
+    updateQueryId(queryIdGenerator())
+  }
 
   const assignment = data?.UserMyself?.assignments?.results?.find((a) => {
     return `${a.id}` === assignmentId
@@ -178,6 +182,11 @@ export default function Assignment() {
         Remaining attempts: unlimited
         <br />
       </div>
+      <br />
+      <Button
+        onClick={handleReload}
+        appearance="primary"
+      >reload</Button>
       {(corrections.length || loadingCorrection) &&
         <div>
           <br />
