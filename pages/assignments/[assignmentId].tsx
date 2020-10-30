@@ -16,7 +16,7 @@ import mySubmissions from '../../queries/mySubmissions.gql';
 import CorrectionHints from "./CorrectionHints";
 import Button from "@atlaskit/button";
 
-const MAX_CORRECTIONS_SHOWN = 5
+const MAX_CORRECTIONS_SHOWN = 30
 const POLL_CORRECTION_TIMEOUT = 5000
 const POLL_RELOAD_TIMEOUT = 20000
 

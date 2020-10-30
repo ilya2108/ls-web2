@@ -18,7 +18,7 @@ import CorrectionHints from "../assignments/CorrectionHints";
 import TimeLeft from "../../components/TimeLeft";
 
 
-const MAX_CORRECTIONS_SHOWN = 5
+const MAX_CORRECTIONS_SHOWN = 30
 const POLL_CORRECTION_TIMEOUT = 5000
 const POLL_RELOAD_TIMEOUT = 20000
 
