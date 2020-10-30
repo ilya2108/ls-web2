@@ -62,6 +62,8 @@ export default function Assignment() {
   )
 
   const handleReload = () => {
+    updateToggledAttempt(null)
+    updateToggledHint(null)
     updateQueryId(queryIdGenerator())
   }
 
@@ -96,6 +98,8 @@ export default function Assignment() {
       updateLoadingCorrection(submissionJob)
 
       setTimeout(() => {
+        updateToggledAttempt(null)
+        updateToggledHint(null)
         updateQueryId(queryIdGenerator())
         updateLoadingCorrection(null)
       }, POLL_CORRECTION_TIMEOUT)

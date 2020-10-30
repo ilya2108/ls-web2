@@ -71,6 +71,8 @@ export default function Exam() {
   )
 
   const handleReload = () => {
+    updateToggledAttempt(null)
+    updateToggledHint(null)
     updateQueryId(queryIdGenerator())
   }
 
@@ -116,6 +118,8 @@ export default function Exam() {
       updateLoadingCorrection(submissionJob)
 
       setTimeout(() => {
+        updateToggledAttempt(null)
+        updateToggledHint(null)
         updateQueryId(queryIdGenerator())
         updateLoadingCorrection(null)
       }, POLL_CORRECTION_TIMEOUT)
