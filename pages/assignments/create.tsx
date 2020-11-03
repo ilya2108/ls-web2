@@ -15,7 +15,7 @@ type Props = {
 
 export default function CreateAssignment({ assignment }: Props = {}) {
   const dispatch = useDispatch();
-  const [description, updateDescription] = useState(assignment.description || '')
+  const [description, updateDescription] = useState(assignment?.description || '')
   const [solution, updateSolution] = useState(assignment.solution || '')
   const [name, updateName] = useState(assignment.name || '')
   const [previewActive, togglePreview] = useState(false)
