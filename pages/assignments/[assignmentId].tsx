@@ -26,25 +26,47 @@ export default function Assignment() {
   const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const [queryId, updateQueryId] = useState(queryIdGenerator())
 
+  // const { data, error } = useSWR(
+  //   gql`query ${queryId} {
+  //     UserMyself {
+  //       assignments {
+  //         totalCount
+  //         results {
+  //           id
+  //           name
+  //           descriptionHtml
+  //           submissions {
+  //             results {
+  //               submissionData
+  //               correction {
+  //                 id
+  //                 score
+  //                 createdAt
+  //                 data
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }`,
+  //   fetcher
+  // )
+
   const { data, error } = useSWR(
     gql`query ${queryId} {
-      UserMyself {
-        assignments {
-          totalCount
+      GeneratedAssignmentDetail(id: ${assignmentId}) {
+        id
+        name
+        descriptionHtml
+        submissions {
           results {
-            id
-            name
-            descriptionHtml
-            submissions {
-              results {
-                submissionData
-                correction {
-                  id
-                  score
-                  createdAt
-                  data
-                }
-              }
+            submissionData
+            correction {
+              id
+              score
+              createdAt
+              data
             }
           }
         }
@@ -59,9 +81,10 @@ export default function Assignment() {
     updateQueryId(queryIdGenerator())
   }
 
-  const assignment = data?.UserMyself?.assignments?.results?.find((a) => {
-    return `${a.id}` === assignmentId
-  })
+  const assignment = data?.GeneratedAssignmentDetail
+  // const assignment = data?.UserMyself?.assignments?.results?.find((a) => {
+  //   return `${a.id}` === assignmentId
+  // })
 
   if (!assignment) {
     return <Loading />

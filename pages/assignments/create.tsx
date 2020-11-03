@@ -144,6 +144,36 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
     }, []))
   }
 
+  const handleTest = () => {
+    console.log("Initiating assignment test", solution, testCases)
+
+    fetcher(gql`mutation testass {
+      AssignmentTest(data: { id: ${assignment.id} }) {
+        job {
+          id
+        }
+      }
+    }
+    `)
+    .then((response) => {
+      const jobId = response.AssignmentTest?.job?.id
+      if (!jobId) {
+        dispatch(assignmentCreatedFlag('error', `Failed to prepare assignment test`))
+        return
+      }
+
+      console.log("Assignment test prepared ", {jobId})
+      dispatch(assignmentCreatedFlag('success', `Assignment test prepared, redirecting`))
+
+      window.location.pathname = `/assignments/test/${jobId}`
+    })
+    .catch((error) => {
+      dispatch(assignmentCreatedFlag('error', `Failed to prepare assignment test`))
+      console.error(error)
+    })
+
+  }
+
   const handleOwnershipChange = () => {
     fetcher(gql`mutation aco {
       AssignmentChangeOwner(data: {id: ${assignment.id}, ownerId: ${userId}}) {
@@ -343,7 +373,16 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
         <i> (NOTE: (1) BI-PS1, (2) BIE-PS1, (3) BIK-PS1)</i> <br />
         <br />
       </div>
-      <br />      
+      <br />
+
+      <Button
+        appearance="primary"
+        spacing="compact"
+        onClick={handleTest}
+      >
+        Test this
+      </Button>
+
       <button onClick={handleSubmit}>{assignment ? 'Edit assignment' : 'Submit assignment draft'}</button>
     </Layout>
   )
