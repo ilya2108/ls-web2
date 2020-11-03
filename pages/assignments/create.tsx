@@ -3,11 +3,10 @@ import React, { ChangeEvent, useState } from 'react'
 import { useDispatch } from "react-redux";
 import { encode } from "js-base64"
 import Button from "@atlaskit/button";
-
 import Layout from '../../layout/Layout'
 import { fetcher } from '../../modules/api'
 import { assignmentCreatedFlag } from "../../modules/core/redux/flag/flag.actions";
-
+import AssignmentPreview from '../../components/AssignmentPreview';
 
 type Props = {
   assignment?: any
@@ -19,7 +18,7 @@ export default function CreateAssignment({ assignment }: Props = {}) {
   const [description, updateDescription] = useState(assignment.description || '')
   const [solution, updateSolution] = useState(assignment.solution || '')
   const [name, updateName] = useState(assignment.name || '')
-
+  const [previewActive, togglePreview] = useState(false)
   const [testCases, updateTestCases] = useState(assignment.testcases || [])
 
 
@@ -190,6 +189,16 @@ export default function CreateAssignment({ assignment }: Props = {}) {
     })
   }
 
+  if (previewActive) {
+    return (
+      <AssignmentPreview
+        description={description}
+        testcases={testCases}
+        onPreviewClose={() => togglePreview(false)}
+      />
+    )
+  }
+
   return (
     <Layout>
       <h1>{assignment ? 'Edit' : 'Create'} an assignment</h1>
@@ -200,6 +209,7 @@ export default function CreateAssignment({ assignment }: Props = {}) {
         <textarea
           className="textarea"
           rows={10}
+          name="txt"
           spellCheck="false"
           placeholder="Markdown assignment text"
           defaultValue={description}
@@ -221,14 +231,23 @@ export default function CreateAssignment({ assignment }: Props = {}) {
       </div>
 
       {assignment &&
-        <Button
-          appearance="primary"
-          spacing="compact"
-          href={`${process.env.BACKEND_ROOT_URI}/admin/assignment/assignment/${assignment.id}/change/`}
-          target="_blank"
-        >
-          Admin link
-        </Button>
+        <>
+          <Button
+            appearance="primary"
+            spacing="compact"
+            href={`${process.env.BACKEND_ROOT_URI}/admin/assignment/assignment/${assignment.id}/change/`}
+            target="_blank"
+          >
+            Admin link
+          </Button>
+          &nbsp;&nbsp;&nbsp;
+          <Button
+            appearance="subtle"
+            onClick={() => togglePreview(!previewActive)}
+          >
+            Preview
+          </Button>
+        </>
       }
 
       <h2>Test cases</h2>
