@@ -296,7 +296,6 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
         <>
           <Button
             appearance="primary"
-            spacing="compact"
             href={`${process.env.BACKEND_ROOT_URI}/admin/assignment/assignment/${assignment.id}/change/`}
             target="_blank"
           >
@@ -376,14 +375,18 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
       <br />
 
       <Button
-        appearance="primary"
-        spacing="compact"
+        appearance="warning"
         onClick={handleTest}
       >
         Test this
       </Button>
-
-      <button onClick={handleSubmit}>{assignment ? 'Edit assignment' : 'Submit assignment draft'}</button>
+      &nbsp;&nbsp;&nbsp;
+      <Button
+        appearance="primary"
+        onClick={handleSubmit}
+      >
+          {assignment ? 'Save assignment' : 'Submit assignment draft'}
+      </Button>
     </Layout>
   )
 }
