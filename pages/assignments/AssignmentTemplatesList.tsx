@@ -19,13 +19,13 @@ export default function AssignmentTemplateList() {
 
   return (
     <>
-      <h2>Unpublished Assignments</h2>
+      <h2>Available Assignments</h2>
       <div className='exams-container'>
         {
           assignments.map((task) => {
             return (
               <div key={v4()}>
-                <TasksPageTaskItem task={task} admin/>
+                <TasksPageTaskItem task={task} admin />
                 <br />
               </div>
             )

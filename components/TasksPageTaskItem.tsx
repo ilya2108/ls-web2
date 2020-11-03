@@ -51,11 +51,12 @@ export default function TasksPageTaskItem(props: Props) {
 
   return (
     <div>
-      <a className='exam' href={admin ? '/assignments/' : `/assignments/${task.id}`}>
+      <a className='exam' href={admin ? `/assignments/edit/${task.id}/` : `/assignments/${task.id}`}>
         {task.name} {}
         {(task.exam?.id ? `(exam)` : '(homework)')} {(task.published && admin) ? '[PUBLISHED]' : ''}
       </a>
-      {admin && <span> — <i className="hints-toggle-handle" onClick={handlePublish}>publish</i></span>}
+      {/* {admin && <span> — <i className="hints-toggle-handle" onClick={handlePublish}>publish</i></span>} */}
+      {admin && <span> — <a className="hints-toggle-handle" href={`/assignments/edit/${task.id}/`}>edit</a></span>}
     </div>
   )
 }

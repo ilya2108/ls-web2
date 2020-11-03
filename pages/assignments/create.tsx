@@ -9,17 +9,17 @@ import { assignmentCreatedFlag } from "../../modules/core/redux/flag/flag.action
 
 
 type Props = {
-
+  assignment?: any
 }
 
 
-export default function CreateAssignment(props: Props) {
+export default function CreateAssignment({ assignment }: Props = {}) {
   const dispatch = useDispatch();
-  const [description, updateDescription] = useState('')
-  const [solution, updateSolution] = useState('')
-  const [name, updateName] = useState('')
+  const [description, updateDescription] = useState(assignment.description || '')
+  const [solution, updateSolution] = useState(assignment.solution || '')
+  const [name, updateName] = useState(assignment.name || '')
 
-  const [testCases, updateTestCases] = useState([])
+  const [testCases, updateTestCases] = useState(assignment.testcases || [])
 
 
   const handleSolutionChange = (e) => {
@@ -186,7 +186,7 @@ export default function CreateAssignment(props: Props) {
 
   return (
     <Layout>
-      <h1>Create an assignment</h1>
+      <h1>{assignment ? 'Edit' : 'Create'} an assignment</h1>
       <br />
       <input className="assignment-name-input" placeholder="Assignment name" name="name" onChange={handleNameChange} defaultValue={name} />
 
@@ -267,7 +267,7 @@ export default function CreateAssignment(props: Props) {
         <br />
       </div>
       <br />      
-      <button onClick={handleSubmit}>Submit assignment draft</button>
+      <button onClick={handleSubmit}>{assignment ? 'Edit assignment' : 'Submit assignment draft'}</button>
     </Layout>
   )
 }
