@@ -42,6 +42,7 @@
     "js-base64": "^3.5.2",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.20",
+    "markdown-it": "^12.0.2",
     "next": "^9.5.5",
     "pluralize": "^8.0.0",
     "react": "16.13.1",
