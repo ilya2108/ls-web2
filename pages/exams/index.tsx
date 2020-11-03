@@ -1,37 +1,25 @@
 import useSWR from "swr";
-import { useRouter } from "next/router";
 import { gql } from "graphql-request";
-import React, { useEffect, useState } from "react";
-import pluralize from 'pluralize'
+import React, { useState } from "react";
 import debounce from 'lodash/debounce'
 import { encode } from "js-base64"
-import { v4 } from 'uuid'
 import Button from "@atlaskit/button";
 
-import { calculateScore, decodeAttemptScript } from '../../utils/score-utils'
+import { calculateScore } from '../../utils/score-utils'
 import { fetcher } from "../../modules/api";
 import Layout from "../../layout/Layout";
-import Loading from "../../components/Loading";
-import { formatSubmissionCreateTime } from '../../utils/date-utils'
-import mySubmissions from '../../queries/mySubmissions.gql';
-import CorrectionHints from "../assignments/CorrectionHints";
 import TimeLeft from "../../components/TimeLeft";
+import SubmissionAttempts from "../../components/SubmissionAttempts";
+import { queryIdGenerator } from "../../utils/graphql-utils";
 
 
-const MAX_CORRECTIONS_SHOWN = 30
 const POLL_CORRECTION_TIMEOUT = 5000
-const POLL_RELOAD_TIMEOUT = 20000
-
-const queryIdGenerator = () => {
-  return v4().substr(0, 3).replace(/\d/g, 'x')
-}
 
 export default function Exam() {
   const [solution, updateSolution] = useState('')
   const [loadingCorrection, updateLoadingCorrection] = useState(null)
   const [toggledHint, updateToggledHint] = useState(null)
   const [toggledAttempt, updateToggledAttempt] = useState(null)
-  const [extraAttemptsHidden, updateExtraAttemptsHidden] = useState(true)
   const [queryId, updateQueryId] = useState(queryIdGenerator())
 
   const { data, error } = useSWR(
@@ -132,10 +120,6 @@ export default function Exam() {
     updateSolutionDebounced(event.target.value)
   }
 
-  const handleExtraAttemptsShow = () => {
-    updateExtraAttemptsHidden(false)
-  }
-
   const handleHintsToggle = (hintId: number) => {
     if (toggledHint === hintId) {
       updateToggledHint(null)
@@ -221,44 +205,14 @@ export default function Exam() {
         appearance="primary"
       >reload</Button>
       {(sortedCorrections.length || loadingCorrection) &&
-        <div>
-          <br />
-          <h2>Attempts</h2>
-          <div className='attempts-container'>
-            <ul>
-              {loadingCorrection && <li>{formatSubmissionCreateTime(loadingCorrection.createTime)} — submitted (correcting)</li>}
-              {sortedCorrections.map((correction, i) => {
-                if (i > MAX_CORRECTIONS_SHOWN && extraAttemptsHidden) {
-                  return null
-                }
-
-                if (!correction || correction?.score == null) {
-                  return (
-                    <li key={`correction-${v4()}`}>
-                      in progress
-                    </li>
-                  )
-                }
-
-                return (
-                  <li key={`correction-${v4()}`}>
-                    {formatSubmissionCreateTime(correction?.createdAt)} — <b>{correction?.score} {pluralize('point', correction?.score)}</b>
-                    { } — <i className='hints-toggle-handle' onClick={() => handleHintsToggle(i)}>{toggledHint === i ? '(hide hints)' : '(show hints)'}</i>
-                    { } | <i className='hints-toggle-handle' onClick={() => handleAttemptToggle(i)}>{toggledAttempt === i ? '(hide attempt)' : '(show attempt)'}</i>
-                    {toggledHint === i && <CorrectionHints data={correction?.data} />}
-                    <br />
-                    {toggledAttempt === i &&
-                      <pre>
-                        {decodeAttemptScript(correction?.submissionData)}
-                      </pre>
-                    }
-                  </li>
-                )
-              })}
-              {extraAttemptsHidden && corrections.length > MAX_CORRECTIONS_SHOWN && <a href='#' onClick={handleExtraAttemptsShow}>show more</a>}
-            </ul>
-          </div>
-        </div>
+        <SubmissionAttempts
+          toggledHint={toggledHint}
+          toggledAttempt={toggledAttempt}
+          corrections={sortedCorrections}
+          loadingCorrection={loadingCorrection}
+          onHintToggle={handleHintsToggle}
+          onAttemptToggle={handleAttemptToggle}
+        />
       }
     </Layout>
   )
