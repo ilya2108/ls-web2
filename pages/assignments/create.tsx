@@ -268,10 +268,10 @@ export default function CreateAssignment({ assignment }: Props = {}) {
               <div className="textarea-wrapper">
                 <textarea
                   className="textarea"
-                  rows={4}
+                  rows={15}
                   spellCheck="false"
                   placeholder="Lidl"
-                  defaultValue=""
+                  defaultValue={testcase.lidl}
                   onChange={(e) => handleTestcaseLidlChange(i, e)}
                 />
               </div>
