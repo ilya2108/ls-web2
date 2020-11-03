@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { gql } from "graphql-request";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { decode } from "js-base64"
 
 

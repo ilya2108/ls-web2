@@ -12,6 +12,7 @@ import Loading from "../../components/Loading";
 import Button from "@atlaskit/button";
 import SubmissionAttempts from "../../components/SubmissionAttempts";
 import { queryIdGenerator, sortCorrections } from "../../utils/graphql-utils";
+import AssignmentDescription from "../../components/AssignmentDescription";
 
 const POLL_CORRECTION_TIMEOUT = 5000
 
@@ -144,12 +145,7 @@ export default function Assignment() {
     <Layout>
       <h1>Assignment: {assignment.name}</h1>
       <br />
-      <div
-        className="assignment"
-        dangerouslySetInnerHTML={{
-          __html: assignment.descriptionHtml
-        }}
-      />
+      <AssignmentDescription assignmentHtml={assignment.descriptionHtml} />
       <h2>Solution</h2>
       <div className="textarea-wrapper">
         <textarea

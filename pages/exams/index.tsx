@@ -11,6 +11,7 @@ import Layout from "../../layout/Layout";
 import TimeLeft from "../../components/TimeLeft";
 import SubmissionAttempts from "../../components/SubmissionAttempts";
 import { queryIdGenerator, sortCorrections } from "../../utils/graphql-utils";
+import AssignmentDescription from "../../components/AssignmentDescription";
 
 const POLL_CORRECTION_TIMEOUT = 5000
 
@@ -152,12 +153,7 @@ export default function Exam() {
     <Layout>
       <h1>Exam: {assignment.name} <TimeLeft timeLeft={exam.timeLeft} endTime={exam.endTime} /></h1>
       <br />
-      <div
-        className="assignment"
-        dangerouslySetInnerHTML={{
-          __html: assignment.descriptionHtml
-        }}
-      />
+      <AssignmentDescription assignmentHtml={assignment.descriptionHtml} />
       <h2>Solution</h2>
       <div className="textarea-wrapper">
         <textarea

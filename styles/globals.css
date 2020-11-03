@@ -24,6 +24,10 @@ a {
   display: flex;
 }
 
+.assignment {
+  width: 700px;
+}
+
 .assignment code {
   background-color: #dbe6ff
 }
