@@ -11,7 +11,7 @@ import Layout from "../../layout/Layout";
 import Loading from "../../components/Loading";
 import Button from "@atlaskit/button";
 import SubmissionAttempts from "../../components/SubmissionAttempts";
-import { queryIdGenerator } from "../../utils/graphql-utils";
+import { queryIdGenerator, sortCorrections } from "../../utils/graphql-utils";
 
 const POLL_CORRECTION_TIMEOUT = 5000
 
@@ -125,24 +125,7 @@ export default function Assignment() {
   const corrections = assignment?.submissions?.results
     .map(({ correction, submissionData }) => ({ ...correction, submissionData }))
 
-  const sortedCorrections  = corrections.sort((c1, c2) => {
-    console.log({ c1, c2 })
-    if (!c1.createdAt) {
-      return -1
-    }
-
-    if (c1.createdAt > c2.createdAt) {
-      return -1
-    }
-
-    if (c1.createdAt === c2.createdAt) {
-      return 0
-    }
-
-    if (c1.createdAt < c2.createdAt) {
-      return 1
-    }
-  })
+  const sortedCorrections  = corrections.sort(sortCorrections)
 
   const maxPoints = null
   // const maxPoints = corrections.reduce((sum, correction) => {
