@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Markdown from 'markdown-it';
 import Button from "@atlaskit/button";
 
@@ -10,6 +10,7 @@ const md = new Markdown()
 
 type Props = {
   description: string
+  name: string
   testcases: any[]
   onPreviewClose: Function
 }
@@ -19,7 +20,7 @@ export default function AssignmentPreview(props: Props) {
 
   return (
     <Layout>
-      <h1>Assignment preview: {name}</h1>
+      <h1>Assignment preview: {props.name}</h1>
       <br />
       <AssignmentDescription assignmentHtml={descriptionHtml} />
       <div className="textarea-wrapper">

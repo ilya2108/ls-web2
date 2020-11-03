@@ -194,6 +194,7 @@ export default function CreateAssignment({ assignment }: Props = {}) {
       <AssignmentPreview
         description={description}
         testcases={testCases}
+        name={name}
         onPreviewClose={() => togglePreview(false)}
       />
     )
