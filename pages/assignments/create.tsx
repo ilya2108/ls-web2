@@ -2,6 +2,7 @@ import { gql } from 'graphql-request'
 import React, { ChangeEvent, useState } from 'react'
 import { useDispatch } from "react-redux";
 import { encode } from "js-base64"
+import Button from "@atlaskit/button";
 
 import Layout from '../../layout/Layout'
 import { fetcher } from '../../modules/api'
@@ -154,8 +155,13 @@ export default function CreateAssignment({ assignment }: Props = {}) {
     })
     const testCasesJson = JSON.stringify(encodedTestCases).replace(/"/g, '\\"')
 
+    const mutation = assignment ? 'AssignmentUpdate': 'AssignmentCreate'
+    const idpart = assignment ? `id: ${assignment.id}` : ''
+    const action = assignment ? 'create' : 'edit'
+
     fetcher(gql`mutation submit {
-      AssignmentCreate(data: {
+      ${mutation}(data: {
+        id: ${assignment.id || null}
         courseId: 1,
         templateId: 1,
         name: "${name}",
@@ -169,17 +175,17 @@ export default function CreateAssignment({ assignment }: Props = {}) {
       }
     }`)
     .then((response) => {
-      const assignmentTemplateId = response.AssignmentCreate?.object?.id
+      const assignmentTemplateId = response[mutation]?.object?.id
       if (!assignmentTemplateId) {
-        dispatch(assignmentCreatedFlag('error', 'Failed to create assignment'))
+        dispatch(assignmentCreatedFlag('error', `Failed to ${action} assignment`))
         return
       }
 
       console.log("Created assignment", {assignmentTemplateId})
-      dispatch(assignmentCreatedFlag('success', 'Created assignment'))
+      dispatch(assignmentCreatedFlag('success', `Assignment ${action} successful`))
     })
     .catch((error) => {
-      dispatch(assignmentCreatedFlag('error', 'Failed to create assignment'))
+      dispatch(assignmentCreatedFlag('error', `Failed to ${action} assignment`))
       console.error(error)
     })
   }
@@ -213,6 +219,17 @@ export default function CreateAssignment({ assignment }: Props = {}) {
           onChange={handleSolutionChange}
         />
       </div>
+
+      {assignment &&
+        <Button
+          appearance="primary"
+          spacing="compact"
+          href={`${process.env.BACKEND_ROOT_URI}/admin/assignment/assignment/${assignment.id}/change/`}
+          target="_blank"
+        >
+          Admin link
+        </Button>
+      }
 
       <h2>Test cases</h2>
       <br />
