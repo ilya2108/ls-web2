@@ -145,6 +145,8 @@ export default function CreateAssignment({ assignment }: Props = {}) {
   const handleSubmit = () => {
     console.log("Creating assignment", solution, testCases)
 
+    const newlineEscapedDescription = description.replace(/\n/g, "\\n")
+
     const encodedSolution = encode(solution)
     const encodedTestCases = testCases.map((testCase) => {
       return {
@@ -164,7 +166,7 @@ export default function CreateAssignment({ assignment }: Props = {}) {
         courseId: 1,
         templateId: 1,
         name: "${name}",
-        description: "${description}"
+        description: "${newlineEscapedDescription}"
         generatorData: "{\\"lidl\\": \\"bmFtZT0ne3sgZW52LnVzZXJuYW1lIH19Jwo=\\"}"
         correctionData: "{\\"solution\\": \\"${encodedSolution}\\", \\"testcases\\": ${testCasesJson}}"
       }) {
