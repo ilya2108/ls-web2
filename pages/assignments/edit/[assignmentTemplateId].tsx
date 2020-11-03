@@ -27,13 +27,27 @@ export default function EditAssignment() {
         generatorData
         correctionData
         id
+        owner {
+          username
+        }
+      }
+    }`,
+    fetcher
+  )
+
+  const { data: userData, error: userError } = useSWR(
+    gql`query {
+      UserMyself {
+        id
+        username
       }
     }`,
     fetcher
   )
 
   const assignment = data?.AssignmentDetail || {}
-  if (!assignment || error) {
+  const user = userData?.UserMyself
+  if (!assignment || error || !user || userError) {
     return (
       <Layout>not found</Layout>
     )
@@ -56,6 +70,8 @@ export default function EditAssignment() {
     return (
       <CreateAssignment
         assignment={preprocessedAssignment}
+        owner={assignment.owner.username}
+        userId={user.id}
       />
     )
   } catch {

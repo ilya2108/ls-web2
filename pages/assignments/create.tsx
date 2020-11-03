@@ -10,10 +10,12 @@ import AssignmentPreview from '../../components/AssignmentPreview';
 
 type Props = {
   assignment?: any
+  owner?: string
+  userId?: string
 }
 
 
-export default function CreateAssignment({ assignment }: Props = {}) {
+export default function CreateAssignment({ assignment, owner, userId }: Props = {}) {
   const dispatch = useDispatch();
   const [description, updateDescription] = useState(assignment?.description || '')
   const [solution, updateSolution] = useState(assignment?.solution || '')
@@ -142,6 +144,33 @@ export default function CreateAssignment({ assignment }: Props = {}) {
     }, []))
   }
 
+  const handleOwnershipChange = () => {
+    fetcher(gql`mutation aco {
+      AssignmentChangeOwner(data: {id: ${assignment.id}, ownerId: ${userId}}) {
+        object {
+          id
+        }
+      }
+    }`)
+    .then((response) => {
+      const assignmentTemplateId = response.AssignmentChangeOwner?.object?.id
+      if (!assignmentTemplateId) {
+        dispatch(assignmentCreatedFlag('error', `Failed to change owner`))
+        return
+      }
+
+      console.log("Updated assignment ownershipne", {assignmentTemplateId})
+      dispatch(assignmentCreatedFlag('success', `Assignment ownership changed`))
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
+    })
+    .catch((error) => {
+      dispatch(assignmentCreatedFlag('error', `Failed to change owner`))
+      console.error(error)
+    })
+  }
+
   const handleSubmit = () => {
     console.log("Creating assignment", solution, testCases)
 
@@ -249,6 +278,15 @@ export default function CreateAssignment({ assignment }: Props = {}) {
             onClick={() => togglePreview(!previewActive)}
           >
             Preview
+          </Button>
+          &nbsp;&nbsp;&nbsp;
+          Current owner is <b>{owner}</b>
+          &nbsp;&nbsp;&nbsp;
+          <Button
+            appearance="warning"
+            onClick={handleOwnershipChange}
+          >
+            Change owner to me
           </Button>
         </>
       }
