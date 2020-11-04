@@ -102,8 +102,6 @@ export default function EditExam() {
     return assignments
   }, [])
 
-  console.warn(examAssignments)
-
 
   const checkJobStatus = (jobId: string) => {
     return new Promise((resolve, reject) => {
