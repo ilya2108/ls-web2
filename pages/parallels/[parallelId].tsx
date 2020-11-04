@@ -238,9 +238,22 @@ export default function Parallel() {
           <br />
           <br />
           <select ref={selectRef} defaultValue={availableExams[0].id}>
-            {availableExams.map((exam) => {
-              return <option value={exam.id}>{exam.name}</option>
-            })}
+            {availableExams
+              .sort((e1, e2) => {
+                if (e1.name > e2.name) {
+                  return -1
+                }
+
+                if (e2.name > e1.name) {
+                  return 1
+                }
+
+                return 0
+              })
+              .map((exam) => {
+                return <option value={exam.id}>{exam.name}</option>
+              })
+            }
           </select>
           <br />
           <Button appearance="primary" onClick={handleExamStudentAdd}>Add selected students to this Exam</Button>
