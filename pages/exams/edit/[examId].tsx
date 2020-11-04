@@ -118,7 +118,7 @@ export default function EditExam() {
             return
           }
 
-          if (response.JobDetail?.result === null) {
+          if (response.JobDetail?.finished && response.JobDetail?.result === null) {
             dispatch(assignmentCreatedFlag('error', `Failed to generate assignment for students`))
             reject()
 
@@ -152,6 +152,7 @@ export default function EditExam() {
     .then((response) => {
       const jobId = response.ExamCompleteEnrollment?.job?.id
       if (!jobId) {
+        console.error('1', response)
         dispatch(assignmentCreatedFlag('error', `Exam enrollment failed (no job id)`))
         return
       }
@@ -168,7 +169,7 @@ export default function EditExam() {
       dispatch(assignmentCreatedFlag('success', `All assignments were generated, you can start now`))
     })
     .catch((e) => {
-      console.error(e)
+      console.error('2', e)
       dispatch(assignmentCreatedFlag('error', `Exam enrollment failed`))
     })
   }
@@ -197,7 +198,7 @@ export default function EditExam() {
     })
     .catch((e) => {
       console.error(e)
-      dispatch(assignmentCreatedFlag('error', `Exam enrollment failed`))
+      dispatch(assignmentCreatedFlag('error', `Exam start failed`))
     })
   }
 
