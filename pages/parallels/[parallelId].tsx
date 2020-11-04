@@ -242,6 +242,7 @@ export default function Parallel() {
               return <option value={exam.id}>{exam.name}</option>
             })}
           </select>
+          <br />
           <Button appearance="primary" onClick={handleExamStudentAdd}>Add selected students to this Exam</Button>
           {/* <button className="butt" onClick={handleExamComplete}>Complete enrollment</button>
           <button className="butt" onClick={handleExamStart}>Start exam</button> */}
@@ -252,6 +253,10 @@ export default function Parallel() {
           <div className="status">
             {status}
           </div>
+          <br />
+          <br />
+          <br />
+          <a href="/exams/admin/list">See all exams</a>
           <br />
         </div>
       }
