@@ -111,6 +111,19 @@ export default function UsersPage() {
             key: email,
             content: email,
           },
+          {
+            key: score,
+            content: score
+          },
+          {
+            content: (
+              <Button
+                iconAfter={<ShortcutIcon label="" />}
+                appearance="subtle-link"
+                href={`/users/${encodeURIComponent(id)}`}
+              />
+            ),
+          },  
         ],
         key: username,
       }
