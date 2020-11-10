@@ -245,6 +245,9 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
 
       console.log("Created assignment", {assignmentTemplateId})
       dispatch(assignmentCreatedFlag('success', `Assignment ${action} successful`))
+      setTimeout(() => {
+        window.location.href = `/assignments/edit/${assignmentTemplateId}`
+      }, 1000)
     })
     .catch((error) => {
       dispatch(assignmentCreatedFlag('error', `Failed to ${action} assignment`))
@@ -384,12 +387,14 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
           {assignment ? 'Save assignment' : 'Submit assignment draft'}
       </Button>
       &nbsp;&nbsp;&nbsp;
-      <Button
-        appearance="warning"
-        onClick={handleTest}
-      >
-        Test this
-      </Button>
+      {assignment &&
+        <Button
+          appearance="warning"
+          onClick={handleTest}
+        >
+          Test this
+        </Button>
+      }
     </Layout>
   )
 }

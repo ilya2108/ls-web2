@@ -16,6 +16,10 @@ import AssignmentDescription from "../../components/AssignmentDescription";
 
 const POLL_CORRECTION_TIMEOUT = 5000
 
+const isTeacher = (generatedFor: string) => {
+  return ['zitnyjak', 'muzikar', 'cermada1', 'cernyvi2', 'soch', 'jancijak', 'barinkl', 'kaspaji3', 'trdlicka', 'horskyma7'].includes(generatedFor)
+}
+
 export default function Assignment() {
   const router = useRouter();
   const { assignmentId } = router.query;
@@ -58,6 +62,12 @@ export default function Assignment() {
       GeneratedAssignmentDetail(id: ${assignmentId}) {
         id
         name
+        student {
+          username
+        }
+        assignment {
+          id
+        }
         descriptionHtml
         submissions {
           results {
@@ -201,6 +211,13 @@ export default function Assignment() {
         onClick={handleReload}
         appearance="primary"
       >reload</Button>
+      &nbsp;&nbsp;&nbsp;
+      {isTeacher(assignment.student.username) && assignment.assignment.id&&
+        <Button
+          href={`/assignments/edit/${assignment.assignment.id}`}
+          appearance="warning"
+        >go back</Button>
+      }
       {(corrections.length || loadingCorrection) &&
         <SubmissionAttempts
           toggledHint={toggledHint}
