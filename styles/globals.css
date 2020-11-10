@@ -120,3 +120,12 @@ a {
   display: flex;
   flex-direction: column;
 }
+
+.flag-container {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.flag-container--error {
+  color: red;
+}
