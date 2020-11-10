@@ -217,11 +217,11 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
 
     const mutation = assignment ? 'AssignmentUpdate': 'AssignmentCreate'
     const idpart = assignment ? `id: ${assignment.id}` : ''
-    const action = assignment ? 'create' : 'edit'
+    const action = assignment ? 'edit' : 'create'
 
     fetcher(gql`mutation submit {
       ${mutation}(data: {
-        id: ${assignment.id || null}
+        ${idpart},
         courseId: 1,
         templateId: 1,
         name: "${name}",
