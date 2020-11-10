@@ -36,14 +36,24 @@ export default function AssignmentTestJob() {
     )
   }
 
+  const sortedExams = exams.sort((e1, e2) => {
+    if (e1.template.name > e2.template.name) {
+      return -1
+    }
+    if (e1.template.name < e2.template.name) {
+      return 1
+    }
+
+    return 0
+  })
+
   return (
     <Layout>
       <ul>
-        {exams.map((exam) => {
+        {sortedExams.map((exam) => {
           return (
             <li>
-              ({exam.id})&nbsp;
-              <a href={`/exams/edit/${exam.id}`}>{exam.template.name}</a>
+              <a href={`/exams/edit/${exam.id}`}>{exam.template.name}</a>&nbsp;(id={exam.id})
             </li>
           )
         })}
