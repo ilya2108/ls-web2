@@ -374,18 +374,19 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
       </div>
       <br />
 
-      <Button
-        appearance="warning"
-        onClick={handleTest}
-      >
-        Test this
-      </Button>
-      &nbsp;&nbsp;&nbsp;
+
       <Button
         appearance="primary"
         onClick={handleSubmit}
       >
           {assignment ? 'Save assignment' : 'Submit assignment draft'}
+      </Button>
+      &nbsp;&nbsp;&nbsp;
+      <Button
+        appearance="warning"
+        onClick={handleTest}
+      >
+        Test this
       </Button>
     </Layout>
   )
