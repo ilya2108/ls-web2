@@ -21,7 +21,7 @@ export default function TimeLeft(props: Props) {
         return
       }
 
-      setTimeLeft(timeLeft - 1)
+      setTimeLeft((tl) => tl - 1)
     }, 1000)
 
     return () => {
