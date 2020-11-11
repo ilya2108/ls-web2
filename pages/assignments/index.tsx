@@ -43,9 +43,8 @@ export default function TasksPage() {
         {
           tasks.map((task) => {
             return (
-              <div key={v4()}>
+              <div key={v4()} className="exams-task">
                 <TasksPageTaskItem task={task} />
-                <br />
               </div>
             )
           })
