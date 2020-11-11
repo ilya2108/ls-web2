@@ -13,21 +13,24 @@ export default function TimeLeft(props: Props) {
   )
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      // NOTE: The timeouts here are shifted compared to server time.
-      if (timeLeft <= 3600) {
-        window.location.reload()
-        clearTimeout(timeout)
-        return
-      }
+    const timeout = setInterval(() => {
+      setTimeLeft((tl) => {
+        const nextTl = tl - 1
+        // NOTE: The timeouts here are shifted compared to server time.
+        if (nextTl <= 3600) {
+          window.location.reload()
+          clearInterval(timeout)
+          return
+        }
 
-      setTimeLeft((tl) => tl - 1)
+        return nextTl
+      })
     }, 1000)
 
     return () => {
-      clearTimeout(timeout)
+      clearInterval(timeout)
     }
-  })
+  }, [endTime])
 
   return (
     <span>[{unix(timeLeft).format("mm:ss")}]</span>
