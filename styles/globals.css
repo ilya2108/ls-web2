@@ -44,6 +44,20 @@ a {
   display: inline-block;
 }
 
+.exams-header-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  margin: 25px 0;
+}
+
+.exams-header {
+  display: inline-block;
+  margin: auto 25px auto 0;
+  padding-top: 5px;
+}
+
 .exam-link, .exam-link:hover,
 .exam-edit, .exams-edit:hover {
   background-color: #fff;
