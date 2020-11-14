@@ -31,6 +31,7 @@ import {
   passwordChangeErrorFlag,
   passwordChangeSuccessFlag,
 } from "../../modules/core/redux/flag/flag.actions";
+import UserSubmissionsSection from "./UserSubmissionsSection";
 
 type Props = {
   userId: string;
@@ -119,6 +120,7 @@ export default function UserPage(props: Props) {
       {renderSpinner ? (
         <HugeSpinner />
       ) : error ? null : (
+        <>
         <Table>
           <Header>
             <HRow>
@@ -268,6 +270,8 @@ export default function UserPage(props: Props) {
             </Row>
           }
         </Table>
+        <UserSubmissionsSection userData={userData} />
+        </>
       )}
     </Layout>
   );

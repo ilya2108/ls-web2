@@ -56,8 +56,25 @@ export default function UserPage() {
           }
 
           assignments {
+            totalCount
             results {
+              assignment {
+                name
+              }
               score
+              submissions {
+                results {
+                  correction {
+                    id
+                    score
+                    submission {
+                      createdAt
+                      id
+                      submissionData
+                    }
+                  }
+                }
+              }
             }
           }
         }
