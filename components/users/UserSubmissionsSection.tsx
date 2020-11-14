@@ -27,7 +27,6 @@ export default function UserSubmissionsSection(props: Props) {
             <div>
               <b>{i}) {ass.assignment.name}, score ({ass.score})</b>
               {ass.submissions.results.map((sub, i) => {
-                console.warn(sub)
                 try {
                   const submissionData = JSON.parse(sub?.correction?.submission?.submissionData)
                   const decodedSubmission = decode(submissionData.script)                

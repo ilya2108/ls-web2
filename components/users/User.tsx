@@ -270,7 +270,7 @@ export default function UserPage(props: Props) {
             </Row>
           }
         </Table>
-        <UserSubmissionsSection userData={userData} />
+        {!profile && <UserSubmissionsSection userData={userData} />}
         </>
       )}
     </Layout>
