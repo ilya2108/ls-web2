@@ -51,6 +51,7 @@ export default function UserSubmissionsSection(props: Props) {
                   )
                 }
               })}
+              <br />
               <i>-----------------------------------------</i>
               <br />
               <br />
