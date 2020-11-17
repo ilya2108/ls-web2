@@ -25,7 +25,7 @@ export default function UserSubmissionsSection(props: Props) {
         assignments.results.map((ass, i) => {
           return (
             <div>
-              <b>{i}) {ass.assignment.name}, score ({ass.score})</b>
+              <b>{i}) <a href={`/assignments/edit/${ass.assignment.id}`}>{ass.assignment.name}</a>, score ({ass.score})</b>
               {ass.submissions.results.map((sub, i) => {
                 try {
                   const submissionData = JSON.parse(sub?.correction?.submission?.submissionData)

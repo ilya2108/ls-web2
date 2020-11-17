@@ -59,6 +59,7 @@ export default function UserPage() {
             totalCount
             results {
               assignment {
+                id
                 name
               }
               score
