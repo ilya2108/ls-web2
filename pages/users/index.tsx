@@ -34,7 +34,7 @@ export default function UsersPage() {
   const users = data?.UserList?.results || [];
 
   // Generating user table header
-  const tableHeaderNames = ["#", "Name", "Username", "Email", "Total score"];
+  const tableHeaderNames = ["#", "Name", "Username", "Email"];
 
   const mappedTableHead = tableHeaderNames.map((headerNames, i) => ({
     key: headerNames,
@@ -53,8 +53,8 @@ export default function UsersPage() {
       return {
         cells: [
           {
-            key: i,
-            content: i
+            key: `id-${id}-${i}`,
+            content: id
           },
           {
             // Name
