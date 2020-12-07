@@ -11,7 +11,6 @@ import Layout from "../../layout/Layout";
 import { fetcher } from "../../modules/api";
 import HugeSpinner from "../../components/HugeSpinner/HugeSpinner";
 import Error from "../../components/Error";
-import { calculateSemesterScore } from '../../utils/score-utils'
 
 export default function UsersPage() {
   const { data, error } = useSWR(
@@ -24,11 +23,6 @@ export default function UsersPage() {
             username
             firstName
             lastName
-            assignments {
-              results {
-                score
-              }
-            }
           }
         }
       }
@@ -55,8 +49,7 @@ export default function UsersPage() {
 
   // Generating user table rows
   const tableRows = users.map(
-    ({ lastName, firstName, id, username, email, assignments }, i) => {
-      const score = calculateSemesterScore(assignments)
+    ({ lastName, firstName, id, username, email }, i) => {
       return {
         cells: [
           {
@@ -87,10 +80,6 @@ export default function UsersPage() {
             // Email
             key: email,
             content: email,
-          },
-          {
-            key: score,
-            content: score
           },
         ],
         key: username,
