@@ -392,7 +392,7 @@ export default function CreateAssignment({ assignment, owner, userId }: Props = 
           appearance="warning"
           onClick={handleTest}
         >
-          Test this
+          Test it
         </Button>
       }
     </Layout>
