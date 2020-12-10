@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useSWR from "swr";
 import { gql } from "graphql-request";
 import { v4 } from 'uuid';
@@ -16,10 +16,20 @@ export default function AssignmentTemplateList() {
   );
 
   const assignments = data?.AssignmentList?.results || []
-  const [assignmentsFiltered, setAssignmentsFiltered] = useState(data?.AssignmentList?.results || [])
+  const [assignmentsFiltered, setAssignmentsFiltered] = useState(assignments || [])
+
+  //Fixes assignments not being displayed after refreshing page
+  useEffect(() => { 
+    setAssignmentsFiltered(assignments)
+  },[assignments])
+
+
   const handleSearch = (e) => {
+    filterAssignments(e.target.value)
+  }
+  const filterAssignments = (query: String) => {
     setAssignmentsFiltered(assignments.filter(assignment => {
-      return assignment.name.toUpperCase().indexOf(e.target.value.toUpperCase()) !== -1
+      return assignment.name.toUpperCase().indexOf(query.toUpperCase()) !== -1
     }))
   }
 
