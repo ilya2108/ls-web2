@@ -23,7 +23,6 @@ export default function AssignmentTemplateList() {
     setAssignmentsFiltered(assignments)
   },[assignments])
 
-
   const handleSearch = (e) => {
     filterAssignments(e.target.value)
   }
