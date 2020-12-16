@@ -28,6 +28,11 @@ a {
   width: 700px;
 }
 
+.assignment pre {
+  padding: 5px;
+  background-color: #dbe6ff
+}
+
 .assignment code {
   background-color: #dbe6ff
 }
