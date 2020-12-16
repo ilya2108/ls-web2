@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { gql } from "graphql-request";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import debounce from 'lodash/debounce'
 import { encode } from "js-base64"
 import Button from "@atlaskit/button";
@@ -12,15 +12,40 @@ import TimeLeft from "../../components/TimeLeft";
 import SubmissionAttempts from "../../components/SubmissionAttempts";
 import { queryIdGenerator, sortCorrections } from "../../utils/graphql-utils";
 import AssignmentDescription from "../../components/AssignmentDescription";
+import ExamAssignment from "../../components/exams/ExamAssignment";
+import Pagination from '@atlaskit/pagination';
 
 const POLL_CORRECTION_TIMEOUT = 5000
 
+const detectDefaultAssignmentId = () => {
+  if (!process.browser || !window || !window.location || !window.location.hash || window.location.hash.indexOf('_') === -1) {
+    return 0
+  }
+
+  const parts = window.location.hash.split('_')
+  try {
+    const possibleId = parseInt(parts[parts.length - 1])
+    if (Number.isNaN(possibleId)) {
+      return 0
+    }
+
+    return possibleId
+  } catch (e) {
+    return 0
+  }
+}
+
 export default function Exam() {
-  const [solution, updateSolution] = useState('')
-  const [loadingCorrection, updateLoadingCorrection] = useState(null)
-  const [toggledHint, updateToggledHint] = useState(null)
-  const [toggledAttempt, updateToggledAttempt] = useState(null)
+  const defaultAssId = detectDefaultAssignmentId()
+  const [assignmentId, updateAssignmentId] = useState(defaultAssId)
   const [queryId, updateQueryId] = useState(queryIdGenerator())
+
+  useEffect(() => {
+    const defaultId = detectDefaultAssignmentId()
+    if (defaultId !== assignmentId) {
+      updateAssignmentId(defaultId)
+    }
+  }, []);
 
   const { data, error } = useSWR(
     gql`query ${queryId} {
@@ -59,13 +84,15 @@ export default function Exam() {
   )
 
   const handleReload = () => {
-    updateToggledAttempt(null)
-    updateToggledHint(null)
+    // updateToggledAttempt(null)
+    // updateToggledHint(null)
     updateQueryId(queryIdGenerator())
   }
 
   const exam = data?.UserMyself?.activeExam
-  const assignment = exam?.assigmnentsOfStudentInExam?.results[0]
+  const multiAss = exam?.assigmnentsOfStudentInExam?.results?.length > 1
+  const assignment = exam?.assigmnentsOfStudentInExam?.results[assignmentId]
+  const assignments = exam?.assigmnentsOfStudentInExam?.results
   if (!data) {
     return <Layout>loading</Layout>
   }
@@ -78,69 +105,11 @@ export default function Exam() {
           onClick={handleReload}
           appearance="primary"
         >reload</Button>
-
       </Layout>
     )
   }
 
-  const resultScore = calculateScore(assignment)
-  const handleSubmit = () => {
-    if (!solution) {
-      return
-    }
 
-    const encodedSolution = encode(solution)
-    fetcher(gql`mutation submit {
-      SubmissionCreate(data: {
-        generatedAssignmentId: "${assignment.id}",
-        submissionData: "{ \\"script\\": \\"${encodedSolution}\\" }",
-      }) {
-        job {
-          id
-          createTime
-        }
-      }
-    }`)
-    .then((response) => {
-      const submissionJob = response.SubmissionCreate.job
-      updateLoadingCorrection(submissionJob)
-
-      setTimeout(() => {
-        updateToggledAttempt(null)
-        updateToggledHint(null)
-        updateQueryId(queryIdGenerator())
-        updateLoadingCorrection(null)
-      }, POLL_CORRECTION_TIMEOUT)
-    })
-    .catch((e) => console.error(e));
-  }
-
-  const updateSolutionDebounced = debounce(updateSolution, 500)
-  const handleSolutionChange = (event) => {
-    updateSolutionDebounced(event.target.value)
-  }
-
-  const handleHintsToggle = (hintId: number) => {
-    if (toggledHint === hintId) {
-      updateToggledHint(null)
-      return
-    }
-
-    updateToggledHint(hintId)
-  }
-
-  const handleAttemptToggle = (hintId: number) => {
-    if (toggledAttempt === hintId) {
-      updateToggledAttempt(null)
-      return
-    }
-
-    updateToggledAttempt(hintId)
-  }
-
-  const corrections = assignment?.submissions?.results
-    .map(({ correction, submissionData }) => ({ ...correction, submissionData }))
-  const sortedCorrections  = corrections.sort(sortCorrections)
 
   // const queryInProgress = corrections.some((correction) => !correction)
   // if (queryInProgress) {
@@ -151,45 +120,50 @@ export default function Exam() {
 
   return (
     <Layout>
-      <h1>Exam: {assignment.name} <TimeLeft timeLeft={exam.timeLeft} endTime={exam.endTime} /></h1>
-      <br />
-      <AssignmentDescription assignmentHtml={assignment.descriptionHtml} />
-      <h2>Solution</h2>
-      <div className="textarea-wrapper">
-        <textarea
-          className="textarea"
-          rows={10}
-          spellCheck="false"
-          defaultValue={solution}
-          onBlur={handleSolutionChange}
-          onChange={handleSolutionChange}
-        />
-        <button onClick={handleSubmit} disabled={!solution || loadingCorrection}>Submit</button>
-      </div>
-      <br />
-      <br />
-      <h2>Results</h2>
-      <div>
-        Current score: {resultScore}
-        <br />
-        Remaining attempts: unlimited
-        <br />
-      </div>
-      <br />
-      <Button
-        onClick={handleReload}
-        appearance="primary"
-      >reload</Button>
-      {(sortedCorrections.length || loadingCorrection) &&
-        <SubmissionAttempts
-          toggledHint={toggledHint}
-          toggledAttempt={toggledAttempt}
-          corrections={sortedCorrections}
-          loadingCorrection={loadingCorrection}
-          onHintToggle={handleHintsToggle}
-          onAttemptToggle={handleAttemptToggle}
+      {multiAss &&
+        <Pagination
+          selectedIndex={assignmentId}
+          onChange={(event, nextId) => {
+            updateAssignmentId(nextId)
+            window.location.hash = `assignment_${nextId}`
+          }}
+          pages={assignments.map((a, i) => i)}
         />
       }
+      <h1>Exam: {assignment.name} <TimeLeft timeLeft={exam.timeLeft} endTime={exam.endTime} /></h1>
+      {multiAss &&
+        <div>
+          <br />
+          <br />
+          <b>This exam has multiple assignments:</b>
+          <ol>
+          {assignments.map((ass, i) => {
+            const link = (
+              <a
+                key={`ass-${i}`}
+                href={`#assignment_${i}`}
+                onClick={() => updateAssignmentId(i)}
+              >
+                {ass.name}
+              </a>
+            )
+
+            if (i === assignmentId) {
+              return <li><b>{link}</b></li>
+            }
+
+            return <li>{link}</li>
+          })}
+          </ol>
+        </div>
+      }
+      <br />
+      <hr />
+      <br />
+      <ExamAssignment
+        assignment={assignment}
+        onReload={handleReload}
+      />
     </Layout>
   )
 }
