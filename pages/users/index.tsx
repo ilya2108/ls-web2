@@ -24,14 +24,13 @@ import Button from '@atlaskit/button';
 
 export default function UsersPage() {
   const [inputVal, setInputVal] = useState("");
-  // TODO: figure out a way to render a loading state
-  const [loading, setLoading] = useState(false);
+  
   const setInputValDebounced = debounce(setInputVal, 300)
+  
   const handleSearchEvent = (event) => {
     const { value } = event.target;
     setInputValDebounced(value)
   };
-
 
   const { data, error } = useSWR(
     gql`
@@ -50,7 +49,6 @@ export default function UsersPage() {
     fetcher
   );
 
-  // TODO: Loading.
   const users = data?.UserList?.results || [];
 
   const tableHeaderNames = ["#", "Name", "Username", "Email", "Score"];
@@ -72,7 +70,6 @@ export default function UsersPage() {
     });
     return filteredUsers;
   };
-
 
   const tableRows = filterUsers(users).map(
     ({ lastName, firstName, id, username, email, assignments }, i) => {
@@ -151,10 +148,6 @@ export default function UsersPage() {
       >
         User list
         </PageHeader>
-      {!error && !data ? (
-        <HugeSpinner />
-      ) : (
-        <Fragment>
           <SearchWrapper>
             <Textfield
               name="basic"
@@ -166,17 +159,14 @@ export default function UsersPage() {
           </SearchWrapper>
           <DynamicTable
             head={tableHeadRow}
-            rows={tableRows}
+            rows={data ? tableRows : null}
             loadingSpinnerSize="large"
-            isLoading={false}
+            isLoading={data ? false : true}
             isFixedSize
             defaultSortKey="Name"
             defaultSortOrder="ASC"
             rowsPerPage={numberOfRowsPerPage()}
           />
-        </Fragment>
-      )}
-
     </Layout>
   );
 }
