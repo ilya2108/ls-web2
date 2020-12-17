@@ -205,6 +205,8 @@ export default function Assignment() {
         }
         Remaining attempts: unlimited
         <br />
+        Final deadline: Dec 17, 10:10
+        <br />
       </div>
       <br />
       <Button
