@@ -54,7 +54,7 @@ export default function UsersPage() {
   const users = data?.UserList?.results || [];
 
   // Generating user table header
-  const tableHeaderNames = ["#", "Name", "Username", "Email"];
+  const tableHeaderNames = ["#", "Name", "Username", "Email", "Score"];
 
   const mappedTableHead = tableHeaderNames.map((headerNames, i) => ({
     key: headerNames,
