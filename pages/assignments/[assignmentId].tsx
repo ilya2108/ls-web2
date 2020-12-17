@@ -102,9 +102,7 @@ export default function Assignment() {
 
   const resultScore = calculateScore(assignment)
   const handleSubmit = () => {
-    if (!solution) {
-      return
-    }
+    return
 
     const encodedSolution = encode(solution)
     fetcher(gql`mutation submit {
@@ -189,7 +187,7 @@ export default function Assignment() {
           onBlur={handleSolutionChange}
           onChange={handleSolutionChange}
         />
-        <button onClick={handleSubmit} disabled={!solution || loadingCorrection}>Submit</button>
+        <button onClick={handleSubmit} disabled>Submit</button>
       </div>
       <br />
       <br />
