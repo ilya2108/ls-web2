@@ -26,7 +26,7 @@ export default function UsersPage() {
   const [inputVal, setInputVal] = useState("");
   // TODO: figure out a way to render a loading state
   const [loading, setLoading] = useState(false);
-  const setInputValDebounced = debounce(setInputVal, 250)
+  const setInputValDebounced = debounce(setInputVal, 300)
   const handleSearchEvent = (event) => {
     const { value } = event.target;
     setInputValDebounced(value)
