@@ -53,7 +53,6 @@ export default function UsersPage() {
   // TODO: Loading.
   const users = data?.UserList?.results || [];
 
-  // Generating user table header
   const tableHeaderNames = ["#", "Name", "Username", "Email", "Score"];
 
   const mappedTableHead = tableHeaderNames.map((headerNames, i) => ({
@@ -66,8 +65,6 @@ export default function UsersPage() {
   const tableHeadRow = {
     cells: mappedTableHead,
   };
-
-  // Generating user table rows
 
   const filterUsers = (users) => {
     const filteredUsers = users.filter((user) => {
@@ -130,6 +127,15 @@ export default function UsersPage() {
     }
   );
 
+  const numberOfRowsPerPage = () => {
+    if(typeof document !== 'undefined' || typeof window !== 'undefined') {
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      
+      return Math.ceil((vh - 312)/43);
+    }
+    return 24;
+  }
+
   if (error) {
     return <Error />
   }
@@ -166,6 +172,7 @@ export default function UsersPage() {
             isFixedSize
             defaultSortKey="Name"
             defaultSortOrder="ASC"
+            rowsPerPage={numberOfRowsPerPage()}
           />
         </Fragment>
       )}
