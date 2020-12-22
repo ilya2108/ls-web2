@@ -37,15 +37,78 @@ a {
   background-color: #dbe6ff
 }
 
-.user, .exam {
+.user {
   line-height: 16px;
   font-size: 1.2rem;
   padding: 5px 0;
   display: inline-block;
 }
 
+.exams-header-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  margin: 25px 0;
+}
+
+.exams-header {
+  display: inline-block;
+  margin: auto 25px auto 0;
+  padding-top: 5px;
+}
+
+.exam-link, .exam-link:hover,
+.exam-edit, .exams-edit:hover {
+  background-color: #fff;
+  color: #000 !important;
+  text-decoration: none !important;
+  transition: 0.3s all;
+}
+
 .exams-container {
+  display: flex;
+  flex-direction: column;
   margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.exams-task {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+
+  border-bottom: 1px solid #eee;
+
+  transition: 0.3s all;
+}
+
+.exam {
+  display: flex;
+  width: 100%;
+}
+
+.exam-link {
+  display: inline-block;
+  flex-grow: 1;
+  padding: 10px;
+}
+
+
+.exam-edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin: auto;
+  padding: 0 15px 0 15px;
+  border-left: 1px solid #eee; 
+}
+
+.exam-link:hover, .exam-edit:hover {
+  background-color: rgb(235,236,240);
 }
 
 #__next {

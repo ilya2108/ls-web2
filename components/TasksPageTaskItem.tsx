@@ -50,13 +50,13 @@ export default function TasksPageTaskItem(props: Props) {
   }
 
   return (
-    <div>
-      <a className='exam' href={admin ? `/assignments/edit/${task.id}/` : `/assignments/${task.id}`}>
+    <div className='exam'>
+      <a className='exam-link' href={admin ? `/assignments/edit/${task.id}/` : `/assignments/${task.id}`}>
         {task.name} {}
         {(task.exam?.id ? `(exam)` : '(homework)')} {(task.published && admin) ? '[PUBLISHED]' : ''}
       </a>
       {/* {admin && <span> — <i className="hints-toggle-handle" onClick={handlePublish}>publish</i></span>} */}
-      {admin && <span> — <a className="hints-toggle-handle" href={`/assignments/edit/${task.id}/`}>edit</a></span>}
+      {admin && <a className="exam-edit hints-toggle-handle" href={`/assignments/edit/${task.id}/`}>Edit</a>}
     </div>
   )
 }

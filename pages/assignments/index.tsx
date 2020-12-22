@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { gql } from "graphql-request";
 import { v4 } from 'uuid';
@@ -8,6 +8,7 @@ import TasksPageTaskItem from "../../components/TasksPageTaskItem";
 import { fetcher } from '../../modules/api';
 import AssignmentTemplatesList from "./AssignmentTemplatesList"
 
+import Textfield from '@atlaskit/textfield';
 
 export default function TasksPage() {
   const { data, error } = useSWR(
@@ -34,18 +35,35 @@ export default function TasksPage() {
 
   // TODO: Loading.
   const admin = data?.UserMyself?.isSuperuser
-  const tasks = data?.UserMyself?.assignments?.results || []
+  const assignments = data?.UserMyself?.assignments?.results || []
+  const [assignmentsFiltered, setAssignmentsFiltered] = useState(assignments || [])
+
+  //Fixes assignments not being displayed after refreshing page
+  useEffect(() => { 
+    setAssignmentsFiltered(assignments)
+  },[assignments])
+
+  const handleSearch = (e) => {
+    filterAssignments(e.target.value)
+  }
+  const filterAssignments = (query: String) => {
+    setAssignmentsFiltered(assignments.filter(assignment => {
+      return assignment.name.toUpperCase().indexOf(query.toUpperCase()) !== -1
+    }))
+  }
 
   return (
     <Layout>
-      <h1>Assignments</h1>
+      <div className="exams-header-div">
+        <h1 className="exams-header">Assignments</h1>
+        <Textfield width="300" onChange={ handleSearch } placeholder="Search assignment..." />
+      </div>
       <div className='exams-container'>
         {
-          tasks.map((task) => {
+          assignmentsFiltered.map((task) => {
             return (
-              <div key={v4()}>
+              <div key={v4()} className="exams-task">
                 <TasksPageTaskItem task={task} />
-                <br />
               </div>
             )
           })
