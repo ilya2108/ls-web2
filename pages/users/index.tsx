@@ -51,7 +51,7 @@ export default function UsersPage() {
 
   const users = data?.UserList?.results || [];
 
-  const tableHeaderNames = ["#", "Name", "Username", "Email", "Score"];
+  const tableHeaderNames = ["#", "Name", "Username", "Email"];
 
   const mappedTableHead = tableHeaderNames.map((headerNames, i) => ({
     key: headerNames,
@@ -104,10 +104,6 @@ export default function UsersPage() {
             // Email
             key: email,
             content: email,
-          },
-          {
-            key: score,
-            content: score
           },
           {
             content: (
