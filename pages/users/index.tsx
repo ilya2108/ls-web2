@@ -64,7 +64,11 @@ export default function UsersPage() {
 
   const filterUsers = (users) => {
     const filteredUsers = users.filter((user) => {
-      return user.username.toLowerCase().includes(inputVal.toLowerCase());
+      return (
+        user.username.toLowerCase().includes(inputVal.toLowerCase()) ||
+        user.firstName.toLowerCase().includes(inputVal.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(inputVal.toLowerCase())
+      )
     });
     return filteredUsers;
   };
