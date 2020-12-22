@@ -1,7 +1,9 @@
+import React, { useState, Fragment } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { gql } from "graphql-request";
-import { v4 } from 'uuid';
+import debounce from "lodash/debounce"
+
 
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
@@ -9,10 +11,25 @@ import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
 
 import Layout from "../../layout/Layout";
 import { fetcher } from "../../modules/api";
-import HugeSpinner from "../../components/HugeSpinner/HugeSpinner";
 import Error from "../../components/Error";
+import { calculateSemesterScore } from '../../utils/score-utils'
+import Textfield from "@atlaskit/textfield";
+import { SearchWrapper } from "../../pages-styles/UsersPage/UsersPage.styles";
+import EditorSearchIcon from "@atlaskit/icon/glyph/editor/search";
+import ShortcutIcon from "@atlaskit/icon/glyph/shortcut";
+import Button from '@atlaskit/button';
+
 
 export default function UsersPage() {
+  const [inputVal, setInputVal] = useState("");
+  
+  const setInputValDebounced = debounce(setInputVal, 300)
+  
+  const handleSearchEvent = (event) => {
+    const { value } = event.target;
+    setInputValDebounced(value)
+  };
+
   const { data, error } = useSWR(
     gql`
       {
@@ -30,10 +47,8 @@ export default function UsersPage() {
     fetcher
   );
 
-  // TODO: Loading.
   const users = data?.UserList?.results || [];
 
-  // Generating user table header
   const tableHeaderNames = ["#", "Name", "Username", "Email"];
 
   const mappedTableHead = tableHeaderNames.map((headerNames, i) => ({
@@ -47,9 +62,20 @@ export default function UsersPage() {
     cells: mappedTableHead,
   };
 
-  // Generating user table rows
-  const tableRows = users.map(
-    ({ lastName, firstName, id, username, email }, i) => {
+  const filterUsers = (users) => {
+    const filteredUsers = users.filter((user) => {
+      return (
+        user.username.toLowerCase().includes(inputVal.toLowerCase()) ||
+        user.firstName.toLowerCase().includes(inputVal.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(inputVal.toLowerCase())
+      )
+    });
+    return filteredUsers;
+  };
+
+  const tableRows = filterUsers(users).map(
+    ({ lastName, firstName, id, username, email, assignments }, i) => {
+      const score = calculateSemesterScore(assignments)
       return {
         cells: [
           {
@@ -81,11 +107,29 @@ export default function UsersPage() {
             key: email,
             content: email,
           },
+          {
+            content: (
+              <Button
+                iconAfter={<ShortcutIcon label="" />}
+                appearance="subtle-link"
+                href={`/users/${encodeURIComponent(id)}`}
+              />
+            ),
+          },  
         ],
         key: username,
       }
     }
   );
+
+  const numberOfRowsPerPage = () => {
+    if(typeof document !== 'undefined' || typeof window !== 'undefined') {
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      
+      return Math.ceil((vh - 312)/43);
+    }
+    return 24;
+  }
 
   if (error) {
     return <Error />
@@ -101,23 +145,26 @@ export default function UsersPage() {
         }
       >
         User list
-      </PageHeader>
-      {!error && !data ? (
-        <HugeSpinner />
-      ) : (
-        <section>
+        </PageHeader>
+          <SearchWrapper>
+            <Textfield
+              name="basic"
+              isCompact
+              placeholder="Search username"
+              elemAfterInput={<EditorSearchIcon label="" />}
+              onChange={(event) => handleSearchEvent(event)}
+            />
+          </SearchWrapper>
           <DynamicTable
-            caption={null}
             head={tableHeadRow}
-            rows={tableRows}
+            rows={data ? tableRows : null}
             loadingSpinnerSize="large"
-            isLoading={false}
+            isLoading={data ? false : true}
             isFixedSize
             defaultSortKey="Name"
             defaultSortOrder="ASC"
+            rowsPerPage={numberOfRowsPerPage()}
           />
-        </section>
-      )}
     </Layout>
   );
 }
