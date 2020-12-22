@@ -2,7 +2,6 @@ import React, { useState, Fragment } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { gql } from "graphql-request";
-import { v4 } from 'uuid';
 import debounce from "lodash/debounce"
 
 
@@ -12,7 +11,6 @@ import { BreadcrumbsItem, BreadcrumbsStateless } from "@atlaskit/breadcrumbs";
 
 import Layout from "../../layout/Layout";
 import { fetcher } from "../../modules/api";
-import HugeSpinner from "../../components/HugeSpinner/HugeSpinner";
 import Error from "../../components/Error";
 import { calculateSemesterScore } from '../../utils/score-utils'
 import Textfield from "@atlaskit/textfield";
