@@ -38,7 +38,7 @@ export default function AssignmentTestJob() {
     return 0
   }
 
-  //Fixes exams not being displayed after refreshing page
+  // Fixes exams not being displayed after refreshing page
   useEffect(() => { 
     setExamsFiltered(exams.sort(sortExams))
   },[exams])
@@ -47,7 +47,7 @@ export default function AssignmentTestJob() {
     filterExams(e.target.value)
   }
 
-  //Filters exams (using query from the search field) and sorts them by name
+  // Filters exams (using query from the search field) and sorts them by name
   const filterExams = (query: String) => {
     setExamsFiltered(exams.filter(exam => {
       return exam.template.name.toUpperCase().indexOf(query.toUpperCase()) !== -1
@@ -64,16 +64,22 @@ export default function AssignmentTestJob() {
 
   return (
     <Layout>
-      <Textfield width="300" onChange={ handleSearch } placeholder="Search..." />
-      <ul>
+      <div className="exams-header-div">
+        <h2 className="exams-header">Exams</h2>
+        <Textfield width="300" onChange={ handleSearch } placeholder="Search..." />
+      </div>
+      <div className='exams-container'>
         {examsFiltered.map((exam) => {
           return (
-            <li>
-              <a href={`/exams/edit/${exam.id}`}>{exam.template.name}</a>&nbsp;(id={exam.id})
-            </li>
+            <div className="exams-task">
+              <span className="exam-id">id={exam.id}</span>
+              <a className="exam-link" href={`/exams/edit/${exam.id}`}>
+                <span>{exam.template.name}</span>
+              </a>
+            </div>
           )
         })}
-      </ul>
+      </div>
     </Layout>
   )
 }
