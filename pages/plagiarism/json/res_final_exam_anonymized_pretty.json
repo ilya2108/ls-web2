@@ -1,0 +1,193 @@
+[
+    {
+        "script": "awk -F':' 'BEGIN{max=0}($4==\"CZK\" && $3>max){max=$3}($4==\"EUR\" && $3*25>max){max=$3*25}END{printf\"%d\\n\",max}' \"$VYROBKY\"",
+        "culprit_assignment_name": "2020-vt-xc",
+        "culprit_count": 3,
+        "culprits": [
+            "e7a2297@fit.cvut.cz",
+            "8495b25@fit.cvut.cz",
+            "81830c2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [ $# -eq 3 ]\n        then\n                echo \"$((($1 + $2) * $3))\"\n                exit 0\n        else\n                >&2 echo \"Spatny pocet parametru\"\n                exit 2\nfi",
+        "culprit_assignment_name": "2020-vt-rc",
+        "culprit_count": 3,
+        "culprits": [
+            "363b5da@fit.cvut.cz",
+            "967d349@fit.cvut.cz",
+            "154c740@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nname=\"$1\"\n\nif [ -d \"$name\" ]\nthen\nchmod -R a-w \"$name\";\nchmod o-x \"$name\";\nelse\necho \"$name neni adresar\" 2>&1\nfi",
+        "culprit_assignment_name": "2020-vt-pf",
+        "culprit_count": 2,
+        "culprits": [
+            "f161b94@fit.cvut.cz",
+            "baf82e8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n    if [ -d \"$1\" ]\n    then\n    chmod a-w,o-x \"$1\"\n    else\n    echo \"\"$1\" neni adresar\" >&2\n  fi",
+        "culprit_assignment_name": "2020-vt-pf",
+        "culprit_count": 2,
+        "culprits": [
+            "f1179bd@fit.cvut.cz",
+            "f8ea00a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [ $# = 1 ] \nthen \necho \"$1\"\nelif [ $# = 2 ] \necho ((\"$1\"*\"$2\"))\nelif [ $# = 3 ] \necho ((\"$1\"+\"$2\"+\"$3\"))\nfi",
+        "culprit_assignment_name": "2020-vt-rc1",
+        "culprit_count": 2,
+        "culprits": [
+            "4fb1309@fit.cvut.cz",
+            "2177ede@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif($(cat \"$TEXT\"|wc -l)<=20)\nthen\na=$(cat \"$TEXT\"|wc -l)\na=$((a-10))\ncat \"$TEXT\"|tail -\"$a\"\nelse\necho \"Soubor $TEXT ma malo radku\"\nexit 1\nfi",
+        "culprit_assignment_name": "2020-vt-sb",
+        "culprit_count": 2,
+        "culprits": [
+            "4fb1309@fit.cvut.cz",
+            "2177ede@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [ -d \"$1\" ]\nthen\nchmod u-w \"$1\"\nchmod g-w \"$1\"\nchmod o-w \"$1\"\nelse\necho \"$1 neni adresar\"\nfi",
+        "culprit_assignment_name": "2020-vt-pf",
+        "culprit_count": 2,
+        "culprits": [
+            "4fb1309@fit.cvut.cz",
+            "c9ed623@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [ -d \"$1\" ]\nthen\nchmod u-w \"$1\"\nchmod g-w \"$1\"\nchmod o-w \"$1\"\nelse\necho \"$1 neni adresar\"\nfi ",
+        "culprit_assignment_name": "2020-vt-pf",
+        "culprit_count": 2,
+        "culprits": [
+            "e164080@fit.cvut.cz",
+            "ba9d344@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nnum=\"$#\"\n\nif [ \"$num\" -eq 3 ];\nthen\n  count=$(((\"$1\"+\"$2\")*\"$3\"))\n  echo \"$count\" \nelse\n\n  echo \"Spatny pocet parametru\" >&2\n  return 2\n\nfi",
+        "culprit_assignment_name": "2020-vt-rc",
+        "culprit_count": 2,
+        "culprits": [
+            "8da83ce@fit.cvut.cz",
+            "3572b60@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\ncat \"$1\"|head -10 > prvnich10.txt\nif (($(cat \"$1\"|wc -l) > 20));\nthen \ncat \"$1\"|head -20 | tail -10 > druhych10.txt\nelse\nprintf \"Kratky soubor\\n\" >&2\nexit 2\nfi",
+        "culprit_assignment_name": "2020-vt-xb",
+        "culprit_count": 2,
+        "culprits": [
+            "25d8683@fit.cvut.cz",
+            "072ec66@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "if [ $(sed -i '1 s/Ahoj Honzo/Vazeny pane Jene/' \"$TEXT\") ]\nthen\nprintf \"\\n\" >>\"$TEXT\"\nelse\nprintf \"***Uredne opraveno***\\n\" >>\"$TEXT\"\nfi",
+        "culprit_assignment_name": "2020-vt-sa",
+        "culprit_count": 2,
+        "culprits": [
+            "25d8683@fit.cvut.cz",
+            "24971c0@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "if [ $(sed -i '1 s/Ahoj Honzo/Vazeny pane Jene/' \"$TEXT\") ]\nthen\nprintf \"\\n\" >>\"$TEXT\"\nelse\nprintf \"*** Uredne opraveno ***\\n\" >>\"$TEXT\"\nfi",
+        "culprit_assignment_name": "2020-vt-sa",
+        "culprit_count": 2,
+        "culprits": [
+            "708b3f7@fit.cvut.cz",
+            "a076be1@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "if [ -d \"$1\" ]; then\n        chmod ugo-w \"$1\";\n        chmod o-x \"$1\";\nelse\necho \"$1 neni adresar\" > 2\nfi",
+        "culprit_assignment_name": "2020-vt-pf",
+        "culprit_count": 2,
+        "culprits": [
+            "cacbad8@fit.cvut.cz",
+            "9a9daae@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [ $# = 1 ]\nthen\necho \"$1\"\nelif [ $# = 2 ]\nthen\necho $(($1*$2))\nelif [ $# = 3 ]\nthen\necho $(($1+$2+$3))\nfi",
+        "culprit_assignment_name": "2020-vt-rc1",
+        "culprit_count": 2,
+        "culprits": [
+            "d6cd949@fit.cvut.cz",
+            "853fb55@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\nif [ $# -eq 1 ] \nthen \necho \"$1\" ;\nelif [ $# -eq 2 ] \nthen \necho \"$((\"$1\" * \"$2\"))\"\nelif [ $# -eq 3 ]\nthen\necho \"$((\"$1\" + \"$2\" + \"$3\"))\"\nfi",
+        "culprit_assignment_name": "2020-vt-rc1",
+        "culprit_count": 2,
+        "culprits": [
+            "f1179bd@fit.cvut.cz",
+            "f8ea00a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n    if [ -d $1 ]\n    then\n    chmod a-w,o-x \"$1\"\n    else\n    echo \"\"$1\" neni adresar\" >&2\n  fi",
+        "culprit_assignment_name": "2020-vt-pf",
+        "culprit_count": 2,
+        "culprits": [
+            "f1179bd@fit.cvut.cz",
+            "f8ea00a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed -e '1s/Ahoj Honzo,/Vazeny pane Jene,/' \"$TEXT\" > tmp\ncat \"tmp\" > \"$TEXT\"\necho \"*** Uredne opraveno ***\" >> \"$TEXT\"\nrm \"tmp\"",
+        "culprit_assignment_name": "2020-vt-sa",
+        "culprit_count": 2,
+        "culprits": [
+            "18e79bf@fit.cvut.cz",
+            "456b987@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "if [ $# -eq 0 ]; then\n    echo \"0\"\n    exit 0\nelse\n    for i do\n        sum=$(expr $sum + $i)\n    done\n    echo $sum\nfi",
+        "culprit_assignment_name": "2020-vt-ra",
+        "culprit_count": 2,
+        "culprits": [
+            "66ac033@fit.cvut.cz",
+            "03e86e3@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nIFS=\":\"\nMAX=0\n\nwhile read good isAvaliable price currency;\ndo\n\tif [[ \"$currency\" = 'EUR' ]]; then\n\t\tNEWPRICE=$((price * 25))\n\t\tif [[ \"$MAX\" -lt  \"$NEWPRICE\" ]]; then\n\t \t\tMAX=\"$NEWPRICE\"\n\t\tfi\n\t\n\telif [[ \"$MAX\" -lt  \"$price\" ]]; then\n \t\tMAX=\"$price\"\n\tfi\n\t\n \ndone < \"$VYROBKY\"\n\necho \"$MAX\"",
+        "culprit_assignment_name": "2020-vt-xc",
+        "culprit_count": 2,
+        "culprits": [
+            "8da83ce@fit.cvut.cz",
+            "3572b60@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nfile=\"$1\"\n\nsed -i '5,10d' \"$file\"\nsed -i '1d' \"$file\"\necho \"*** Uredne zkraceno ***\" >> \"$file\"",
+        "culprit_assignment_name": "2020-vt-sc",
+        "culprit_count": 2,
+        "culprits": [
+            "8da83ce@fit.cvut.cz",
+            "3572b60@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [ -d \"$1\" ]\nthen\nchmod u-w \"$1\";\nchmod g-w \"$1\";\nchmod o-wx \"$1\";\nelse\necho \"$1 neni adresar\" >&2;\nfi",
+        "culprit_assignment_name": "2020-vt-pf",
+        "culprit_count": 2,
+        "culprits": [
+            "a09e93a@fit.cvut.cz",
+            "32c30c9@fit.cvut.cz"
+        ]
+    }
+]
