@@ -218,6 +218,11 @@ a {
   margin-bottom: 10px;
 }
 
+.plagiat-wrapper a, .plagiat-wrapper a:hover {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
 .plagiat-wrapper > .plagiat-header > h1 {
   margin: 5px 10px 0 0;
   display: inline-block;
