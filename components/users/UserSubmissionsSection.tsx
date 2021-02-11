@@ -3,6 +3,7 @@ import { decode } from "js-base64"
 import dayjs, { unix } from 'dayjs'
 import pluralize from 'pluralize'
 import { calculateSemesterScore } from '../../utils/score-utils'
+import {BorderCell, CodeCell} from "../../pages-styles/UserPage/UserPage.styles";
 
 type Props = {
   userData: any,
@@ -24,7 +25,7 @@ export default function UserSubmissionsSection(props: Props) {
       {
         assignments.results.map((ass, i) => {
           return (
-            <div>
+            <BorderCell>
               <b>{i}) <a href={`/assignments/edit/${ass.assignment.id}`}>{ass.assignment.name}</a>, score ({ass.score})</b>
               {ass.submissions.results.map((sub, i) => {
                 try {
@@ -33,14 +34,16 @@ export default function UserSubmissionsSection(props: Props) {
                   return (
                     <>
                       <p>
-                        <b>
                           {dayjs(sub?.correction?.submission.createdAt).format("DD.MM. HH:mm:ss")}
-                          { } ({sub?.correction.score} {pluralize('point', sub?.correction.score)})
-                        </b>
+                          <b>
+                              { } ({sub?.correction.score} {pluralize('point', sub?.correction.score)})
+                          </b>
                       </p>
-                      <pre>
-                        {decodedSubmission}
-                      </pre>
+                      <CodeCell>
+                         <code>
+                            {decodedSubmission}
+                        </code>
+                      </CodeCell>
                       <br/>
                     </>
                   )
@@ -51,11 +54,8 @@ export default function UserSubmissionsSection(props: Props) {
                   )
                 }
               })}
-              <br />
-              <i>-----------------------------------------</i>
-              <br />
-              <br />
-            </div>
+
+            </BorderCell>
           )
         })
       }
