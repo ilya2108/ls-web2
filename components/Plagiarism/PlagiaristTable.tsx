@@ -30,17 +30,15 @@ export default function PlagiaristTable({ plagiats }) {
 
     return (
         <div>
-                <div>
-                    <DynamicTable
-                        head={tableHead}
-                        rows={plagiats ? tableRows : null}
-                        rowsPerPage={10}
-                        defaultPage={1}
-                        isFixedSize
-                        defaultSortKey="Number of plagiats"
-                        defaultSortOrder="DESC"
-                    /> 
-                </div>
+            <DynamicTable
+                head={tableHead}
+                rows={plagiats ? tableRows : null}
+                rowsPerPage={10}
+                defaultPage={1}
+                isFixedSize
+                defaultSortKey="Number of plagiats"
+                defaultSortOrder="DESC"
+            /> 
         </div>
     );
 };
