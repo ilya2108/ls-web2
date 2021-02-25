@@ -5,7 +5,7 @@ import Link from "next/link";
 import Badge from '@atlaskit/badge';
 import Lozenge from '@atlaskit/lozenge';
 
-export default function PlagiatsList({ plagiats }) {
+export default function PlagiatsList({ plagiats, highlightUser = null }) {
     return (
         <div>
             {plagiats.map((plagiat, index) => {
@@ -23,7 +23,8 @@ export default function PlagiatsList({ plagiats }) {
                             {plagiat.culprits.map((culprit, index) => {
                                 return (
                                     <span key={index}>
-                                        <Lozenge>
+                                        <Lozenge
+                                            appearance={culprit === highlightUser ? "new" : "default"}>
                                             <Link href={`/plagiarism/user/${encodeURIComponent(culprit)}`}>
                                                 <a>{culprit}</a>
                                             </Link>

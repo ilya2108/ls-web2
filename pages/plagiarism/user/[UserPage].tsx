@@ -13,7 +13,8 @@ export default function UserPage() {
     const plagiats = allPlagiats.filter(plagiat => { return plagiat.culprits.includes(userEmail)})
     return (
         <Layout>
-            <PlagiatsList plagiats={plagiats} />
+            <h1>User: {userEmail}</h1>
+            <PlagiatsList plagiats={plagiats} highlightUser={userEmail}/>
         </Layout>
     );
 }
