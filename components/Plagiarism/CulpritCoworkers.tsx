@@ -1,27 +1,27 @@
 import React from 'react';
 
 import DynamicTable from '@atlaskit/dynamic-table'
-import Link from "next/link";
+import Link from 'next/link'
+
+import { countPlagiatsOfCulprit, createCoworkerSet, getPlagiatsOfCulprit } from '../../utils/plagiarism-utils'
 
 export default function PlagiaristCoworkers({ plagiats, userEmail }) {
-    const removeDuplicates = (arr: Array<any>) => Array.from(new Set(arr)) //Remove duplicates from array
+    const plagiatsFiltered = getPlagiatsOfCulprit(plagiats, userEmail)
 
-    const plagiatsFiltered = plagiats.filter(plagiat => plagiat.culprits.includes(userEmail))
-
-    //Set of all plagiarists that had same solution as plagiarist (without plagiarist himself)
-    const coworkers = removeDuplicates(plagiatsFiltered.map(x => x.culprits).reduce((a, b) => a.concat(b))).filter(x => x !== userEmail)
+    // Set of all plagiarists that had same solution as plagiarist (without plagiarist himself)
+    const coworkers = createCoworkerSet(plagiatsFiltered, userEmail)
 
     //Table rows with all coworkers (email + count of same solutions)
-    const tableRows = coworkers.map((plag, i) => {
-        const count = plagiatsFiltered.filter(plagiat => plagiat.culprits.includes(plag)).length
+    const tableRows = coworkers.map(coworker => {
+        const count = countPlagiatsOfCulprit(plagiatsFiltered, coworker)
         return { cells: [
-            { key: plag, content: (
-                <Link href={`/plagiarism/user/${encodeURIComponent(plag)}`}>
-                    <a>{plag}</a>
+            { key: coworker, content: (
+                <Link href={`/plagiarism/user/${encodeURIComponent(coworker)}`}>
+                    <a>{coworker}</a>
                 </Link>)},
             { key: count, content: count},
             { key: count, content: (count * 100 / plagiats.length).toFixed(2) + "%"}
-        ], key: plag}
+        ], key: coworker}
     })
 
     const tableHeadMapped = ["Coworker", "Number of same solutions", `% of ${userEmail}'s plagiats`].map(name => ({
@@ -41,7 +41,7 @@ export default function PlagiaristCoworkers({ plagiats, userEmail }) {
                 isFixedSize
                 defaultSortKey="Number of same solutions"
                 defaultSortOrder="DESC"
-            /> 
+            />
         </div>
     );
 };

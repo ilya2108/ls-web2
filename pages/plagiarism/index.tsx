@@ -4,7 +4,7 @@ import Layout from "../../layout/Layout";
 import plagiats from './json/res_semester_anonymized_pretty.json';
 
 import PlagiatsList from '../../components/Plagiarism/PlagiatsList';
-import PlagiaristTable from '../../components/Plagiarism/PlagiaristTable';
+import CulpritsTable from '../../components/Plagiarism/CulpritsTable';
 
 export default function users() {
     return (
@@ -12,7 +12,7 @@ export default function users() {
             <h1>Plagiarism</h1>
 
             <h2>Table of plagirists</h2>
-            <PlagiaristTable plagiats={plagiats} />
+            <CulpritsTable plagiats={plagiats} />
 
             <h2>List of all plagiats</h2>
             <PlagiatsList plagiats={plagiats} />

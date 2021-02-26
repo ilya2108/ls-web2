@@ -39,5 +39,3 @@ export default function PlagiatsList({ plagiats, highlightUser = null }) {
         </div>
     );
 };
-
-PlagiatsList;
