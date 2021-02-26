@@ -25,6 +25,7 @@ export default function PlagiatsList({ plagiats, highlightUser = null }) {
                                     <span key={index}>
                                         <Lozenge
                                             appearance={culprit === highlightUser ? "new" : "default"}>
+                                            {/* TODO - Later change from culprit's email to ID */}
                                             <Link href={`/plagiarism/user/${encodeURIComponent(culprit)}`}>
                                                 <a>{culprit}</a>
                                             </Link>

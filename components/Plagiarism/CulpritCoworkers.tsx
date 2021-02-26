@@ -16,6 +16,7 @@ export default function PlagiaristCoworkers({ plagiats, userEmail }) {
         const count = countPlagiatsOfCulprit(plagiatsFiltered, coworker)
         return { cells: [
             { key: coworker, content: (
+                // TODO - Later change from culprit's email to ID
                 <Link href={`/plagiarism/user/${encodeURIComponent(coworker)}`}>
                     <a>{coworker}</a>
                 </Link>)},

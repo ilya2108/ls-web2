@@ -31,6 +31,7 @@ export default function PlagiaristTable({ plagiats }) {
         const count = countPlagiatsOfCulprit(plagiats, culprit)
         return { cells: [
             { key: culprit, content: (
+                // TODO - Later change from culprit's email to ID
                 <Link href={`/plagiarism/user/${encodeURIComponent(culprit)}`}>
                     <a>{culprit}</a>
                 </Link>)},
