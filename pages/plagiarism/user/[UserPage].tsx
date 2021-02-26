@@ -16,10 +16,10 @@ export default function UserPage() {
         <Layout>
             <h1>User: {userEmail}</h1>
 
-            <h2>Most common coworkers</h2>
+            <h2 className="mb-3">Most common coworkers</h2>
             <CulpritCoworkers plagiats={plagiats} userEmail={userEmail} />
 
-            <h2>All plagiats:</h2>
+            <h2 className="mb-3">All plagiats:</h2>
             <PlagiatsList plagiats={plagiats} highlightUser={userEmail}/>
         </Layout>
     );

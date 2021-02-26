@@ -48,13 +48,16 @@ export default function PlagiaristTable({ plagiats }) {
 
     return (
         <div>
-            <Textfield
-                name="basic"
-                isCompact
-                placeholder="Search username"
-                elemAfterInput={<EditorSearchIcon label="" />}
-                onChange={(event) => handleSearchEvent(event)}
-            />
+            <div className="search-field mb-3">
+                <Textfield
+                    className="search-field"
+                    name="basic"
+                    isCompact
+                    placeholder="Search username"
+                    elemAfterInput={<EditorSearchIcon label="" />}
+                    onChange={(event) => handleSearchEvent(event)}
+                />
+            </div>
             <DynamicTable
                 head={tableHead}
                 rows={plagiats ? tableRows : null}
