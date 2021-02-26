@@ -11,7 +11,7 @@ export default function users() {
         <Layout>
             <h1>Plagiarism</h1>
 
-            <h2>Table of plagirists</h2>
+            <h2>Table of culprits</h2>
             <CulpritsTable plagiats={plagiats} />
 
             <h2>List of all plagiats</h2>

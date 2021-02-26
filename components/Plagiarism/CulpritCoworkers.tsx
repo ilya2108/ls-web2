@@ -11,7 +11,7 @@ export default function PlagiaristCoworkers({ plagiats, userEmail }) {
     // Set of all plagiarists that had same solution as plagiarist (without plagiarist himself)
     const coworkers = createCoworkerSet(plagiatsFiltered, userEmail)
 
-    //Table rows with all coworkers (email + count of same solutions)
+    // Table rows with all coworkers (email + count of same solutions)
     const tableRows = coworkers.map(coworker => {
         const count = countPlagiatsOfCulprit(plagiatsFiltered, coworker)
         return { cells: [
