@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from "next/router";
 import Layout from "../../../layout/Layout";
 
-import allPlagiats from '../json/res_semester_anonymized_pretty.json';
+import allPlagiats from '../__fixtures__/res_semester_anonymized_pretty.json';
 
 import PlagiatsList from '../../../components/Plagiarism/PlagiatsList';
 import CulpritCoworkers from '../../../components/Plagiarism/CulpritCoworkers';
