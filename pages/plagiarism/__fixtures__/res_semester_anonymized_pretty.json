@@ -1,0 +1,2531 @@
+[
+    {
+        "script": "cat \"$DIR\"/*.txt | tr  ' ' '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -nr | awk '{print $2}' | head -1",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 50,
+        "culprits": [
+            "92d80f0@fit.cvut.cz",
+            "2f6a8d0@fit.cvut.cz",
+            "bf552a9@fit.cvut.cz",
+            "223dd3f@fit.cvut.cz",
+            "0b9a7e0@fit.cvut.cz",
+            "53b37cf@fit.cvut.cz",
+            "fe86e8a@fit.cvut.cz",
+            "6208018@fit.cvut.cz",
+            "2d761e7@fit.cvut.cz",
+            "4561574@fit.cvut.cz",
+            "c98e835@fit.cvut.cz",
+            "6767b81@fit.cvut.cz",
+            "9a6fd4f@fit.cvut.cz",
+            "3a00894@fit.cvut.cz",
+            "a353ac9@fit.cvut.cz",
+            "9796cde@fit.cvut.cz",
+            "a7bf202@fit.cvut.cz",
+            "87490f9@fit.cvut.cz",
+            "9a36e9f@fit.cvut.cz",
+            "6cc5dda@fit.cvut.cz",
+            "182308b@fit.cvut.cz",
+            "787ac7e@fit.cvut.cz",
+            "5d1772d@fit.cvut.cz",
+            "bbbb990@fit.cvut.cz",
+            "6858021@fit.cvut.cz",
+            "67b76a8@fit.cvut.cz",
+            "ff7598c@fit.cvut.cz",
+            "1097280@fit.cvut.cz",
+            "a061574@fit.cvut.cz",
+            "f990200@fit.cvut.cz",
+            "afe3b9d@fit.cvut.cz",
+            "1abe086@fit.cvut.cz",
+            "3a203cc@fit.cvut.cz",
+            "5e0e0d1@fit.cvut.cz",
+            "00fa8bb@fit.cvut.cz",
+            "972254c@fit.cvut.cz",
+            "0444c21@fit.cvut.cz",
+            "a41b014@fit.cvut.cz",
+            "7e9af18@fit.cvut.cz",
+            "66ff38e@fit.cvut.cz",
+            "a046449@fit.cvut.cz",
+            "55c472d@fit.cvut.cz",
+            "dfb1b3e@fit.cvut.cz",
+            "2ce24d2@fit.cvut.cz",
+            "a235ede@fit.cvut.cz",
+            "32d5618@fit.cvut.cz",
+            "b983fe6@fit.cvut.cz",
+            "e76dd57@fit.cvut.cz",
+            "5aab732@fit.cvut.cz",
+            "fcac742@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [0-9] | tr [:upper:] [:lower:] | sort > a2.txt; split -l 10 a2.txt a2.txt_; paste a2.txt_* | nl > \"$FILE\"; rm a2*",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 38,
+        "culprits": [
+            "2f6a8d0@fit.cvut.cz",
+            "0b9a7e0@fit.cvut.cz",
+            "6208018@fit.cvut.cz",
+            "2d761e7@fit.cvut.cz",
+            "4561574@fit.cvut.cz",
+            "c98e835@fit.cvut.cz",
+            "a2ca511@fit.cvut.cz",
+            "3a00894@fit.cvut.cz",
+            "a353ac9@fit.cvut.cz",
+            "9796cde@fit.cvut.cz",
+            "e63edee@fit.cvut.cz",
+            "87490f9@fit.cvut.cz",
+            "9a36e9f@fit.cvut.cz",
+            "182308b@fit.cvut.cz",
+            "787ac7e@fit.cvut.cz",
+            "67b76a8@fit.cvut.cz",
+            "ff7598c@fit.cvut.cz",
+            "1097280@fit.cvut.cz",
+            "f990200@fit.cvut.cz",
+            "1abe086@fit.cvut.cz",
+            "b2455d0@fit.cvut.cz",
+            "914fc09@fit.cvut.cz",
+            "00fa8bb@fit.cvut.cz",
+            "f3c8d3c@fit.cvut.cz",
+            "7a9285d@fit.cvut.cz",
+            "7e9af18@fit.cvut.cz",
+            "66ff38e@fit.cvut.cz",
+            "a046449@fit.cvut.cz",
+            "dfb1b3e@fit.cvut.cz",
+            "6ba91a1@fit.cvut.cz",
+            "5e040bd@fit.cvut.cz",
+            "ba7877f@fit.cvut.cz",
+            "f13e73e@fit.cvut.cz",
+            "16576d2@fit.cvut.cz",
+            "3ce0506@fit.cvut.cz",
+            "51c1e5f@fit.cvut.cz",
+            "b983fe6@fit.cvut.cz",
+            "fcac742@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | head -1 | awk ' {FS=\",\";$0=$0}{\nprintf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | tail -n +2 | awk ' {FS=\",\";$0=$0}{\n printf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 31,
+        "culprits": [
+            "2f6a8d0@fit.cvut.cz",
+            "0b9a7e0@fit.cvut.cz",
+            "fe86e8a@fit.cvut.cz",
+            "723b699@fit.cvut.cz",
+            "6208018@fit.cvut.cz",
+            "2d761e7@fit.cvut.cz",
+            "c98e835@fit.cvut.cz",
+            "a90a9de@fit.cvut.cz",
+            "6767b81@fit.cvut.cz",
+            "a2ca511@fit.cvut.cz",
+            "3a00894@fit.cvut.cz",
+            "9796cde@fit.cvut.cz",
+            "a7bf202@fit.cvut.cz",
+            "182308b@fit.cvut.cz",
+            "787ac7e@fit.cvut.cz",
+            "5d1772d@fit.cvut.cz",
+            "6858021@fit.cvut.cz",
+            "67b76a8@fit.cvut.cz",
+            "1097280@fit.cvut.cz",
+            "dbeec3f@fit.cvut.cz",
+            "f990200@fit.cvut.cz",
+            "afe3b9d@fit.cvut.cz",
+            "00fa8bb@fit.cvut.cz",
+            "972254c@fit.cvut.cz",
+            "7a9285d@fit.cvut.cz",
+            "a41b014@fit.cvut.cz",
+            "7e9af18@fit.cvut.cz",
+            "66ff38e@fit.cvut.cz",
+            "e76dd57@fit.cvut.cz",
+            "5aab732@fit.cvut.cz",
+            "fcac742@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr '\\t,' ' ' | tr -s ' ' | tr ' ' ',' | sed 's/,[[:alpha:]]*$//1' | sed 's/,/ /4' | sed 's/,/ /4' >table.csv; cat \"$FILE\" | tail -n+2 | tr '\\n' ',' | sed 's/, /\\n/g' | sed 's/^ //g' | sed 's/,$/\\n/g'| sed 's/,//4' | sed 's/,//4'>>table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 11,
+        "culprits": [
+            "7f6931a@fit.cvut.cz",
+            "f209262@fit.cvut.cz",
+            "11ce1b6@fit.cvut.cz",
+            "5cad676@fit.cvut.cz",
+            "2a55887@fit.cvut.cz",
+            "7de075a@fit.cvut.cz",
+            "3f7827a@fit.cvut.cz",
+            "3aed5f6@fit.cvut.cz",
+            "45460ca@fit.cvut.cz",
+            "9d60ebc@fit.cvut.cz",
+            "e65aca8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tail -n+2 | sed 's/,//g'  |awk '\n        BEGIN {print \"Symbol,Name,Sector,Market Cap $K,Last\"}\n        NR%5 {printf(\"%s,\", $0); next}\n        {print $0} '| sed 's/^ *//g' > table.csv",
+        "culprit_assignment_name": "en-2020-09 DU Change of the file format to csv",
+        "culprit_count": 11,
+        "culprits": [
+            "dfb1b3e@fit.cvut.cz",
+            "6ba91a1@fit.cvut.cz",
+            "9c35541@fit.cvut.cz",
+            "a235ede@fit.cvut.cz",
+            "431a793@fit.cvut.cz",
+            "3aee468@fit.cvut.cz",
+            "ba7877f@fit.cvut.cz",
+            "f13e73e@fit.cvut.cz",
+            "6d86a84@fit.cvut.cz",
+            "ec7d995@fit.cvut.cz",
+            "edfca61@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "awk '{gsub(/<['b1'|'B1'][[:lower:]]>/ , \"xxxx\") && count++}1 \n    END{print count}' | tail -1); cat \"${1}.original\" | awk '{count+=gsub(/<['b1'|'B1'][[:lower:]]>/ , \"xxxx\")}1 ' > \"$1\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 9,
+        "culprits": [
+            "04d789c@fit.cvut.cz",
+            "723b699@fit.cvut.cz",
+            "508dc89@fit.cvut.cz",
+            "eff33be@fit.cvut.cz",
+            "7384b69@fit.cvut.cz",
+            "0881461@fit.cvut.cz",
+            "b954b66@fit.cvut.cz",
+            "e891e7c@fit.cvut.cz",
+            "1250a05@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "grep \",$2,\" \"$1\" > tmp.txt;\nif [ -s tmp.txt ]\nthen\n    a=\"Do nothing.\"\nelse\n    echo Wrong sector >&2\n    echo Usage: $0 file sector >&2\n    rm tmp.txt;\n    exit 1;\nfi\nalfa=\"Shares from the sector \\\"$2\\\"\"\necho Shares from the sector \\\"$2\\\"\ntestik=${#alfa}\ncounter=1\nwhile [ $counter -le $testik ]\ndo\nprintf \"-\"\n((counter++))\ndone\nprintf \"\\n\"\ncat tmp.txt;\ncounter=1\nwhile [ $counter -le $testik ]\ndo\nprintf \"-\"\n((counter++))\ndone\nprintf \"\\n\"\nawk 'BEGIN{FS = \",\"}{print $5}' tmp.txt > data.txt\nsort -nr data.txt > datasorted.txt\nmax=$(head -1 datasorted.txt)\nsort -n data.txt > datasorted1.txt\nmin=$(head -1 datasorted1.txt)\ncount=0;\ntotal=0; \n\naverage=$(awk -F ',' 'BEGIN{sum= 0; num= 0;}{ sum += $1;num += 1}END{printf \"%.2f\",sum / num}' datasorted.txt)\necho -e minimum last price = $min'\\t'average last price = $average'\\t'maximum last price= $max \nrm data.txt\nrm tmp.txt\nrm datasorted.txt\nrm datasorted1.txt",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 9,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "5515970@fit.cvut.cz",
+            "6cc5dda@fit.cvut.cz",
+            "e605bcb@fit.cvut.cz",
+            "5d1772d@fit.cvut.cz",
+            "173c9f4@fit.cvut.cz",
+            "23bd0a0@fit.cvut.cz",
+            "3a203cc@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "head -1 < \"$FILE\"| tr -d ','  | tr '\\t' ',' | sed 's/,Links//' > cache1\ntail -n+2 < \"$FILE\" | tr -d ',' > cache2\npaste -s -d',,,,\\n' cache2| sed 's/ //1' >cache3\ncat cache1 cache3 > table.csv\nrm cache1 cache2 cache3",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 9,
+        "culprits": [
+            "04d789c@fit.cvut.cz",
+            "e031e63@fit.cvut.cz",
+            "23bd0a0@fit.cvut.cz",
+            "c0f089d@fit.cvut.cz",
+            "592a2ed@fit.cvut.cz",
+            "afd945a@fit.cvut.cz",
+            "474e9bc@fit.cvut.cz",
+            "3264e39@fit.cvut.cz",
+            "b1e756c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -c '[:alnum:]' '[\\n*]' | sort | uniq -c | sort -nr > \"$DIR/tmp.txt\"\nawk 'length($2) == 7 { print $2 }' \"$DIR/tmp.txt\" | head -1\nrm \"$DIR/tmp.txt\"",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 7,
+        "culprits": [
+            "eda5e9f@fit.cvut.cz",
+            "2e9eb0a@fit.cvut.cz",
+            "fc81245@fit.cvut.cz",
+            "26643e5@fit.cvut.cz",
+            "31ed453@fit.cvut.cz",
+            "9bbbd22@fit.cvut.cz",
+            "80cbf32@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 7,
+        "culprits": [
+            "2f6a8d0@fit.cvut.cz",
+            "223dd3f@fit.cvut.cz",
+            "6208018@fit.cvut.cz",
+            "9a36e9f@fit.cvut.cz",
+            "ff7598c@fit.cvut.cz",
+            "a41b014@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cp \"$1\" \"$1\".original\n\nsed -e 's/\\b[Bb]l[a-z]*\\b/xxxx/g' \"$1\" > tmp\ncat tmp > \"$1\"\necho  \"---\"  >> \"$1\"\necho \"Z celkoveho poctu $(wc -l \"$1\".original | cut -c1) radek bylo $(egrep -c '\\b[Bb]l[a-z]*\\b' \"$1\".original) cenzurovano\" >> \"$1\" \nrm tmp",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 7,
+        "culprits": [
+            "6767b81@fit.cvut.cz",
+            "3a00894@fit.cvut.cz",
+            "9796cde@fit.cvut.cz",
+            "a061574@fit.cvut.cz",
+            "f990200@fit.cvut.cz",
+            "afe3b9d@fit.cvut.cz",
+            "a046449@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr -d ',' | tr '\\t' ',' | sed 's/,Links//' > table.csv;\ncat \"$FILE\" | tail -n +2 | tr -d ',' | paste -d',' - - - - - | cut -c2- >> table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 7,
+        "culprits": [
+            "903829e@fit.cvut.cz",
+            "799d8c8@fit.cvut.cz",
+            "7727dab@fit.cvut.cz",
+            "0881461@fit.cvut.cz",
+            "882ac82@fit.cvut.cz",
+            "165b7ef@fit.cvut.cz",
+            "51b4a51@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv\ncat \"$FILE\" | tail -n +2 | split -l5 -d\nTEMP=\"$(ls x** | wc -l)\"\nm=0\nwhile [ $m -lt $TEMP ]\ndo\ncat  \"x0$m\" | sed 's/,//g' | tr '\\n' ',' | sed 's/ //' | sed 's/,/\\n/5' >> \"table.csv\"\nm=$(( $m + 1 ))\ndone",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 7,
+        "culprits": [
+            "2e9eb0a@fit.cvut.cz",
+            "af5c5d1@fit.cvut.cz",
+            "fc81245@fit.cvut.cz",
+            "26643e5@fit.cvut.cz",
+            "31ed453@fit.cvut.cz",
+            "e2486bc@fit.cvut.cz",
+            "b232447@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort | head -10 > s1;\ncat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort | head -20 | tail -10 > s2;\ncat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort | tail -10 > s3;\npaste s1 s2 s3 | nl > \"$FILE\";\nrm s1 s2 s3",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 7,
+        "culprits": [
+            "e031e63@fit.cvut.cz",
+            "e605bcb@fit.cvut.cz",
+            "23bd0a0@fit.cvut.cz",
+            "592a2ed@fit.cvut.cz",
+            "afd945a@fit.cvut.cz",
+            "043a95c@fit.cvut.cz",
+            "3264e39@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "average=$(grep \"$2\" \"$1\" | cut -d, -f5 | sort -n | tr '\\n' ' ' | tr '.' ',' | awk '{ OFS=\" \"; for(i = 1; i <= NF; i++) sum += $i; average = sum/NF; printf(\"%.2f\", average);}' | tr ',' '.')",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 6,
+        "culprits": [
+            "c98e835@fit.cvut.cz",
+            "a353ac9@fit.cvut.cz",
+            "e63edee@fit.cvut.cz",
+            "6858021@fit.cvut.cz",
+            "19f237b@fit.cvut.cz",
+            "a046449@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr ' ' '\\n' <\"$DIR\"/*.txt | tr -s '\\n' | egrep '<[[:alpha:]]{7}>' | sort | uniq -c | sort -k1,1nr -k2,2r | head -1 | tr -s ' ' | cut -d' ' -f3;",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 6,
+        "culprits": [
+            "11ce1b6@fit.cvut.cz",
+            "37f3a7a@fit.cvut.cz",
+            "7de075a@fit.cvut.cz",
+            "3f7827a@fit.cvut.cz",
+            "208bb13@fit.cvut.cz",
+            "e65aca8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '[:upper:]' '[:lower:]' | tr ' ' '\\n' | tr -d '.,' | grep '.......' | sort | uniq -c | sort -rn | head -1 | tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 6,
+        "culprits": [
+            "36e2cb4@fit.cvut.cz",
+            "86434d5@fit.cvut.cz",
+            "5ec7dd9@fit.cvut.cz",
+            "461f336@fit.cvut.cz",
+            "473a5cd@fit.cvut.cz",
+            "b954b66@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nintro=\"Shares from the sector \\\"$2\\\"\"\ndashes=$(sed 's/\\(.\\)/-/g' <<< \"$intro\")\nscrpt_n=\"$0\"\nsearch=\"$2\"\nsearch_f=\"$1\"\n\necho $intro >./help.txt\nawk -v dash=\"$dashes\" -v see=\"$search\" '\n    BEGIN { FS=\",\";print dash;min;max;avg;cnt};\n    {\n        if ( $3 == see){\n            printf $0 \"\\n\";\n            cnt++;\n            avg+=$5;\n            if ($5>max) max=$5;\n            if (cnt == 1) min=$5;\n            else if ($5<min) min=$5;\n        }\n    };\n     END { if (cnt > 0) printf (dash\"\\nminimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\",min,avg/cnt,max)}\n' \"$search_f\">>./help.txt\nlines=$(wc -l <./help.txt)\nif [ $lines -eq 2 ];    then\n    printf \"Wrong sector\\nUsage: $scrpt_n file sector\\n\" >&2\n    r\\m ./help.txt\n    exit 1\nelse\n    cat ./help.txt\n    r\\m ./help.txt\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 6,
+        "culprits": [
+            "7f6931a@fit.cvut.cz",
+            "f209262@fit.cvut.cz",
+            "a871bbf@fit.cvut.cz",
+            "16f28b9@fit.cvut.cz",
+            "208bb13@fit.cvut.cz",
+            "e65aca8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort | pr -3 -t | tr -s '\\t' >tmp.txt\ncat -n tmp.txt >\"$FILE\"\nrm tmp.txt",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 6,
+        "culprits": [
+            "5a1e31e@fit.cvut.cz",
+            "c2120ec@fit.cvut.cz",
+            "d423dbe@fit.cvut.cz",
+            "882ac82@fit.cvut.cz",
+            "e2486bc@fit.cvut.cz",
+            "dcdb6a2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nFILE=\"$1\"\n\ncat \"$FILE\" |tee \"${FILE}.original\" | sed -E 's/\\<[Bb]l[^ 0123456789]*\\>/xxxx/g' > \"${FILE}2\"\necho --- >> \"${FILE}2\"\nx=$(wc -l < \"${FILE}.original\")\ny=$(grep -E 'xxxx' \"${FILE}2\"| wc -l)\necho \"Z celkoveho poctu $x radek bylo $y cenzurovano\" >> \"${FILE}2\"\ncat \"${FILE}2\" > \"$FILE\"\n\\rm \"${FILE}2\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 6,
+        "culprits": [
+            "ac4ebef@fit.cvut.cz",
+            "a447c97@fit.cvut.cz",
+            "86434d5@fit.cvut.cz",
+            "5ec7dd9@fit.cvut.cz",
+            "4086ed4@fit.cvut.cz",
+            "7e9fd0c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nname=$1;\narg2=$2;\n\npocet=$(grep -c \",$arg2,\" \"$name\");\n\nif [ \"$pocet\" = 0 ]; then\n{\n echo \"Wrong sector\" >&2;\n echo \"Usage: /\"${0##*/}\" file sector\" >&2;\n exit 1;\n}\nfi\n\necho Shares from the sector \"\"$arg2\"\";\n\nnr=$(echo \"$arg2\" | wc -m)\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\ngrep \",$arg2,\" \"$name\";\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\nmin=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | head -1);\nmax=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | tail -1);\ngrep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | awk '{s+=$1} END {printf \"%f\", s}' > tmp;\necho \" $pocet\" >> tmp\navg=$(awk '{printf \"%.2f\",$1/$2}' tmp)\n\nprintf \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\" $min $avg $max;",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 5,
+        "culprits": [
+            "92d80f0@fit.cvut.cz",
+            "51f717e@fit.cvut.cz",
+            "723b699@fit.cvut.cz",
+            "6208018@fit.cvut.cz",
+            "66860dd@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr ' ' '\\n' <\"$DIR\"/*.txt | tr -s '\\n' | egrep '\\<[[:alpha:]]{7}\\>' | sort | uniq -c | sort -k1,1nr -k2,2r | head -1 | tr -s ' ' | cut -d' ' -f3;",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 5,
+        "culprits": [
+            "f209262@fit.cvut.cz",
+            "11ce1b6@fit.cvut.cz",
+            "da43c17@fit.cvut.cz",
+            "2a55887@fit.cvut.cz",
+            "3aed5f6@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '[[:upper:]]' '[[:lower:]]' | sed 's/[^[:lower:]]/\\n/g'| sort | grep '.......' | uniq -c | sort -n | tail -1 | sed 's/[^[:lower:]]//g'",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 5,
+        "culprits": [
+            "fa67302@fit.cvut.cz",
+            "d423dbe@fit.cvut.cz",
+            "3f7827a@fit.cvut.cz",
+            "f6ae4eb@fit.cvut.cz",
+            "776fd53@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [0-9] | tr [:upper:] [:lower:] | sort > a2.txt; split -l 10 a2.txt a2.txt_; paste a2.txt_* | nl > \"$FILE\"; rm a2*\n",
+        "culprit_assignment_name": "en-2020-06 Modification and joining columns",
+        "culprit_count": 5,
+        "culprits": [
+            "2d761e7@fit.cvut.cz",
+            "3a00894@fit.cvut.cz",
+            "afe3b9d@fit.cvut.cz",
+            "972254c@fit.cvut.cz",
+            "2b7d0f7@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort | head -10 > s1; \ncat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort | head -20 | tail -10 > s2; \ncat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort | tail -10 > s3; \npaste s1 s2 s3 | nl > \"$FILE\"; \nrm s1 s2 s3",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 5,
+        "culprits": [
+            "eda5e9f@fit.cvut.cz",
+            "2e9eb0a@fit.cvut.cz",
+            "a83b1f0@fit.cvut.cz",
+            "9c5e6c5@fit.cvut.cz",
+            "26643e5@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir ~/cz\nmkdir ~/en\nln \"$UNIVERSITIES\"/\"CVUT v Praze\" ~/cz/CVUT\nln \"$UNIVERSITIES\"/\"CVUT v Praze\" ~/en/CTU",
+        "culprit_assignment_name": "[OLD] 005 - Pevny link II.",
+        "culprit_count": 5,
+        "culprits": [
+            "359d125@fit.cvut.cz",
+            "17b660c@fit.cvut.cz",
+            "794a520@fit.cvut.cz",
+            "882ac82@fit.cvut.cz",
+            "2333720@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nif [[ $# -eq 2 ]];\nthen\necho \"$1\"\necho \"$2\"\nexit 0\nfi\n1>&2 echo \"Spatny pocet parametru\"\nexit 2",
+        "culprit_assignment_name": "2020-12 - Test 1",
+        "culprit_count": 5,
+        "culprits": [
+            "fa0f9e7@fit.cvut.cz",
+            "16f28b9@fit.cvut.cz",
+            "95c3c7b@fit.cvut.cz",
+            "7384b69@fit.cvut.cz",
+            "9d60ebc@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd ./\"$DIR\"\ncat *.txt | grep -E -o '\\<.......\\>' |  sort | uniq -c | sort -r | head -1 | tr -d '[:digit:]' | tr -d ' ' > tmp\ncat tmp\nrm -r tmp",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 5,
+        "culprits": [
+            "e605bcb@fit.cvut.cz",
+            "592a2ed@fit.cvut.cz",
+            "474e9bc@fit.cvut.cz",
+            "3264e39@fit.cvut.cz",
+            "b1e756c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | tail -n +2 | awk ' {FS=\",\";$0=$0}{\n printf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 5,
+        "culprits": [
+            "2f6a8d0@fit.cvut.cz",
+            "0b9a7e0@fit.cvut.cz",
+            "5d1772d@fit.cvut.cz",
+            "a41b014@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\ncat \"$1\" | grep '^$' > /dev/null\n\nif [ $? -eq 1 ]\nthen\n  echo ne >&2\n  exit 1\nelse\n  echo ano \n  exit 0\nfi",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 5,
+        "culprits": [
+            "ba6a43a@fit.cvut.cz",
+            "182308b@fit.cvut.cz",
+            "787ac7e@fit.cvut.cz",
+            "f990200@fit.cvut.cz",
+            "972254c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif (($# != 3))\nthen\n  echo \"Spatny pocet parametru\" >&2 \n  exit 2\nfi\n\nresult=$(($1*$2*$3))\necho $result",
+        "culprit_assignment_name": "2020-12 - soucin",
+        "culprit_count": 5,
+        "culprits": [
+            "23bd0a0@fit.cvut.cz",
+            "f6dce00@fit.cvut.cz",
+            "8376b79@fit.cvut.cz",
+            "387c60a@fit.cvut.cz",
+            "3264e39@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\n#Copy Text\ncp -f \"$1\" \"$1\".original\n\n#Replace Name\nsed -e 's/\\<bl[[:lower:]]*\\>/xxxx/g' -e 's/\\<Bl[[:lower:]]*\\>/xxxx/g' \"$1\".original > \"$1\"\nvar=\"$(grep -c 'xxxx' < \"$1\")\"\n\nvar2=\"$(wc -l < \"$1\")\"\n\n#Last line echo\necho \"---\nOut of a total of $var2 rows, $var were censored\" >> \"$1\"",
+        "culprit_assignment_name": "en-2020 DU Censorship",
+        "culprit_count": 5,
+        "culprits": [
+            "630add3@fit.cvut.cz",
+            "6ba91a1@fit.cvut.cz",
+            "5e040bd@fit.cvut.cz",
+            "f13e73e@fit.cvut.cz",
+            "edfca61@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir -p ~/cz ~/en \nln \"UNIVERSITIES/CVUT v Praze\" ~/cz/CVUT \nln \"UNIVERSITIES/CVUT v Praze\" ~/cz/CTU",
+        "culprit_assignment_name": "[OLD] EN-005-Hard link II",
+        "culprit_count": 4,
+        "culprits": [
+            "d0ef618@fit.cvut.cz",
+            "e61f1d6@fit.cvut.cz",
+            "6ba91a1@fit.cvut.cz",
+            "f13e73e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\ncp -f \"$1\" \"$1\".original\nsed -e 's/\\<bl[[:lower:]]\\>/xxxx/g' -e 's/\\<Bl[[:lower:]]\\>/xxxx/g' \"$1\".original > \"$1\"\nvar=\"$(grep -c 'xxxx' < \"$1\")\"\nvar2=\"$(wc -l < \"$1\")\"\necho \"---\nOut of a total of $var2 rows, $var were censored\" >> \"$1\"",
+        "culprit_assignment_name": "en-2020 DU Censorship",
+        "culprit_count": 4,
+        "culprits": [
+            "dfb1b3e@fit.cvut.cz",
+            "bf7e145@fit.cvut.cz",
+            "2b7d0f7@fit.cvut.cz",
+            "3ce0506@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -d '.' | tr -d ',' | tr ' ' '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -n | tail -1 | tr -d '0123456789' | tr -d ' '",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 4,
+        "culprits": [
+            "a447c97@fit.cvut.cz",
+            "e4adf46@fit.cvut.cz",
+            "a84399c@fit.cvut.cz",
+            "1250a05@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | head -1 | awk ' {FS=\",\";$0=$0}{\nprintf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | tail -n +2 | awk ' {FS=\",\";$0=$0}{\n printf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 4,
+        "culprits": [
+            "92d80f0@fit.cvut.cz",
+            "223dd3f@fit.cvut.cz",
+            "723b699@fit.cvut.cz",
+            "a061574@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr '\\t' ' ' | tr ',' ' ' | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7)}' > table.csv;\n\ncat \"$FILE\" | tail +2 | paste -s -d',,,,@' | tr '@' '\\n' | tail +1 | awk '{FS=\",\";$0=$0}{printf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7)}' > tmp;\nsed 's/^*//' tmp >> table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 4,
+        "culprits": [
+            "12a3808@fit.cvut.cz",
+            "3a00894@fit.cvut.cz",
+            "14609ab@fit.cvut.cz",
+            "ff7598c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd \"$DIR\"; sed 's/ /\\n/g;s/\\.//g;s/,//g' *.txt | grep '^.\\{7\\}$' | sort | uniq -c | sort -n | tail -n1 | sed 's/[[:digit:]]*//g' | tr -d ' '",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 4,
+        "culprits": [
+            "75e1fc1@fit.cvut.cz",
+            "71a6231@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | sed 's\\,\\\\' | tr '\\t' '\\n' | head -5 | paste -s -d\",,,,\\n\" > table.csv ; cat \"$FILE\" | tail +2 | sed 's\\,\\\\g' | paste -s -d\",,,,\\n\" | sed 's\\ \\\\' >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 4,
+        "culprits": [
+            "a447c97@fit.cvut.cz",
+            "4086ed4@fit.cvut.cz",
+            "0c08cfe@fit.cvut.cz",
+            "e4adf46@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | sed 's/[0-9]*//g' |  sed 's/[A-Z]/\\L&/g' | sort | split -l 10 | paste xaa xab xac | sed -e 's/\\t/ \\t/g' | column -t -s$'\\t' | awk '{print NR \"\\t\" $0}' && rm xaa xab xac",
+        "culprit_assignment_name": "en-2020-06 Modification and joining columns",
+        "culprit_count": 4,
+        "culprits": [
+            "e61f1d6@fit.cvut.cz",
+            "630add3@fit.cvut.cz",
+            "431a793@fit.cvut.cz",
+            "ba7877f@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '\\n' ' ' | tr ' ' '\\n' | tr -d '.,' | grep '[a-zA-Z]\\{7\\}' | sort | uniq -c | sort -nr | tr -s ' ' | awk -F' ' 'BEGIN{c=0}(c==0){c=$1;}(c==$1){printf\"%s\\n\",$2;}' | sort -r | head -n 1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 4,
+        "culprits": [
+            "1df75e2@fit.cvut.cz",
+            "540e4d1@fit.cvut.cz",
+            "28d6f8e@fit.cvut.cz",
+            "a129b7b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | sed -E 's/[^a-zA-Z]/\\n/g' | sed -En '/^.......$/p' | sort |uniq -c | tr -s ' '| sort -nrt' ' -k2,3 | head -1| cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 4,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "0881461@fit.cvut.cz",
+            "7204353@fit.cvut.cz",
+            "2333720@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr A-Z a-z | tr -cd 'a-z\\n' | sort | split -l 10 ; paste -d'\\t' xaa xab xac | nl > \"$FILE\" ; rm -rf xa*",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 4,
+        "culprits": [
+            "71b03a5@fit.cvut.cz",
+            "69d8ec3@fit.cvut.cz",
+            "5096151@fit.cvut.cz",
+            "e711f94@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr ',' ' ' | cut -f1,2,3,4,5 | tr -s ' ' | tr '\\t' ',' > table.csv ; tail +2 \"$FILE\" | tr -d ',' | paste -s -d',,,,\\n' | cut -c 2- >> table.csv",
+        "culprit_assignment_name": "en-2020-09 DU Change of the file format to csv",
+        "culprit_count": 4,
+        "culprits": [
+            "bf7e145@fit.cvut.cz",
+            "630add3@fit.cvut.cz",
+            "9c2b7e9@fit.cvut.cz",
+            "16576d2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mood=$(ls -a \"$DIR\" | wc -w)\necho \"In the directory $DIR, there are $mood entries\"\nfun=$(echo \"In the directory $DIR, there are $mood entries\" |tee \"$FILE\")",
+        "culprit_assignment_name": "HW3 - Sum of directory entries",
+        "culprit_count": 4,
+        "culprits": [
+            "6ba91a1@fit.cvut.cz",
+            "5e040bd@fit.cvut.cz",
+            "f13e73e@fit.cvut.cz",
+            "9fb73cb@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\n\nN=$(cat \"$1\" | sed -n \"/,$2,/p\" | wc -l)\nif (( N == 0 )); then\n>&2 printf '%s\\n%s\\n' \"Wrong sector\" \"Usage: $0 file sector\" \nexit 1;\nfi\n\nprintf '%s\\n' \"Shares from the sector \\\"$2\\\"\"\necho \"----------------------------------\"\ncat \"$1\" | sed -n \"/,$2,/p\"\necho \"----------------------------------\"\n\ncat \"$1\" | sed -n \"/,$2,/p\" | cut -d, -f5 | sort -rn | awk 'MIN=1000 {for(i=0; i<NF; i++) if (MAX<$0) {MAX = $0}; if ($0<MIN) {MIN = $0}; SUM+=$0; DELENI++} \nEND {printf \"minimum last price = %.02lf\\taverage last price = %.02lf\\tmaximum last price= %.02lf\\n\", MIN, SUM/DELENI, MAX }'",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 3,
+        "culprits": [
+            "75e1fc1@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed 's/,*//g' \"$FILE\" | head -n -1 | sed '1s/Links//' | tr -s ' ' ' ' | sed '1s/Market Cap $K/Market.Cap:$K/' | sed '1s/ /\\n/g' | tr -s '\\n' '\\n' | paste -s -d',,,,\\n'| sed 's/ //' | sed '1s/Market.Cap:$K/Market Cap $K/' | sed '1s/Symbol\tName\tSector\tMarket Cap $K\tLast\t,/Symbol,Name,Sector,Market Cap $K,Last\\n/' >table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "71a6231@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "touch table.csv;\necho \"Symbol,Name,Sector,Market Cap \\$K,Last\" > table.csv;\ncat \"${FILE}\" | sed -n '2,$p' | sed 's/^[ \\t]*//;s/[ \\t]*$//' | sed '\n$!N;$!N;$!N;$!N;s/,//g' | sed '$!N;$!N;$!N;$!N;s/\\n/,/g'>>table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "0666ae5@fit.cvut.cz",
+            "cda055e@fit.cvut.cz",
+            "c2120ec@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed 's/,*//g' \"$FILE\" | head -n -1 | sed '1s/Links//' | tr -s ' ' ' ' | sed '1s/Market Cap $K/Market.Cap:$K/' | sed '1s/ /\\n/g' | tr -s '\\n' '\\n' | paste -s -d',,,,,\\n'| sed 's/ //' | sed '1s/Market.Cap:$K/Market Cap $K/' | sed '1s/Symbol\tName\tSector\tMarket Cap $K\tLast\t,/Symbol,Name,Sector,Market Cap $K,Last\\n/' >table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "71a6231@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '\\n' ' ' | tr ' ' '\\n' | tr -d '.,' | grep '[a-zA-Z]{7}' | sort | uniq -c | sort -nr | tr -s ' ' | awk -F' ' 'BEGIN{c=0}(c==0){c=$1;}(c==$1){printf\"%s\\n\",$2;}' | sort -r | head -n 1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "1df75e2@fit.cvut.cz",
+            "2515a45@fit.cvut.cz",
+            "a129b7b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\nData=\"$1\"\nSectorName=\"$2\"\n\n\ngrep -E \"^[^,]+,[^,]+,$2,\" \"$Data\" > cacheAWK_1\nNumberLines=$(wc -l <cacheAWK_1)\nif (( NumberLines == 0 ))\n    then echo \"Wrong sector\" >&2; echo \"Usage: $0 file sector\" >&2; exit 1\n    fi\n    \necho \"Shares from the sector \\\"$2\\\"\" > result\nMinus=$(sed -E 's/[[:alnum:][:blank:]\"[:alnum:][:blank:]\"[:alnum:][:blank:]]/-/g' <<<\"Shares from the sector\\\"$2\\\"\" )\necho \"$Minus\"- >> result\ncat cacheAWK_1 >> result\necho \"$Minus\"- >> result\n\navg=$(awk -F',' 'BEGIN{c=0;s=0.0} {c++; s=s+$5 } END{printf(\"%g\",s/c)}' cacheAWK_1)\nmax=$(awk -F',' 'BEGIN{c=0;s=0.0} {if(s<=$5){s=$5}} END{printf(\"%g\",s)}' cacheAWK_1)\nmin=$(awk -F',' 'BEGIN{c=0;s=-1} { if(s==-1){s=$5}; if(s>=$5){s=$5}} END{printf(\"%0.2f\",s)}' cacheAWK_1)\n\nprintf \"minimum last price = %0.2f\\taverage last price = %0.2f\\tmaximum last price= %0.2f\\n\" $min $avg $max >> result\ncat result\nrm result cacheAWK_1",
+        "culprit_assignment_name": "2020-LS-TEST-HW SED",
+        "culprit_count": 3,
+        "culprits": [
+            "3a00894@fit.cvut.cz",
+            "182308b@fit.cvut.cz",
+            "23bd0a0@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr -d '[:digit:]' <\"$FILE\" | tr '[:upper:]' '[:lower:]' | sort | split -l 10; paste xaa xab xac | nl > \"$FILE\"; rm xa[a-c]",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 3,
+        "culprits": [
+            "f2c3b83@fit.cvut.cz",
+            "66860dd@fit.cvut.cz",
+            "0627db4@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt| tr -d . | tr ' ' '\\n' |sort -f | grep -e \"^.......$\"| uniq -c | sort -n | tail -1 | tr -d {1234567890} |tr -d ' '",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "f4b7d59@fit.cvut.cz",
+            "641ca56@fit.cvut.cz",
+            "7d63122@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed 's/,*//g' \"$FILE\" | head -n -1 | sed '1s/Links//' | tr -s ' ' ' ' | sed '1s/Market Cap $K/Market.Cap:$K/' | sed '1s/ /\\n/g' | tr -s '\\n' '\\n' | paste -s -d',,,,\\n'| sed 's/ //' | sed '1s/Market.Cap:$K/Market Cap $K/' >table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "71a6231@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -d \".\" | tr \" \" \"\\n\" | grep -E ^.......$ | sort | uniq -c | sort -nr | sort -r | head -1 | tr -d \"[:digit:]\" | tr -d \" \"",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "65b20a2@fit.cvut.cz",
+            "c96ca41@fit.cvut.cz",
+            "3704a65@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr  ' ' '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -nr | awk '{print $2}' | head -1\n",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "0b9a7e0@fit.cvut.cz",
+            "dbeec3f@fit.cvut.cz",
+            "7a9285d@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "X=$(ls -a \"./$DIR\" | wc -l)\necho \"V adresari $DIR je $X polozek\"\necho \"V adresari $DIR je $X polozek\" > \"./$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 3,
+        "culprits": [
+            "2e9eb0a@fit.cvut.cz",
+            "26643e5@fit.cvut.cz",
+            "9bbbd22@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr '[:blank:]' '\\n' <\"$DIR\"/*.txt | grep -E '.{7}' | sort | uniq -c | sort -k1 | tail -1 | tr -d '0-9' | tr -d ' '",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "7f6931a@fit.cvut.cz",
+            "f209262@fit.cvut.cz",
+            "9d60ebc@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr '[:blank:]' '\\n' <\"$DIR\"/*.txt | grep -E '.{7}' | sort | uniq -c | sort -k1,1n -k2 | tail -1 | tr -d ' 0-9'",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "7f6931a@fit.cvut.cz",
+            "5cad676@fit.cvut.cz",
+            "16f28b9@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "name=\"$1\"\ncat \"$name\" > \"$name\".original\nsed -e 's/<[Bb]l[a-z]*>/xxxx/g' \"$name\".original > \"$name\"\nwords=\"$(grep \"<xxxx>\" \"$name\" | wc -l)\"\nrows=\"$(cat \"$name\".original | wc -l)\"\nprintf '%s---\\n' >> \"$name\"\necho \"Z celkoveho poctu \"$rows\" radek bylo \"$words\" cenzurovano\" >> \"$name\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "17df1a6@fit.cvut.cz",
+            "aecc617@fit.cvut.cz",
+            "1560c38@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | sed -e 's/\\<Links\\>//g'| sed -e 's/\"Cap,\"/Cap/g' | sed 's/\\(.*\\),/\\1/' | tr ',' ' ' | tr '\\t' ',' | sed 's/\\(.*\\),/\\1/' > table.csv;\ncat \"$FILE\" | tail -n +2 | tr -d ',' | tr '\\n' ',' | sed 's/, /\\n/g' | sed 's/^ //' | sed 's/,*$//' >> table.csv;\nprintf \"\\n\" >> table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "99dc5ef@fit.cvut.cz",
+            "2619cdd@fit.cvut.cz",
+            "acc84ac@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [ $# -eq 3 ]\n        then\n                echo \"$(($1 * $2 * $3))\"\n                exit 0\n        else\n                >&2 echo \"Spatny pocet parametru\"\n                exit 2\nfi",
+        "culprit_assignment_name": "2020-12 - soucin",
+        "culprit_count": 3,
+        "culprits": [
+            "b9776ac@fit.cvut.cz",
+            "2a55887@fit.cvut.cz",
+            "7de075a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\n\nawk -F ',' '{ print $3}' \"$1\" > tmpLmao\n\ngrep \"$2\"  tmpLmao > tmp2\n\nif [ $? -eq 1 ]; then\n\n        echo \"Wrong sector\" 1>&2\n        echo \"Usage: $0 file sector\" 1>&2\n        exit 1\nfi\n\n\nstart=1\n\nstring=$(echo \"Shares from the sector \\\"\"$2\"\\\"\")\necho $string\n\nlenght=${#string}\n\nfor(( c=$start; c<=$lenght; c++))\ndo\n        printf -\ndone\necho\n\n\ngrep \"$2\" \"$1\"\n\n\nfor(( c=$start; c<=$lenght; c++))\ndo\n        printf -\ndone\necho\n\n\n\nbig=$(grep \"$2\" \"$1\" | awk -F ',' '{print $5}' | sort -g | tail -1)\n\nsmall=$(grep \"$2\" \"$1\" | awk -F ',' '{print $5}' | sort -g | head -1)\n\navg=$(grep \"$2\" \"$1\" | awk -F ',' '{sum+=$5} END {print sum/NR}')\n\ntmp=$(printf %.2f $avg)\n\n\necho -e \"minimum last price = $small\\taverage last price = $tmp\\tmaximum last price= $big\"\n\n",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 3,
+        "culprits": [
+            "a447c97@fit.cvut.cz",
+            "534cab6@fit.cvut.cz",
+            "40f3329@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"Symbol,Name,Sector,Market Cap \\$K,Last\" >> table.csv\ncat \"$FILE\" |sed 's/,//g' | tail +2 | paste -d~ - - - - - |cut -d' ' -f2- | tr '~' ',' >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "a366c58@fit.cvut.cz",
+            "0179895@fit.cvut.cz",
+            "aacdd13@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr '[:upper:]' '[:lower:]' | tr -d '0-9' | sort | split -l10; paste x* | nl > \"$FILE\"; rm x*",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 3,
+        "culprits": [
+            "f68128d@fit.cvut.cz",
+            "f816709@fit.cvut.cz",
+            "3aed5f6@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr '[:upper:]' '[:lower:]' | tr -d '[:digit:]' | sort | split -l10 ; paste xa? -d '\\t'| nl > \"$FILE\" ; rm -rf xa?",
+        "culprit_assignment_name": "en-2020-06 Modification and joining columns",
+        "culprit_count": 3,
+        "culprits": [
+            "630add3@fit.cvut.cz",
+            "9c2b7e9@fit.cvut.cz",
+            "a235ede@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr '\\t' ' ' | tr ',' ' ' | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7)}' > table.csv;\n\ncat \"$FILE\" | tail +2 | paste -s -d',,,,@' | tr '@' '\\n' | tail +1 | awk '{FS=\",\";$0=$0}{printf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7)}' > tmp;\nsed 's/^ *//' tmp >> table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "bf552a9@fit.cvut.cz",
+            "ff7598c@fit.cvut.cz",
+            "37e14b4@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$1\" > \"$1.original\";\ncat \"$1.original\" | sed -E \"s/\\<(B|b)l[[:lower:]]*\\>/xxxx/g\" > \"$1\";\necho \"---\" >> \"$1\";\necho Z celkoveho poctu $(cat \"$1.original\" | wc -l) radek bylo $(cat \"$1.original\" | grep -Ei '\\<bl[[:lower:]]*\\>' | wc -l) cenzurovano >> \"$1\";",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "711c810@fit.cvut.cz",
+            "51f717e@fit.cvut.cz",
+            "f2c3b83@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "printf \"%s\\n\" \"$(cat \"$FILE\" | tr -d '[:digit:]' | tr '[:upper:]' '[:lower:]' | sort | pr -t -3 -s | nl)\" > \"$FILE\";",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 3,
+        "culprits": [
+            "36e2cb4@fit.cvut.cz",
+            "eb173bf@fit.cvut.cz",
+            "461f336@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir -p ~/{cz, en} \nln \"UNIVERSITIES/CVUT v Praze\" ~/cz/CVUT \nln \"UNIVERSITIES/CVUT v Praze\" ~/cz/CTU ",
+        "culprit_assignment_name": "[OLD] 005 - Pevny link II.",
+        "culprit_count": 3,
+        "culprits": [
+            "7f6931a@fit.cvut.cz",
+            "a353ac9@fit.cvut.cz",
+            "0df8faf@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nif [[ ! -f \"$1\" ]] ;then\n exit 1\nelse\n y=$(cat \"$1\" | awk -F',' -v jmeno=\"$2\" '{if(jmeno==$3){print $0}}')\n if [[ \"$y\" == \"\" ]] ;then\n  me=\"$(basename \"$(test -L \"$0\" && readlink \"$0\" || echo \"$0\")\")\"\n  echo \"Wrong sector\" >&2\n  echo \"Usage: /$me file sector\" >&2\n  exit 1\n else\n  echo \"$y\" > tmp.txt\n  x=$(cut tmp.txt -d',' -f5 | sort -rn)\n  min=$(echo \"$x\" | tail -1)\n  max=$(echo \"$x\" | head -1)\n  avg=$(echo \"$x\" | awk 'BEGIN{avg=0} {avg+=$1} END{avg=avg/NR; print avg}')\n  echo \"Shares from the sector \"'\"'$2'\"'\n  echo \"Shares from the sector \"'\"'$2'\"' | sed 's/./-/g'\n  echo \"$y\"\n  echo \"Shares from the sector \"'\"'$2'\"' | sed 's/./-/g'\n  printf \"minimum last price = %0.2f\\taverage last price = %0.2f\\tmaximum last price= %0.2f\\n\" $min $avg $max\n fi\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 3,
+        "culprits": [
+            "fa67302@fit.cvut.cz",
+            "65b20a2@fit.cvut.cz",
+            "4e70d16@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [0-9] | tr [A-Z] [a-z] | sort > test.txt;\nsplit -l 10 test.txt;\npaste -d'\\t'  xaa xab xac | nl > \"$FILE\";\n\\rm test.txt xaa xab xac",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 3,
+        "culprits": [
+            "a90a9de@fit.cvut.cz",
+            "5d1772d@fit.cvut.cz",
+            "c9f8be3@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | head -1 | awk ' {FS=\",\";$0=$0}{\nprintf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "c630fac@fit.cvut.cz",
+            "9a36e9f@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\ncat \"$1\">\"$1\".original\ncountY=$(egrep -c '\\<Bl|\\<bl' \"$1\")\ncountX=$(wc -l < \"$1\")\nsed 's/\\<Bl[[:lower:]]*\\>/xxxx/g' \"$1\"  | sed 's/\\<bl[[:lower:]]*\\>/xxxx/g' > tmp.txt\ncat tmp.txt > \"$1\"\nrm tmp.txt\necho \"---\">>\"$1\"\necho \"Z celkoveho poctu $countX radek bylo $countY cenzurovano\" >>\"$1\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "f209262@fit.cvut.cz",
+            "2a55887@fit.cvut.cz",
+            "3f7827a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr ' ' '\\n' <\"$DIR\"/*.txt | tr -s '\\n' | egrep '\\<[[:alpha:]]{7}\\>' | sort | uniq -c | sort -k1,1nr -k2,2r | head -1 | tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "11ce1b6@fit.cvut.cz",
+            "da43c17@fit.cvut.cz",
+            "2447e72@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "oldPATH=$PATH;PATH=/usr/gnu/bin:\"$PATH\";cat \"$FILE\" | tr -d '0-9' | tr [:upper:] [:lower:] | sort > pomoc.txt; POMOC=\"pomoc.txt\"; cat \"$POMOC\" | head -10 >s1.txt; cat \"$POMOC\" | head -20 | tail -10 >s2.txt; cat \"$POMOC\" | tail -10 >s3.txt; paste -d'\\t' s1.txt s2.txt s3.txt | cat -n > \"$FILE\"; PATH=$oldPATH;unset oldPATH; yes | rm s?.txt \"$POMOC\";",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 3,
+        "culprits": [
+            "da43c17@fit.cvut.cz",
+            "a871bbf@fit.cvut.cz",
+            "9d60ebc@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "input=$1\nif [ ! -f \"$input\" ]; then\n    exit 1\nfi\noriginal=\"${input}.original\"\ncp \"${input}\" \"${original}\"\nsed -E -i 's/(\\b[Bb]l[^ 0-9]+\\b)/xxxx/g' \"${input}\"\nsed -E -i 's/\\<[Bb]l\\>/xxxx/g' \"${input}\"\nX=$(grep -c 'xxxx' \"${input}\")\nY=$(grep -v '^\\s*$' \"${original}\" | wc -l)\ntouch tmp\nhead -${Y} \"${input}\" > tmp\ncp tmp \"${input}\"\nrm -r tmp\nY2=$(cat \"${original}\" | wc -l)\nif [ \"$Y\" -gt \"$Y2\" ];then\n    printf \"\\n\" >> \"${input}\"\nfi\necho \"---\" >> \"${input}\"\nprintf \"Z celkoveho poctu ${Y} radek bylo ${X} cenzurovano\\n\" >> \"${input}\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "0666ae5@fit.cvut.cz",
+            "cda055e@fit.cvut.cz",
+            "80a6502@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "name=\"$1\"\ncat \"$name\" > \"$name\".original\nsed -e 's/\\<[Bb]l[a-z]*\\>/xxxx/g' \"$name\".original > \"$name\"\nwords=\"$(grep \"\\<xxxx\\>\" \"$name\" | wc -l)\"\nrows=\"$(cat \"$name\".original | wc -l)\"\nprintf '%s---\\n' >> \"$name\"\necho \"Z celkoveho poctu \"$rows\" radek bylo \"$words\" cenzurovano\" >> \"$name\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "0881461@fit.cvut.cz",
+            "a366c58@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nresult=\"$(awk -F',' -v\"sector=$2\" '\nBEGIN { \n    print \"Shares from the sector \\\"\" sector \"\\\"\"\n    for ( i = 0; i < length(sector) + 25; i++ ) {\n        printf \"-\"\n    }\n    printf \"\\n\"\n    min = 0;\n    sum = 0;\n    cnt = 0;\n    max = 0;\n}\n$3 == sector { \n    print;\n    if ( cnt++ == 0 ) {\n        min = $5;\n        max = $5;\n    }\n    if ( $5 < min ) {\n        min = $5;\n    }\n    if ( $5 > max ) {\n        max = $5;\n    }\n    sum += $5;\n}\nEND {\n    for ( i = 0; i < length(sector) + 25; i++ ) {\n        printf \"-\"\n    }\n    printf \"\\n\"\n    printf \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\",min,sum/cnt,max\n}\n' \"$1\" 2>/dev/null)\"\n\nif [[ \"$(wc -l <<<\"$result\")\" -gt 3 ]]; then\n    echo \"$result\"\n    exit 0\nelse\n    echo -e \"Wrong sector\\nUsage: $0 file sector\" >&2\n    exit 1\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 3,
+        "culprits": [
+            "9e36076@fit.cvut.cz",
+            "6c61b43@fit.cvut.cz",
+            "80a6502@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed 's/,*//g' \"$FILE\" | sed '1s/.*/Symbol Name Sector Market.Cap.$K Last/g;s/^ //;1s/ /\\n/g;1s/\\./ /g' | paste -s -d',,,,\\n' >table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "71a6231@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\"|head -1|sed 's/,//g'|sed 's/\\t/,/g'|cut -d',' -f1-5>table.csv\ncat \"$FILE\"|tail +1|awk 'NR%5==2 {print}'|sed 's/ //g'>c1.txt\ncat \"$FILE\"|tail +1|awk 'NR%5==3 {print}'>c2.txt\ncat \"$FILE\"|tail +1|awk 'NR%5==4 {print}'>c3.txt\ncat \"$FILE\"|tail +1|awk 'NR%5==0 {print}'|sed 's/,//g'>c4.txt\ncat \"$FILE\"|tail +2|awk 'NR%5==0 {print}'>c5.txt\npaste -d',' c[1-5].txt>>table.csv\nrm c[1-5].txt",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "ac4ebef@fit.cvut.cz",
+            "7e9fd0c@fit.cvut.cz",
+            "6962aaf@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd \"$DIR\"\ncat *.txt | tr ' ' '\\n' | tr -d '.,' | grep '.......' | sort | uniq -c | sort -rn | head -1 | tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "71b03a5@fit.cvut.cz",
+            "5096151@fit.cvut.cz",
+            "e711f94@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "k=\"$1\"\ncp \"$k\" \"$k\".original\nsed 's/\\<[Bb]l[a-z]*\\>/xxxx/g' \"$k\" > tmp && mv -f tmp \"$k\"\nX=$(cat \"$k\" | wc -l | tr -d ' ')\nY=$(cat \"$k\"|grep -c 'xxxx')\necho \"---\" >> \"$k\"; echo \"Z celkoveho poctu $X radek bylo $Y cenzurovano\" >> \"$k\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "02b7623@fit.cvut.cz",
+            "6cc5dda@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -c [a-zA-Z] '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -t ' ' -k2,2 -n |tail -1 |tr -s ' ' | cut -d ' ' -f3,3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 3,
+        "culprits": [
+            "63a83e5@fit.cvut.cz",
+            "97184de@fit.cvut.cz",
+            "a87ca9a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/sh\n\nFILE=$1\n\nX=$(cat \"$FILE\" | wc -l)\nY=$(grep -Ew '[Bb]l[[:lower:]]*' \"$FILE\" | wc -l)\n\nsed -E 's/[B]l[[:lower:]]*/xxxx/' \"$FILE\" > tmp\nsed -E 's/[b]l[[:lower:]]*/xxxx/' tmp > tmp2\n\nawk 'END{printf\"---\\nZ celkoveho poctu '$X' radek bylo '$Y' cenzurovano\\n\"}' tmp2 >> tmp2\ntouch \"$FILE.txt\"\ncp \"$FILE\" \"$FILE.txt\"\nmv tmp2 \"$FILE\"\n\nfor FILE in *.txt; do\n    mv \"$FILE\" \"$(basename \"$FILE\" .txt).original\"\ndone\n\nrm tmp",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "fc81245@fit.cvut.cz",
+            "26643e5@fit.cvut.cz",
+            "80cbf32@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tail -n+2 | tr -d ',' | sed 's/^ //g'| paste -s -d',,,,\\n' >table.csv ; sed -i '1 i\\Symbol,Name,Sector,Market Cap $K,Last' table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "86434d5@fit.cvut.cz",
+            "b954b66@fit.cvut.cz",
+            "117d5ad@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tmp.txt;\n\ngrep \",$2,\" \"$1\" > tmp.txt;\nif [ -s tmp.txt ]\nthen\n    a=\"Do nothing.\"\nelse\n    echo Wrong sector >&2\n    echo Usage: $0 file sector >&2\n    rm tmp.txt;\n    exit 1;\nfi\nalfa=\"Shares from the sector \\\"$2\\\"\"\necho Shares from the sector \\\"$2\\\"\ntestik=${#alfa}\ncounter=1\nwhile [ $counter -le $testik ]\ndo\nprintf \"-\"\n((counter++))\ndone\nprintf \"\\n\"\ncat tmp.txt;\ncounter=1\nwhile [ $counter -le $testik ]\ndo\nprintf \"-\"\n((counter++))\ndone\nprintf \"\\n\"\nawk 'BEGIN{FS = \",\"}{print $5}' tmp.txt > data.txt\nsort -nr data.txt > datasorted.txt\nmax=$(head -1 datasorted.txt)\nsort -n data.txt > datasorted1.txt\nmin=$(head -1 datasorted1.txt)\ncount=0;\ntotal=0; \n\naverage=$(awk -F ',' 'BEGIN{sum= 0; num= 0;}{ sum += $1;num += 1}END{printf \"%.2f\",sum / num}' datasorted.txt)\necho -e minimum last price = $min'\\t'average last price = $average'\\t'maximum last price= $max \nrm data.txt\nrm tmp.txt\nrm datasorted.txt\nrm datasorted1.txt",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 3,
+        "culprits": [
+            "0881461@fit.cvut.cz",
+            "f70c07b@fit.cvut.cz",
+            "173c9f4@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d '[0-9]' | tr '[[:upper:]]' '[[:lower:]]' | sort | split -l10; paste 'xaa' 'xab' 'xac' | nl > \"$FILE\"; rm 'xaa' | rm 'xab' | rm 'xac'",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 3,
+        "culprits": [
+            "65b20a2@fit.cvut.cz",
+            "c96ca41@fit.cvut.cz",
+            "3704a65@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr -d \",\" | tr \"\\t\" \"\\n\" | head -5| paste -s -d\",,,,\" >table.csv\ncat \"$FILE\" | tail +2 | tr -d \",\" | paste -s -d\",,,,\\n\" | cut -d\" \" -f2-7 >>table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 3,
+        "culprits": [
+            "65b20a2@fit.cvut.cz",
+            "c96ca41@fit.cvut.cz",
+            "3704a65@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\nX=\"$(cat \"$1\" | wc -l)\"\nsed -e 's/\\<[Bb]l[^ |5]*/xxxx/g' \"$1\" > out\nsed -e 's/\\<xxxx5.*[^ ]*/bl58.q37)/g' out >> out2\ncat out2 > out\nrm out2\necho '---' >> out\nY=\"$(grep 'xxxx' out | wc -l)\"\necho \"Z celkoveho poctu $X radek bylo $Y cenzurovano\" >> out\nmv \"$1\" \"$1.original\"\nmv \"out\" \"$1\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 3,
+        "culprits": [
+            "65b20a2@fit.cvut.cz",
+            "c96ca41@fit.cvut.cz",
+            "3704a65@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "if [ $# != 3 ]; then\n    >&2 echo \"Spatny pocet parametru\"\n    exit 2\nelse\n    sum=$(($1 * $2 * $3))\n    echo \"$sum\"\nfi",
+        "culprit_assignment_name": "2020-12 - soucin",
+        "culprit_count": 3,
+        "culprits": [
+            "ad36c17@fit.cvut.cz",
+            "80a6502@fit.cvut.cz",
+            "87ac12e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\ncp -f \"$1\" \"$1\".original\nsed -e 's/\\<bl[[:lower:]]*\\>/xxxx/g' -e 's/\\<Bl[[:lower:]]*\\>/xxxx/g' \"$1\".original > \"$1\"\nvar=\"$(grep -c 'xxxx' < \"$1\")\"\nvar2=\"$(wc -l < \"$1\")\"\necho \"---\nOut of a total of $var2 rows, $var were censored\" >> \"$1\"",
+        "culprit_assignment_name": "en-2020 DU Censorship",
+        "culprit_count": 3,
+        "culprits": [
+            "dfb1b3e@fit.cvut.cz",
+            "9c2b7e9@fit.cvut.cz",
+            "16576d2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"${DIR}\"/*.txt | tr -c '[:alnum:]' '\\n' | grep '^.\\{7\\}$' | sort | uniq -c | sort -nr | head -1 | tr -c '[:alnum:]' '\\n' | tail -1",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "0666ae5@fit.cvut.cz",
+            "cda055e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir -p ~/{cz, en} \nln \"UNIVERSITIES/CVUT v Praze\" ~/cz/CVUT \nln \"UNIVERSITIES/CVUT v Praze\" ~/cz/CTU",
+        "culprit_assignment_name": "[OLD] 005 - Pevny link II.",
+        "culprit_count": 2,
+        "culprits": [
+            "d0ef618@fit.cvut.cz",
+            "dbeec3f@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir ~/{cz,en} && ln \"$UNIVERSITES\"/\"CVUT v Praze\" ~/cz/CVUT && ln \"$UNIVERSITES\"/\"CVUT v Praze\" ~/en/CTU",
+        "culprit_assignment_name": "[OLD] 005 - Pevny link II.",
+        "culprit_count": 2,
+        "culprits": [
+            "3a00894@fit.cvut.cz",
+            "dbeec3f@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nFILENAME=\"$1\"\nSECTOR=\"$2\"\n\nif ! grep \",$SECTOR,\" \"$FILENAME\" > /dev/null; then\n    printf \"Wrong sector\\nUsage: \"\"$0\"\" file sector\\n\" 1>&2;\n    exit 1\nfi\n\nawk -F ',' -v phrase=\"$SECTOR\" 'BEGIN {\n    i=0;\n    c=0.0;\n    min=1000000;\n    max=0;\n    avg=0.0;\n    len=length(phrase);\n    printf(\"Shares from the sector \\\"%s\\\"\\n\",phrase);\n    for(i = 0; i < len; i++) {\n        printf(\"-\");\n    }\n    printf(\"\\n\");\n    };\n    ($3 == phrase) {\n        print $0;\n        avg+=$NF;\n        c++;\n        if($5 > max)\n            max=$5;\n        if($5 < min)\n            min=$5;\n    };\n    END {\n        for(i=0; i< len + 25; i++) {\n            printf(\"-\");\n        }\n        printf(\"\\n\");\n        printf(\"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price = %.2f\\n\",min,avg/c,max);\n    };\n    ' \"$FILENAME\"",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "cda055e@fit.cvut.cz",
+            "17abdd2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "touch $SOUBOR\ncd $DIR\nls -la > a.a\nN=$(tail -n+3 a.a | wc -l)\necho \"V adresari $DIR je $N polozek\" | tee $SOUBOR",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "dcdb6a2@fit.cvut.cz",
+            "2333720@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "name=\"$1\"\ncat \"$name\" > \"$name\".original\nsed -e 's/\\<[Bb]l[a-z]*\\>/xxxx/g' \"$name\".original > \"$name\"\nwords=\"$(grep \"\\<xxxx\\>\" \"$name\" | wc -l)\"\nrows=\"$(cat \"$name\".original | wc -l)\"\nprintf '%s---\\n' >> \"$name\"\necho \"Z celkoveho poctu \"$rows\" radek bylo \"$words\" cenzurovano\" >> \"$name",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "0881461@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd \"$DIR\"\ncat *.txt | tr -c '[:alpha:]' '[\\n*]' | grep '.......' | uniq -c | sort | tail -1 | tr -d '[:digit:]' | tr -d ' '",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "eff33be@fit.cvut.cz",
+            "02b7623@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr ' ' '\\n' < \"$DIR\"/*.txt | sort | grep -E '^.......$' | uniq -c | sort -n| tail -n -1 | tr -s ' ' | cut -d' ' -f 3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "f2c3b83@fit.cvut.cz",
+            "66860dd@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\ncat \"$1\" | sed -E 's/\\<Bl[a-z]+|\\<bl[a-z]+|^bl$|^Bl$/xxxx/g' > tmp.txt\nR=$( cat \"$1\" | wc -l )\nC=$( grep -E '\\<Bl[a-z]+|\\<bl[a-z]+|^bl$|^Bl$' \"$1\" | wc -l )\n\necho \"---\" >> tmp.txt\necho \"Z celkoveho poctu \"$R\" radek bylo \"$C\" cenzurovano\" >> tmp.txt\n\nmv \"$1\" \"$1.original\"\ncp tmp.txt \"$1\"\nrm -r tmp.txt",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "9e36076@fit.cvut.cz",
+            "845db6c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\n#Copy Text\ncp -f \"$1\" \"$1\".original\n\n#Replace Name\nsed -e 's/\\<bl[[:lower:]]\\>/xxxx/g' -e 's/\\<Bl[[:lower:]]\\>/xxxx/g' \"$1\".original > \"$1\"\nvar=\"$(grep -c 'xxxx' < \"$1\")\"\n\nvar2=\"$(wc -l < \"$1\")\"\n\n#Last line echo\necho \"---\nOut of a total of $var2 rows, $var were censored\" >> \"$1\"",
+        "culprit_assignment_name": "en-2020 DU Censorship",
+        "culprit_count": 2,
+        "culprits": [
+            "630add3@fit.cvut.cz",
+            "6ba91a1@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd \"$DIR\" ; cat *.txt | sed 's/[^ a-zA-Z]*//g' | tr ' ' '\\n' | grep -o -w \"\\w\\{7\\}\" |sort | uniq -c | sort -nr | tr -s ' ' | cut -d ' ' -f3 | sort | tail -1",
+        "culprit_assignment_name": "en-2020-09 DU Word with the highest frequency",
+        "culprit_count": 2,
+        "culprits": [
+            "6653620@fit.cvut.cz",
+            "48729eb@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nfile=$1;\ncateg=$2;\n\nnumberOfLines=$(grep -c \",$categ,\" \"$file\");\n\nif [ \"$numberOfLines\" = 0 ]; then\n{\necho \"Wrong sector\" >&2;\necho \"Usage: /\"${0##*/}\" file sector\" >&2;\nexit 1;\n}\nfi\ncat \"$1\"| awk -v TMP=\"$2\" -v VAR=\"$1\" -F',' 'BEGIN{s=0.0;print \"Shares from the sector \\\"\"TMP\"\\\"\"; len = 25 + length(TMP);for (i = 1; i <= len; i++)\nprintf \"-\";printf\"\\n\";counter = 0; a = 0.0;c=0; min = 0; max = 0}\n{\nif($3 ==TMP)\n{print $0;\ns = s + $5;\nc++;\nif (counter == 0){\nmin = $5\nmax = $5\ncounter = 1}\nif(0 + $5 < 0 + min){\nmin = $5\n}\nif ( 0 + max < 0 + $5){\nmax = $5\n}\n}\n}\nEND{\na = s/c\nfor (i = 1; i <= len; i++)\nprintf \"-\";printf\"\\n\";\nprintf(\"minimum last price = %0.2f\\taverage last price = %0.2f\\tmaximum last price= %0.2f\\n\",min,a, max) }'",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "6208018@fit.cvut.cz",
+            "66ff38e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"${DIR}\"/*.txt | tr -c '[:alnum:]' '\\n' | grep '^.{7}$' | sort | uniq -c | sort -nr | head -1 | tr -c '[:alnum:]' '\\n' | tail -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "cda055e@fit.cvut.cz",
+            "aecc617@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "[ -s \"$1\" ] || echo $'Wrong sector\\nUsage: '$0' file sector' >&2;\n[ -s \"$1\" ] || exit 1;\nawk -F',' -v var=\"$2\" '{if ($3==var) print $5}' \"$1\" > tmp \n[ -s tmp ] || echo $'Wrong sector\\nUsage: '$0' file sector' >&2;\n[ -s tmp ] || exit 1;\nVAR='Shares from the sector \"'$2'\"'\necho $VAR\necho ${VAR//[a-zA-Z0-9_ \\t\\n\\v\\f\\r \\\"]/-}\nawk -F',' -v var=\"$2\" '{if ($3==var) print}' \"$1\"\nsort -g tmp >> tmp2\necho ${VAR//[a-zA-Z0-9_\\\" \\t\\n\\v\\f\\r\\s ]/-}\nz1=head -n 1 tmp2 && z2=tail -n 1 tmp2\nawk -v var1=$z1 -v var2=$z2 '{sum=sum+$1} END { printf(\"minimum last price = %0.2f\\taverage last price = %0.2f\\tmaximum last price= %0.2f\\n\",var1, sum/NR, var2)}' tmp2\nrm tmp && rm tmp2",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "9796cde@fit.cvut.cz",
+            "1097280@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir \"$HOME\"/cz \"$HOME\"/en\nln \"$UNIVERSITIES\"/\"CVUT v Praze\" \"$HOME\"/cz/CVUT\nln \"$UNIVERSITIES\"/\"CVUT v Praze\" \"$HOME\"/en/CTU",
+        "culprit_assignment_name": "[OLD] 005 - Pevny link II.",
+        "culprit_count": 2,
+        "culprits": [
+            "7de075a@fit.cvut.cz",
+            "e65aca8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr A-Z a-z | tr -cd 'a-z\\n' | sort | split -l 10 ; paste -d'\\t' xaa xab xac | nl>\"$FILE\" ; rm -rf xa*",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "63a83e5@fit.cvut.cz",
+            "97184de@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"V adresari $DIR je $(ls -a \"$DIR\" | wc -w) polozek\"\necho \"V adresari $DIR je $(ls -a \"$DIR\" | wc -w) polozek\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "a447c97@fit.cvut.cz",
+            "b954b66@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"V adresari $DIR je $(ls -la $DIR | wc -l) polozek\" && echo \"V adresari $DIR je $(ls -la $DIR | wc -l) polozek\" > $SOUBOR",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "69d8ec3@fit.cvut.cz",
+            "604003e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$1\" | awk -v a=\"$2\" 'BEGIN{FS=\",\"}{if ($3 == a) printf(\"%s,%s,%s,%s,%g\\n\",$1,$2,$3,$4,$5) }' >RE.txt; \n[ -s RE.txt ]; b=$?;\nif [[ $b -eq 0 ]]; then \n  min=$(cat RE.txt | awk 'BEGIN{FS=\",\"}{printf(\"%g\\n\",$5)}' | sort -n | \n  head -1); \n  max=$(cat RE.txt | awk 'BEGIN{FS=\",\"}{printf(\"%g\\n\",$5)}' | sort -n | \n  tail -1);\n  avr=$(awk 'BEGIN{FS=\",\"}{ sum += $5; count++ }END{ avr = sum/count; \n  printf( \"%.2f\\n\", avr ) }' RE.txt);\n  string=\"Shares from the sector \\\"${2}\\\"\"; \n  printf '%s\\n' \"$string\"; iter=$(printf '%s\\n' \"$string\" | wc -c); \n  for i in 'seq 2 $iter'; \n    do printf '%c' \"-\"; \n  done; \n  printf '\\n'; \n  cat RE.txt; \n  for i in 'seq 2 $iter'; \n    do printf '%c' \"-\"; \n  done;\n  printf '\\n';\n  printf '%s\\t%s\\t%s\\n' \"minimum last price = ${min}\" \"average last price = ${avr}\" \"maximum last price= ${max}\";\nelse \n  printf '%s\\n%s\\n' \"Wrong sector\" \"Usage: ${0} file sector\" >&2 \n  return 1;\nfi",
+        "culprit_assignment_name": "2020-LS-TEST-HW SED",
+        "culprit_count": 2,
+        "culprits": [
+            "67b76a8@fit.cvut.cz",
+            "66ff38e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /usr/bin/bash\n\ncd \"$DIR\";\ncat \"$(ls *.txt)\" | tr ' ' '\\n' | tr -d '.,' | tr '[:upper:]' '[:lower:]' | sort -r | uniq -c | sort -nr | cut -c 9- > so\n\nfor word in $(<so)\ndo\n        if [ ${#word} = 7 ]\n        then\n        echo \"$word\"\n        exit 0\n        fi\ndone\nrm -f so",
+        "culprit_assignment_name": "en-2020-09 DU Word with the highest frequency",
+        "culprit_count": 2,
+        "culprits": [
+            "9c2b7e9@fit.cvut.cz",
+            "16576d2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$1\" > \"$1\".original;\nsed 's/\\<[Bb]l[a-z]*\\>/xxxx/g' \"$1\".original > \"$1\";\nlines=$(cat \"$1\".original | wc -l | tr -d ' ');\ncensoredLines=$(diff \"$1\" \"$1\".original | grep \"^>\" | wc -l | tr -d ' ');\necho \"---\" >> \"$1\";\necho \"Z celkoveho poctu $lines radek bylo $censoredLines cenzurovano\"  >> \"$1\";",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "92d80f0@fit.cvut.cz",
+            "e76dd57@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"${DIR}\"/*.txt | tr -c [:alpha:] '\\n'| tr [[:upper:]] [[:lower:]] | sort |grep -E ^[[:alpha:]]{7}$ | uniq -c | sort -k1,1n | tr -s ' ' | cut -d' ' -f3 | tail -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "e3ef132@fit.cvut.cz",
+            "8e3eae2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"${DIR}\"/*.txt | tr -c [:alpha:] '\\n'| tr [[:upper:]] [[:lower:]] | sort |grep -E ^[[:alpha:]]{7}$ | uniq -c | sort -k1,1n | tr -s ' ' | cut -d' ' -f3 | tail -1\n",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "04d789c@fit.cvut.cz",
+            "2fcddd1@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nFILE=\"$1\"\ncp \"$FILE\" \"$FILE\".original\nLINE=$(cat \"$FILE\" | wc -l)\nREPL=$(grep -ci 'bl[[:alpha:]]' \"$FILE\")\nsed -i 's/\\<Bl[[:alpha:]]*\\>/xxxx/g' \"$FILE\"\nsed -i 's/\\<bl[[:alpha:]]*\\>/xxxx/g' \"$FILE\"\necho \"---\" >> \"$FILE\"\necho \"Z celkoveho poctu $LINE radek bylo $REPL cenzurovano\" >> \"$FILE\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "8e3eae2@fit.cvut.cz",
+            "940aa59@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr -d 0-9 < $FILE >tmp.txt\ntr '[A-Z]' '[a-z]' < tmp.txt > $FILE\nsort $FILE > tmp.txt\nhead  tmp.txt  > tmp1.txt\nsed -n 11,20p tmp.txt > tmp2.txt\ntail tmp.txt > $FILE\npaste tmp2.txt $FILE> tmp.txt\npaste tmp1.txt tmp.txt  > tmp2.txt\nnl tmp2.txt > $FILE\nrm tmp1.txt tmp2.txt tmp.txt",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "b26856e@fit.cvut.cz",
+            "40f3329@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed 's/[0-9]*//g' \"$FILE\" | tr '[:upper:]' '[:lower:]' | sort | pr -ts --columns 3 | nl > aaa\ncat aaa > \"$FILE\"\nrm aaa",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "d8cb30c@fit.cvut.cz",
+            "f366219@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$1\" > \"$1.original\" ; \nX=$(cat \"$1\" | wc -l) ; \nY=$(egrep -wc \"[Bb]l[a-z]*\" \"$1\") ; \ncat \"$1\" | sed -e \"s/\\b[Bb]l[a-z]*\\b/xxxx/g\" > s1 ;\necho \"---\" >> s1 ;\necho \"Z celkoveho poctu $X radek bylo $Y cenzurovano\" >> s1;\ncat s1 > \"$1\" ; \nrm s1;",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "9b95707@fit.cvut.cz",
+            "64b75a8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/.txt | tr -c '[:alnum:]' '[\\n]' | sort | uniq -c | sort -nr > \"$DIR/tmp.txt\"\nawk 'length($2) == 7 { print $2 }' \"$DIR/tmp.txt\" | head -1\nrm \"$DIR/tmp.txt\"",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "2e9eb0a@fit.cvut.cz",
+            "fc81245@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "tr ' ' '\\n' <\"$DIR\"/*.txt | tr -s '\\n' | egrep '<[[:alpha:]]{7}>' | sort | uniq -c | sort -k1,1nr -k2,2r | head -1 | tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "7f6931a@fit.cvut.cz",
+            "7de075a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "HF=ls -a \"$DIR\" | wc -l\necho \"V adresari $DIR je $HF polozek\"\necho \"V adresari $DIR je $HF polozek\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "c98e835@fit.cvut.cz",
+            "9796cde@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr  ' ' '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -nr | awk '{print $2}' |head -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "a2ca511@fit.cvut.cz",
+            "9a36e9f@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | sed 's/[0-9]*//g' | tr [:upper:] [:lower:] | sort | pr -3 -s | head -15 | tail -10 | nl > \"$FILE\"",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "d22118d@fit.cvut.cz",
+            "86fc07e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '[,.]' ' ' |  tr -s \" \" | tr \" \" '\\n'| tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | awk '{print $2}' | grep -e \"^.......$\" | head -n 1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "2679850@fit.cvut.cz",
+            "99dc5ef@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir -p ~/{cz, en} \nln \"$UNIVERSITIES/CVUT v Praze\" ~/cz/CVUT \nln \"$UNIVERSITIES/CVUT v Praze\" ~/cz/CTU",
+        "culprit_assignment_name": "[OLD] 005 - Pevny link II.",
+        "culprit_count": 2,
+        "culprits": [
+            "d0ef618@fit.cvut.cz",
+            "0df8faf@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "PP=$(ls -a \"$DIR\" | wc -l)\necho \"V adresari \"$DIR\" je \"$PP\" polozek\"\necho \"V adresari \"$DIR\" je \"$PP\" polozek\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "9796cde@fit.cvut.cz",
+            "a046449@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nallRows=$(wc -l <\"$1\")\ncat \"$1\" > \"$1\".original\nsed 's/\\<\\(B\\|b\\)l[[:lower:]]*\\>/xxxx/g'<\"$1\".original >\"$1\"\nfixedRows=$(grep -c '\\<xxxx\\>' \"$1\")\necho '---' >>\"$1\"\necho 'Z celkoveho poctu '$allRows' radek bylo '$fixedRows' cenzurovano' >> \"$1\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "a871bbf@fit.cvut.cz",
+            "e65aca8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed 's/,*//g' \"$FILE\" | head -n -1 | sed '1s/Links//' | tr -s ' ' ' ' | sed '1s/Market Cap $K/Market.Cap:$K/' | sed '1s/ /\\n/g' | tr -s '\\n' '\\n' | paste -s -d',,,,\\n'| sed 's/ //' | sed '1s/Market.Cap:$K/Market Cap $K/' | sed '1s/Symbol    Name    Sector    Market Cap $K    Last    ,/Symbol,Name,Sector,Market Cap $K,Last\\n/' >table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "71a6231@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\ncat \"$1\">\"$1\".original\ncountY=$(egrep -c '\\<Bl|\\<bl' \"$1\")\ncountX=$(wc -l < \"$1\")\nsed 's/\\<Bl[[:lower:]]*\\>/xxxx/g' \"$1\"  | sed 's/\\<bl[[:lower:]]*\\>/xxxx/g' > tmp.txt\ncat tmp.txt > \"$1\"\nrm tmp.txt\necho \"---\">>\"$1\"\necho \"Z celkoveho poctu $countX radek bylo $countY cenzurovano\" >>\"$1\"\n",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "cb628ae@fit.cvut.cz",
+            "9d60ebc@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -c '[:alpha:]' '\\n' | tr -s '\\n' | egrep '.{7}' | sort | uniq -c | tr -s ' ' | sort -n | tail -1 | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "845db6c@fit.cvut.cz",
+            "1560c38@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$1\" | awk -v a=\"$2\" 'BEGIN{FS=\",\"}{if ($3 == a) printf(\"%s,%s,%s,%s,%g\\n\",$1,$2,$3,$4,$5) }' >RE.txt; \n[ -s RE.txt ]; b=$?;\nif [[ $b -eq 0 ]]; then \n  min=$(cat RE.txt | awk 'BEGIN{FS=\",\"}{printf(\"%g\\n\",$5)}' | sort -n | \n  head -1); \n  max=$(cat RE.txt | awk 'BEGIN{FS=\",\"}{printf(\"%g\\n\",$5)}' | sort -n | \n  tail -1);\n  avr=$(awk 'BEGIN{FS=\",\"}{ sum += $5; count++ }END{ avr = sum/count; \n  printf( \"%.2f\\n\", avr ) }' RE.txt);\n  string=\"Shares from the sector \\\"${2}\\\"\"; \n  printf '%s\\n' \"$string\"; iter=$(printf '%s\\n' \"$string\" | wc -c); \n  for i in `seq 2 $iter`; \n    do printf '%c' \"-\"; \n  done; \n  printf '\\n'; \n  cat RE.txt; \n  for i in `seq 2 $iter`; \n    do printf '%c' \"-\"; \n  done;\n  printf '\\n';\n  printf '%s\\t%s\\t%s\\n' \"minimum last price = ${min}\" \"average last price = ${avr}\" \"maximum last price= ${max}\";\nelse \n  printf '%s\\n%s\\n' \"Wrong sector\" \"Usage: ${0} file sector\" >&2 \n  return 1;\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "1fb2bfa@fit.cvut.cz",
+            "67b76a8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [:digit:] | tr [:upper:] [:lower:] | sort | pr -t -3 | pr -T -n | tr -s '\\t' > \"$FILE\"",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "95c3c7b@fit.cvut.cz",
+            "7384b69@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR/\"*\".txt\" | tr ' ' '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -n | tail -1 | tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "7767929@fit.cvut.cz",
+            "044b0f4@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "# !/bin/bash\ncondition=\"$2\"\nvariable=$(cat \"$1\"|awk -v var=\"$condition\" '{FS=\",\";if($3==var)y+=1} END{print y}')\nif [ \"$variable\" == \"\" ] ; then\necho \"Wrong sector\nUsage: $0 file sector\">&2\nexit 1\nfi\necho \"Shares from the sector \\\"$2\\\"\"\necho \"A\"|awk -v var=\"$condition\" '{for(i=0;i<(25+length(var));i++){printf \"-\"}} END{printf \"\\n\"}'\ncat \"$1\"|awk -v var=\"$condition\" '{FS=\",\" ; if($3==var)print$0;if($3==var){x+=$5;y+=1};if(y==1){min=$5;max=$5}else{if($5<min && $3==var){min=$5} if($5>max && $3==var){max=$5}}};END{{for(i=0;i<25+length(var);i++){printf \"-\"};printf(\"\\nminimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\", min, x/y, max)}}'\nprintf \"\\n\"",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "7e9fd0c@fit.cvut.cz",
+            "6962aaf@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "grep \",$2,\" \"$1\" > tmp.txt;\nif [ -s tmp.txt ]\nthen\n    a=\"Do nothing.\"\nelse\n    echo Wrong sector >&2\n    echo Usage: $0 file sector >&2\n    rm tmp.txt;\n    exit 1;\nfi\necho Shares from the sector \\\"$2\\\"\necho --------------------------------\ncat tmp.txt;\necho --------------------------------\nawk 'BEGIN{FS = \",\"}{print $5}' tmp.txt > data.txt\nsort -nr data.txt > datasorted.txt\nmax=$(head -1 datasorted.txt)\nsort -n data.txt > datasorted1.txt\nmin=$(head -1 datasorted1.txt)\ncount=0;\ntotal=0; \n\nfor i in $( awk '{ print $1; }' datasorted.txt )\n   do \n     total=$(echo $total+$i | bc )\n     ((count++))\n   done\naverage=$(echo \"scale=2; $total / $count\" | bc)\naverage1=$(echo \"scale = 2; $average\"|bc)\necho minimum last price = $min\"      \"average last price = $average1\"     \"maximum last price= $max \nrm data.txt\nrm datasorted.txt\nrm tmp.txt\nrm datasorted1.txt",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "5d1772d@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "DATA=$(cat \"$FILE\"); DATA=${DATA//$','/$''}; DATA=${DATA//$'\\n'/$'\\t'}; DATA=${DATA//$'\\t'/$','}; DATA=${DATA//$',' /$'\\n'}; DATA=${DATA//$',Links'/$''}; echo \"$DATA\" > ./table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "b7ecbd3@fit.cvut.cz",
+            "b1b4261@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"V adresari $DIR je $(ls -a $DIR | wc -l) polozek\"; echo \"V adresari $DIR je $(ls -a $DIR | wc -l) polozek\" > $SOUBOR\n",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "8e195a2@fit.cvut.cz",
+            "d423dbe@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat  \"$FILE\" | head -1 | sed 's/,//g' | awk '{printf \"%s,%s,%s,%s %s %s,%s\\n\", $1, $2, $3, $4, $5, $6, $7}' > table.csv; \"$FILE\" | tail -n+2 | sed 's/,//g' | split -5; awk '{if(NR%5 != 0) printf \"%s,\", $line} {if(NR%5==0) printf \"%s\\n\", $line}' x* | sed 's/ //' >> table.csv; rm x*",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "ad36c17@fit.cvut.cz",
+            "1a708e0@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\ncat \"$1\" > \"$1.original\"\nawk '/\\<[\"B\",\"b\"]+[a-zA-Z]*\\>/ {count ++};\n{gsub (/\\<[B,b]+[a-zA-Z]*\\>/, \"xxxx\",$0)};\n{print $0};\nEND {print \"---\\nZ celkoveho poctu \"NR\" radek bylo \"count\" cenzurovano\"}' \"$1.original\" > \"$1\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr ' ' '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -nr | awk '{printf $2}' | head -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "afe3b9d@fit.cvut.cz",
+            "a41b014@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [0-9] | tr [A-Z] [a-z]  | sort > sorted\nsplit -l 10 sorted sortedd\npaste -d '\\t' sortedd* | nl > \"$FILE\"\nrm sorted*",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "3a203cc@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr  ' ' '\\n' | grep -E '^.{7}$' | sort| uniq -c|tr -s \" \"|sort -t \" \" -k2 -n -r -k3 -r| awk '{print $2}'|head -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "3a203cc@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nif grep -E \"^[^,]*,[^,]*,$2,\" \"$1\" > /dev/null 2> /dev/null;\nthen\n        echo \"Shares from the sector \\\"$2\\\"\"\n        pocet=`echo \"Shares from the sector \\\"$2\\\"\" | wc -c`\n        for (( c =1; c < $pocet; c++))\n        do\n                echo -n \"-\"\n        done\n        echo \"\"\n        echo \"`grep -E \"^[^,]*,[^,]*,$2,\" \"$1\"`\"\n        for (( c =1; c < $pocet; c++))\n        do\n                echo -n \"-\"\n        done\n        echo \"\"\n        echo -e \"minimum last price = `grep -E \"^[^,]*,[^,]*,$2,\" \"$1\"| sort -t',' -k5,5n | head -1 | cut -d',' -f5,5`\\taverage last price = `cat \"$1\" | grep -E \"^[^,]*,[^,]*,$2,\" | awk -F',' 'BEGIN {s=0;r=0} {s+=$NF;r++} END {printf \"%.2f\",  s / r }'`\\tmaximum last price= `grep -E \"^[^,]*,[^,]*,$2,\" \"$1\"| sort -t',' -k5,5n | tail -1 | cut -d',' -f5,5`\"\n\nelse\n        echo \"Wrong sector\" 1>&2\n        echo \"Usage: `echo $0 | cut -c 1-` file sector\" 1>&2\n        exit 1\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "97184de@fit.cvut.cz",
+            "a87ca9a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\n\ncp -f \"$1\" \"$1\".original\nsed  -e 's/\\<[Bb]l[a-z]*\\>/xxxx/g'  \"$1\".original > \"$1\"\ncount=\"$(grep -c 'xxxx' < \"$1\")\"\ncounter=\"$(wc -l < \"$1\")\"\necho \"---\nOut of a total of $counter rows, $count were censored\" >> \"$1\"",
+        "culprit_assignment_name": "en-2020 DU Censorship",
+        "culprit_count": 2,
+        "culprits": [
+            "bf7e145@fit.cvut.cz",
+            "2b7d0f7@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | awk '{for(i=1;i<=NF;i++){ if(length($i)==7) print $i }}' | sort | uniq -c | sort -nr | awk '{print $NF}' | head -1",
+        "culprit_assignment_name": "en-2020-09 DU Word with the highest frequency",
+        "culprit_count": 2,
+        "culprits": [
+            "472ad58@fit.cvut.cz",
+            "d71c4f1@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "touch TEMP{1..4}.txt;\n\ncat \"${FILE}\" | tr [:upper:] [:lower:] | tr -d [0-9] | sort | cut -d$'\\n' -f 1,2,3,4,5,6,7,8,9,10 > TEMP1.txt;\n\ncat \"${FILE}\" | tr [:upper:] [:lower:] | tr -d [0-9] | sort | cut -d$'\\n' -f 11,12,13,14,15,16,17,18,19,20 > TEMP2.txt;\n\ncat \"${FILE}\" | tr [:upper:] [:lower:] | tr -d [0-9] | sort | cut -d$'\\n' -f 21,22,23,24,25,26,27,28,29,30 > TEMP3.txt;\n\npaste TEMP1.txt TEMP2.txt TEMP3.txt > TEMP4.txt;\n\ncat -n TEMP4.txt > \"${FILE}\";\n\nrm -rf TEMP{1..4}.txt;",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "92d80f0@fit.cvut.cz",
+            "e76dd57@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | head -1 | awk ' {FS=\",\";$0=$0}{\nprintf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | tail -n +2 | awk ' {FS=\",\";$0=$0}{\n printf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv\n",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "92d80f0@fit.cvut.cz",
+            "5e0e0d1@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nname=$1;\narg2=$2;\n\npocet=$(grep -c \",$arg2,\" \"$name\");\n\nif [ \"$pocet\" = 0 ]; then\n{\n echo \"Wrong sector\" >&2;\n echo \"Usage: /\"${0##*/}\" file sector\" >&2;\n exit 1;\n}\nfi\n\necho Shares from the sector '\"'$arg2'\"';\n\nnr=$(echo \"$arg2\" | wc -m)\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\ngrep \",$arg2,\" \"$name\";\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\nmin=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | head -1);\nmax=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | tail -1);\ngrep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | awk '{s+=$1} END {printf \"%f\", s}' > tmp;\necho \" $pocet\" >> tmp\navg=$(awk '{printf \"%.2f\",$1/$2}' tmp)\n\nprintf \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\" $min $avg $max;",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "92d80f0@fit.cvut.cz",
+            "e76dd57@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "pocet=$(ls -a \"$DIR\" | wc -w)\necho \"V adresari $DIR je $pocet polozek\"\necho \"V adresari $DIR je $pocet polozek\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "f95e39a@fit.cvut.cz",
+            "b26856e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed -e 's/[0-9]//g' -e 's/./\\L&/g' \"$FILE\" |sort > out.txt; split -l 10 out.txt out.txt_; paste out.txt_* | nl > \"$FILE\"; rm out*\n",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "cd226c1@fit.cvut.cz",
+            "27de502@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -n 1 | tr -d ',' | tr '\\t' ',' | sed 's/,Links//' > table.csv;\ncat \"$FILE\" | tail +2 | tr -d ','  | awk -F '\\t' '{printf \"%s,\" (NR%5==0?RS:FS),$1}' | tr -d '\\t' | sed 's/,$//' | sed 's/^ //'>> table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "1df75e2@fit.cvut.cz",
+            "2515a45@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "grep -E -i -oh \"([a-z]{7})\" \"$DIR\"/*.txt | sort | uniq -c | sort -nr | head -1 | grep -E -i -ow \"([a-z]{7})\"",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "1df75e2@fit.cvut.cz",
+            "2515a45@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [:digit:] | tr '[:upper:]' '[:lower:]' | sort > temp.txt; head -10 temp.txt > soubor1.txt; tail -n +11 temp.txt > temp2.txt; head -10 temp2.txt > soubor2.txt; tail -n +21 temp.txt > soubor3.txt; paste soubor1.txt soubor2.txt soubor3.txt | nl > \"$FILE\"; rm -f temp*.txt; rm -f soubor*.txt",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "e0983ef@fit.cvut.cz",
+            "3da43da@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d \"[0-9]\" | tr \"[:upper:]\" \"[:lower:]\" | sort | pr -3 -t | nl | tr -s '\\t' > temp.txt\ncp temp.txt \"$FILE\"\nrm temp.txt",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "903829e@fit.cvut.cz",
+            "cda055e@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nname=$1;\narg2=$2;\n\npocet=$(grep -c \",$arg2,\" \"$name\");\n\nif [ \"$pocet\" = 0 ]; then\n{\n echo \"Wrong sector\" >&2;\n echo \"Usage: /\"${0##*/}\" file sector\" >&2;\n exit 1;\n}\nfi\n\necho Shares from the sector \\\"\"$arg2\"\\\";\n\nnr=$(echo \"$arg2\" | wc -m)\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\ngrep \",$arg2,\" \"$name\";\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\nmin=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | head -1);\nmax=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | tail -1);\ngrep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | awk '{s+=$1} END {printf \"%f\", s}' > tmp;\necho \" $pocet\" >> tmp\navg=$(awk '{printf \"%.2f\",$1/$2}' tmp)\n\nprintf \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\" $min $avg $max;",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "51f717e@fit.cvut.cz",
+            "66860dd@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "head -1 \"$FILE\" | sed -e 's/,//' -e 's/Links//' | tr -s '\\t' ' ' | tr -s ' ' ' ' | sed 's/ *$//' | tr ' ' '\\n' | paste -s -d',,,  ,\\n' | tee ./table.csv >/dev/null ; tail +2 \"$FILE\" | sed 's/,//g' | paste -s -d',,,,\\n' | sed 's/ //' | tee ./tmp >/dev/null; cat ./tmp >> ./table.csv ; rm ./tmp",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "f92145a@fit.cvut.cz",
+            "45d0100@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tail +2 | tr -d ','  | awk -F '\\t' '{printf \"%s,\" (NR%5==0?RS:FS),$1}' | tr -d '\\t' | sed 's/,$//' | sed 's/^ //'>> table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "0baed02@fit.cvut.cz",
+            "2515a45@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\norig=\"$1\".original;\ncp \"$1\" \"$orig\";\nsed -i.original -e 's/\\b\\<[Bb][a-z]*\\b/xxxx/g' \"$1\";\nnum=$(grep -c 'xxxx' \"$1\");\nrows=$(cat \"$1\" | wc -l);\necho \"---\" >> \"$1\";\necho \"Z celkoveho poctu $rows radek bylo $num cenzurovano\" >> \"$1\";",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "0baed02@fit.cvut.cz",
+            "540e4d1@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | cut -f1,2,3,4,5 | tr ',' ' '| tr -s '\\t' ',' | tr -s ' ' > table.csv ; cat \"$FILE\" | tail -n +2  | sed 's/,//g' | awk '{printf(\"%s,\",$0); if(NR%5==0) printf(\"\\n\");}' | sed 's/^[ ]*//' | sed 's/,$//' >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "8e3eae2@fit.cvut.cz",
+            "940aa59@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "head -1 \"$FILE\" | sed -e 's/\\t/,/g' -e 's/, / /' | cut -d ',' -f1-5 > table.csv;\ntr -d ',' < \"$FILE\" | tr '\\n' ':' | sed -E -e 's/: /\\n/g' | tail -n +2 | tr ':' ',' | sed -e 's/,$/\\n/' >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "f2c3b83@fit.cvut.cz",
+            "66860dd@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nname=$1;\narg2=$2;\n\npocet=$(grep -c \",$arg2,\" \"$name\");\n\nif [ \"$pocet\" = 0 ]; then\n{\n echo \"Wrong sector\" >&2;\n echo \"Usage: /\"${0##*/}\" file sector\" >&2;\n exit 1;\n}\nfi\n\necho Shares from the sector \"\\\"$arg2\\\"\";\n\nnr=$(echo \"$arg2\" | wc -m)\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\ngrep \",$arg2,\" \"$name\";\n\ni=0; while [ $i -le $(($nr+23)) ];\n  do\n    echo -n \"-\" ;\n    i=$(($i+1));\n  done\necho\n\nmin=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | head -1);\nmax=$(grep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | tail -1);\ngrep \"$arg2\" \"$name\" | cut -f5 -d','| sort -n | awk '{s+=$1} END {printf \"%f\", s}' > tmp;\necho \" $pocet\" >> tmp\navg=$(awk '{printf \"%.2f\",$1/$2}' tmp)\n\nprintf \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\" $min $avg $max;",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "723b699@fit.cvut.cz",
+            "51f2f3b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | egrep '\\<.{7}\\>' | tr \" \" \"\\n\" | sort | uniq -c | sort -nr | awk '{$1= \"\"; print $0}' | sed 's/[^ ]* *//' | head -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "c146d2c@fit.cvut.cz",
+            "aaea521@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "awk -v par=\"$2\" -v skriptname=\"$0\" -F, 'BEGIN { text = \"\" ; sm = 0.0; mtch = 0; min = 1000000.0; max - 0.0 }\n        $3 == par {\n         mtch++;\n         text = text $0 \"\\n\" ;\n         sm += $5;\n         if ( $5 < min ) min = $5; \n         if ( $5 > max ) max = $5;\n         }\n        END { if (mtch == 0) {\n                printf(\"Wrong sector\\nUsage: %s file sector\\n\",skriptname)  > \"/dev/stderr\";\n                exit 1;\n             }else {\n                avg = (sm/mtch) ;\n                parr = \"\\\"\" par \"\\\"\";\n                first =  \"Shares from the sector \" parr;\n                ln =  length(first);\n                print first;\n                for(c=0;c<ln;c++) printf \"-\";\n                printf \"\\n\";\n                printf text;\n                for(c=0;c<ln;c++) printf \"-\";\n                printf \"\\n\";\n                printf( \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\", min, avg, max ); \n            }\n        }' \"$1\"",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "9b95707@fit.cvut.cz",
+            "64b75a8@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [:digit:] | tr [:upper:] [:lower:] | sort | split -l 10\npaste x* | nl > \"$FILE\"\nrm x*",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "3da4407@fit.cvut.cz",
+            "f1abba6@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nfile=\"$1\"\nsector=\"$2\"\nsectorLen=$(($(wc -c <<<\"$sector\")+24))\n\ncat \"$file\" | tail -n +2 | grep \"$sector\" > tmp\n\nif [ $(wc -l < tmp) -le 0 ]\n then\n  >&2 printf \"Wrong sector\\nUsage: /%s file sector\\n\" \"${0##*/}\"\n  exit 1\n else\n  printf \"Shares from the sector \\\"${sector}\\\"\\n\";\n  for ((i=0; i<$sectorLen; i++ ))\n  do\n    printf \"-\"\n  done\n  printf \"\\n\";\n\n  awk -vsecLen=\"$sectorLen\" 'BEGIN{FS = \",\";sum = 0; min=max=0}\n  {\n  min = (NR==1 || $5<min) ? $5 : min\n  max = (NR==1 || $5>max) ? $5 : max\n  sum = sum + $5\n  print $0\n  }\n  END{\n  for(i=0;i<secLen;i++){\n    printf(\"-\")\n  }\n  printf(\"\\n\")\n  printf(\"minimum last price = %.02f\\taverage last price = %.02f\\tmaximum last price= %.02f\\n\",min,sum/NR,max)\n  }' tmp\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "2e9eb0a@fit.cvut.cz",
+            "fc81245@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "if ! grep -q \"$2\" \"$1\"\nthen\n    echo \"Wrong sector\" 1>&2\n    echo \"Usage: /gen.sh file sector\" 1>&2\n    exit 1\nelse\n    echo Shares from the sector \"\\\"$2\"\\\"\n    chars=$(echo \"$2\" | wc -c);\n    chars=$((chars+25))\n    n=1\n    while [[ $n -lt $chars ]]\n    do\n        printf '-'\n        (( n+=1 ))\n    done\n    printf \"\\n\";\n    list=$(grep \"$2\" \"$1\")\n    echo \"$list\"\n    n=1\n    while [[ $n -lt $chars ]]\n    do\n        printf '-'\n        (( n+=1 ))\n    done\n    printf \"\\n\"\n    grep \"$2\" \"$1\" | awk -F',' 'BEGIN{rows=0;sum=0;min=0;max=0;}(NR==1){min=$5}{rows++;sum+=$5;if(max<$5){max=$5};if(min>$5){min=$5}}END{printf\"minimum last price = %0.2f\\taverage last price = %0.2f\\tmaximum last price= %0.2f\\n\",min,sum/rows,max}'\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "540e4d1@fit.cvut.cz",
+            "a129b7b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [0-9] | tr [A-Z] [a-z] | sort | awk '\n  BEGIN {n=10;}\n  {\n    l[(NR-1)%n] = l[(NR-1)%n] \"\\t\" $0\n  };\n  END {\n    for (i = 0; i < length(l); i++) {\n      print l[i];\n    }\n  }\n' | awk '{printf \"%6d%s\\n\",NR, $s}' > tmp; rm \"$FILE\"; mv tmp \"$FILE\"",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "223e2ab@fit.cvut.cz",
+            "52029f7@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d '[0-9]' | tr '[[:upper:]]' '[[:lower:]]' | sort > temp.txt ; cat temp.txt | head -10 >temp1.txt ; cat temp.txt | tail -20 | head -10 > temp2.txt ; cat temp.txt | tail -10 > temp3.txt ; paste -d'\\t' temp1.txt temp2.txt temp3.txt | nl > \"$FILE\" ; rm temp.txt temp1.txt temp2.txt temp3.txt",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "fa67302@fit.cvut.cz",
+            "4e70d16@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd \"$DIR\";\ncat *.txt | tr ' ' '\\n' |  grep -E ^[[:alpha:]]{7}$ | sort | uniq -c | sort -t' ' -k1n | tail -1 | tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "7727dab@fit.cvut.cz",
+            "45460ca@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | sed 's/[0-9]*//g' | tr [:upper:] [:lower:] | sort | pr -3 -s | head -15 | tail -10 > tmp.txt;\ncat -n tmp.txt > \"$FILE\";\nrm -r tmp.txt;",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "f4b7d59@fit.cvut.cz",
+            "7d63122@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr -s \"[:blank:]\" \" \" | sed 's/,//g' | sed 's/Symbol/Symbol,/1' | sed 's/Name/Name,/1' | sed 's/Sector/Sector,/1' | sed 's/$K/$K,/1' | sed 's/Last Links/Last/1' | sed 's/, /,/g'>table.csv;\ncat \"$FILE\" | tail +2 | sed 's/,//g' | sed -e 's/^[ \\t]*//' |sed  s/$/,/ | awk 'ORS=NR%5?\" \":\"\\n\"' | sed 's/, /,/g' | sed 's/,$//g'>>table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "f4b7d59@fit.cvut.cz",
+            "7d63122@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nallRows=$(wc -l <\"$1\")\ncat \"$1\" > \"$1\".original\ncat \"$1\".original|sed 's/\\<\\(B\\|b\\)l[[:lower:]]\\>/xxxx/g'>\"$1\"\nfixedRows=$(grep -c '\\<xxxx\\>' \"$1\")\necho '---' >>\"$1\"\necho 'Z celkoveho poctu '$allRows' radek bylo '$fixedRows' cenzurovano' >> \"$1\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "f209262@fit.cvut.cz",
+            "37f3a7a@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cp \"$1\" \"$1\".original\n\nsed -e 's/\\b[Bb]l[a-z]\\b/xxxx/g' \"$1\" > tmp\ncat tmp > \"$1\"\necho  \"---\"  >> \"$1\"\necho \"Z celkoveho poctu $(wc -l \"$1\".original | cut -c1) radek bylo $(egrep -c '\\b[Bb]l[a-z]\\b' \"$1\".original) cenzurovano\" >> \"$1\" \nrm tmp",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "3a00894@fit.cvut.cz",
+            "a061574@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo 'Symbol,Name,Sector,Market Cap $K,Last' > table.csv\ncat \"$FILE\" | tail +2 | sed 's/^[ \\t]*//' | tr -d ',' >> temp.txt\npaste -d',,,,\\n' -s temp.txt >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "17df1a6@fit.cvut.cz",
+            "845db6c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "oldPATH=$PATH ; PATH=/usr/gnu/bin:\"$PATH\" ;\ncat \"$FILE\" | tr -d '0-9' | tr [:upper:] [:lower:] | sort > haha.txt;\nHAH=\"haha.txt\"; \ncat haha.txt | head -10 > 1.txt \ncat haha.txt | head -20 | tail -10 > 2.txt\ncat haha.txt | tail -10 > 3.txt \npaste -d'\\t' 1.txt 2.txt 3.txt | cat -n > \"$FILE\" ;\nPATH=$oldPATH; unset oldPATH;\nyes | rm ?.txt \"$HAH\";",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "11ce1b6@fit.cvut.cz",
+            "45460ca@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\ncat \"$1\">\"$1\".original\nY=$(egrep -c '\\<Bl|\\<bl' \"$1\")\nX=$(wc -l < \"$1\")\nsed 's/\\<Bl[[:lower:]]*\\>/xxxx/g' \"$1\" |\nsed 's/\\<bl[[:lower:]]*\\>/xxxx/g' > new.txt\ncat new.txt > \"$1\"\nrm new.txt\necho \"---\">>\"$1\"\necho \"Z celkoveho poctu \"$X\" radek bylo \"$Y\" cenzurovano\" >>\"$1\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "11ce1b6@fit.cvut.cz",
+            "45460ca@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\"| tr '[:upper:]' '[:lower:]'| tr -d '[:digit:]'| sort | pr -3 | sed -n '6,15p'| tr -s '\\t'|nl > \"$FILE\"",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "d0ef618@fit.cvut.cz",
+            "99dc5ef@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nfile=\"$1\"\nsector=\"$2\"\nseparator=\"--------------------------------\"\n#echo \"Shares from the sector \\\"$2\\\"\"\n#echo \"$separator\"\n#TODO I need to do stderr \ncat \"$file\" | awk -v sec=\"$2\" -v sep=\"-\" -v script=\"$0\" -F, '\nBEGIN {min=10000; max=0};\n$3==sec{if($5<min){min=$5}; if($5>max){max=$5}; cnt++; sum += $5; if(cnt==1) {print \"Shares from the sector \\\"\"sec\"\\\"\"; for(i=0; i<25+length(sec);i++){printf sep}printf \"\\n\"};print $0} \nEND {if(cnt){for(i=0; i<25+length(sec);i++){printf sep}printf \"\\n\"; \nprintf \"minimum last price = %0.2f\\taverage last price = %0.2f\\tmaximum last price= %0.2f\\n\", min, sum/cnt, max} \nelse{print \"Wrong sector\" >\"/dev/stderr\"; print \"Usage: \"script\" file sector\" >\"/dev/stderr\"; exit 1}}'",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "eff33be@fit.cvut.cz",
+            "02b7623@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "mkdir ~/cz\nmkdir ~/en\nln \"$UNIVERSITIES/CVUT v Praze\" ~/cz/CVUT\nln \"$UNIVERSITIES/CVUT v Praze\" ~/en/CTU",
+        "culprit_assignment_name": "[OLD] 005 - Pevny link II.",
+        "culprit_count": 2,
+        "culprits": [
+            "5cad676@fit.cvut.cz",
+            "21f8b98@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nFILENAME=\"$1\"\nSECTOR=\"$2\"\n\nif ! grep \",$SECTOR,\" \"$FILENAME\" > /dev/null; then\n    printf \"Wrong sector\\nUsage: \"\"$0\"\" file sector\\n\" 1>&2;\n    exit 1\nfi\n\nawk -F ',' -v phrase=\"$SECTOR\" 'BEGIN {\n    i=0;\n    c=0.0;\n    min=1000000;\n    max=0;\n    avg=0.0;\n    len=length(phrase);\n    printf(\"Shares from the sector \\\"%s\\\"\\n\",phrase);\n    for(i = 0; i < len + 25; i++) {\n        printf(\"-\");\n    }\n    printf(\"\\n\");\n    };\n    ($3 == phrase) {\n        print $0;\n        avg+=$NF;\n        c++;\n        if($5 > max)\n            max=$5;\n        if($5 < min)\n            min=$5;\n    };\n    END {\n        for(i=0; i< len + 25; i++) {\n            printf(\"-\");\n        }\n        printf(\"\\n\");\n        printf(\"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\",min,avg/c,max);\n    };\n    ' \"$FILENAME\"",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "cda055e@fit.cvut.cz",
+            "17abdd2@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -d '[:punct:][:digit:]' | tr '[:blank:]' '\\n' | grep \".......\" | sort | uniq -c | sort -nr -k1,1 | head -1 | tr -s ' ' |  cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "b2fff21@fit.cvut.cz",
+            "1abe086@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "f=\"$1\"; \ncp \"$f\" \"$f\".original; \nsed 's/\\<[Bb]l[a-z]*\\>/xxxx/g' \"$f\" > tmp && mv -f tmp \"$f\";\nX=cat \"$f\" | wc -l | tr -d ' ';\nY=$((cat \"$f\"|tr ' ' '/n'|grep -c 'xxxx'));\necho \"---\" >> \"$f\"; echo \"Z celkoveho poctu $X radek bylo $Y cenzurovano\" >> \"$f\";",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "b2fff21@fit.cvut.cz",
+            "5d1772d@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "fileCount=$(ls $DIR | wc -la)\nprintf \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\"\necho \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\" > $SOUBOR",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "0881461@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "fileCount=$(ls $DIR | wc -al)\nprintf \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\"\necho \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\" > $SOUBOR",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "0881461@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "fileCount=$(ls -la $DIR | wc -l)\nprintf \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\"\necho \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\" > $SOUBOR",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "0881461@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "fileCount=$(ls -al $DIR | wc -l)\nfileCount=$(( fileCount - 1))\nprintf \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\"\necho \"V adresari %s je %d polozek\\n\" \"$DIR\" \"$fileCount\" > $SOUBOR",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "c2120ec@fit.cvut.cz",
+            "0881461@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\"| tr '[:upper:]' '[:lower:]'| tr -d '[:digit:]'| sort | pr -3 | sed -n '6,15p'|nl |tr -s '\\t'|tee result 1>/dev/null; cat result| tee \"$FILE\";rm result",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "99dc5ef@fit.cvut.cz",
+            "acc84ac@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\nsector=$(tail +2 \"$1\" | cut -d, -f3|grep \"$2\"|wc -l)\nif [ $sector -eq 0 ]; then\n        >&2 echo \"Wrong sector\"\n        >&2 echo \"Usage: $0 file sector\"\n        return 1\nfi\necho \"Shares from the sector \"$2\"\" > temp\nhelp=cat temp|wc -c\ntail +2 \"$1\" | awk -F \",\" -v sector=\"$2\" -v dashes=\"$help\" 'BEGIN{printf \"Shares from the sector \"%s\"\\n\",sector;for(i=0;i<dashes-1;i++)printf \"-\";printf \"\\n\";min=1000000; max=0}$3 == sector{print;cnt++;total+=$5}$5>max && $3==sector{max=$5}min>$5 && $3==sector{min=$5} END{for(i=0;i<dashes-1;++i)printf \"-\";printf \"\\n\";printf \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\",min,total/cnt,max}'\nrm temp",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "99dc5ef@fit.cvut.cz",
+            "acc84ac@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"V adresari \"$DIR\" je $(ls $(pwd) -l .?* | tail --lines=+2 | wc -l) polozek\" && echo \"V adresari \"$DIR\" je $(ls $(pwd) -l .?* | tail --lines=+2 | wc -l) polozek\" > $(pwd)/\"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "9c5e6c5@fit.cvut.cz",
+            "b232447@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr '[A-Z]' '[a-z]' | tr -d '[0-9]' | sort | pr -3ts$'\\t'  | nl > tmp\ncat tmp > \"$FILE\"\nrm tmp",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "5515970@fit.cvut.cz",
+            "f70c07b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "head -n1 \"$FILE\" | tr -d ',' | tr '\\t' ',' | cut -d',' -f-5 > table.csv\ntail -n +2 \"$FILE\" | sed 's/^*[[:upper:]]/,/' >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "5515970@fit.cvut.cz",
+            "f70c07b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "head -n1 \"$FILE\" | tr -d ',' | tr '\\t' ',' | cut -d',' -f-5 > table.csv\ntail -n +2 \"$FILE\" | sed 's/^*[[:upper:]]/,/' | sed 's/^ //g' | tr -d ',' | tr '\\n' ',' | sed 's/,/\\n/5;P;D' >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "5515970@fit.cvut.cz",
+            "f70c07b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd $DIR\ncat *.txt | tr -c '[[:alpha:]]' '\\n'| tr -s '\\n' |  sort | uniq -c | sort -n | tail -1 | tr ' ' '\\n' | tail -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "5515970@fit.cvut.cz",
+            "f70c07b@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr '\\t,' ' ' | tr -s ' ' | tr ' ' ',' | sed 's/,[[:alpha:]]*$//1' | sed 's/,/ /4' | sed 's/,/ /4' >table.csv; cat \"$FILE\" | tail -n+2 | tr '\\n' ',' | sed 's/, /\\n/g' | sed 's/^ //g' | sed 's/,$/\\n/g'| sed 's/,//4' | sed 's/,//4'>>table.csv\n",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "a871bbf@fit.cvut.cz",
+            "4bb0a19@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\n\nN=$(cat \"$1\" | sed -n '/,${2},/p' | wc -l)\nif (( N == 0 )); then\nprintf '%s\\n%s\\n' \"Wrong sector\" \"Usage: ./XYZ     file sector\"\nexit 1;\nfi\nprintf '%s\\n--------------------------------\\n' \"Shares from sector \"$2\"\"\ncat \"$1\" | sed -n '/,\"$2\",/p'\nprintf '--------------------------------\\n'",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "75e1fc1@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\n\nN=$(cat \"$1\" | sed -n '/,${2},/p' | wc -l)\nif (( N == 0 )); then\nprintf '%s\\n%s\\n' \"Wrong sector\" \"Usage: ./XYZ file sector\"\nexit 1;\nfi\nprintf '%s\\n--------------------------------\\n' \"Shares from sector \"$2\"\"\ncat \"$1\" | sed -n '/,\"$2\",/p'\nprintf '--------------------------------\\n'",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "75e1fc1@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\n\nN=$(cat \"$1\" | sed -n \"/,$2,/p\" | wc -l)\nif (( N == 0 )); then\n>&2 printf '%s\\n%s\\n' \"Wrong sector\" \"Usage: $0 file sector\"\nexit 1;\nfi\n\nprintf '%s\\n' \"Shares from the sector \"$2\"\"\necho \"----------------------------------\"\ncat \"$1\" | sed -n \"/,$2,/p\"\necho \"----------------------------------\"\n\ncat \"$1\" | sed -n \"/,$2,/p\" | cut -d, -f5 | awk '{for(i=0; i<NF; i++) if (MAX<$0) {MAX = $0}; if ($0>0) {MIN = $0}; SUM+=$0; DELENI++} \nEND {printf \"minimum last price = %.02lf\\taverage last price = %.02lf\\tmaximum last price= %.02lf\\n\", MIN, SUM/DELENI, MAX }'",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "75e1fc1@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\n\nN=$(cat \"$1\" | sed -n \"/,$2,/p\" | wc -l)\nif (( N == 0 )); then\nprintf '%s\\n%s\\n' \"Wrong sector\" \"Usage: $0 file sector\"\nexit 1;\nfi\n\nprintf '%s\\n' \"Shares from sector \"$2\"\"\necho \"--------------------------------\"\ncat \"$1\" | sed -n \"/,$2,/p\"\necho \"--------------------------------\"\n\ncat \"$1\" | sed -n \"/,$2,/p\" | cut -d, -f5 | sort -rn | awk 'MIN=1000 {for(i=0; i<NF; i++) if (MAX<$0) {MAX = $0}; if ($0<MIN) {MIN = $0; print MIN}; SUM+=$0; DELENI++} \nEND {printf \"minimum last price = %.02lf\\taverage last price = %.02lf\\tmaximum last price = %.02lf\\n\", MIN, SUM/DELENI, MAX }'",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "75e1fc1@fit.cvut.cz",
+            "0cee9ff@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | sed 's/[0-9]//g' | sed 's/[A-Z]/\\L&/g' | sort | split -l 10\npaste xaa xab xac | nl > tempfile ; mv tempfile \"$FILE\" ; rm xaa ; rm xab ; rm xac",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "ef9cb98@fit.cvut.cz",
+            "5ff4648@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d \"[0-9]\"  | tr \"[:upper:]\" \"[:lower:]\" | sort | head -10 > t1.txt\ncat \"$FILE\" | tr -d \"[0-9]\"  | tr \"[:upper:]\" \"[:lower:]\" | sort | head -20 | tail -n 10 > t2.txt\ncat \"$FILE\" | tr -d \"[0-9]\"  | tr \"[:upper:]\" \"[:lower:]\" | sort | tail -10 > t3.txt\n\na=`paste -d\"\\t\" \"t1.txt\" \"t2.txt\" \"t3.txt\"`\n\necho \"$a\" |nl > \"$FILE\"\nrm t1.txt\nrm t2.txt\nrm t3.txt",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "ac4ebef@fit.cvut.cz",
+            "7e9fd0c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d '0123456789' | tr '[:upper:]' '[:lower:]' | sort | pr -3 -t -s | cat -n > soubor.txt; mv soubor.txt \"$FILE\"",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "b42fd1e@fit.cvut.cz",
+            "947d5a6@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -d '.' | tr -d ',' | tr ' ' '\\n' > words.txt && grep -E '[[:alpha:]]{7}' words.txt | sort | uniq | sort -nr | head -1 ; rm words.txt",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "1306a63@fit.cvut.cz",
+            "612778c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | head -3 | awk ' {FS=\",\";$0=$0}{\nprintf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > zk\n\nsed 's/^ *//' zk >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "6cc5dda@fit.cvut.cz",
+            "3a203cc@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"V adresari \"$DIR\" je \"$(ls \"$DIR\" -a | wc -l)\" polozek\"\necho \"V adresari \"$DIR\" je \"$(ls \"$DIR\" -a | wc -l)\" polozek\" >> \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "eb173bf@fit.cvut.cz",
+            "461f336@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | sed 's/Links//1' | sed 's/,//1' | tr $\"\\t\" ',' | sed 's/,//5' | sed 's/^ /b\u0002,/g' | tr '\\n' ',' | sed 's/b\u0002,/\\n/g' | sed 's/,$//g' > tmp.csv;\ncat tmp.csv | head -1 > table.csv;\ncat tmp.csv | sed '1d;s/,//4' >> table.csv;\necho \"\" >> table.csv;",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "eb173bf@fit.cvut.cz",
+            "461f336@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nFILE=$1\nSECTOR=$2\n\ncat \"$FILE\" |\ngrep \"$SECTOR\" |\ngawk -F ',' 'BEGIN {counter=0} { counter++; } END { if (counter==0) { print \"Wrong sector\\nUsage: '\"$0\"' file sector\" > \"/dev/stderr\"; exit 1}}'\n\ntempStr=\"Shares from the sector \"\"$SECTOR\"\"\"\ntempStrLen=echo ${#tempStr}\n\necho $tempStr\n\nfor(( i=1; i<=$tempStrLen; i++))\ndo\n        printf -;\n        if [ \"$i\" -eq \"$tempStrLen\" ]; then\n                printf \\n;\n        fi\ndone\n\ncat \"$FILE\" |\ngrep \"$SECTOR\" |\ngawk -F ',' 'BEGIN {sum=0.0; count=0; min=0; max=0} {print; count++; sum=sum+$5; if(max < $5){max=$5} if(min > $5){min=$5}} END {average=sum/count; printf \"minimum last price = %0.2f\\taverage last price = %0.2f\\tmaximum last price= %0.2>\n\n\nexit 0",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "eb173bf@fit.cvut.cz",
+            "461f336@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"Symbol,Name,Sector,Market Cap $K,Last\" >> table.csv\ncat \"$FILE\" |sed 's/,//g' | tail +2 | paste -d~ - - - - - |cut -d' ' -f2- | tr '~' ',' >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "4f81ee4@fit.cvut.cz",
+            "a366c58@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | sed 's/[0-9]//g' | tr '[:upper:]' '[:lower:]'| sort | pr -3 -ts' ' | tr ' ' '\\t'| cat -n > temp\nmv -f temp \"$FILE\"",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "728138b@fit.cvut.cz",
+            "69a7e3f@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "head -1 \"$FILE\" | tr '\\t' ',' | sed 's/Links//' | sed 's/,\\ /\\ /' | sed 's/,//5' > head\ntail -n +2 \"$FILE\" | tr -d ',' | tr '\\n' ','| sed 's/,\\ /\\n/g'| sed '1s/\\ //1' | sed '$s/,/\\n/5' > body\ncat head body > table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "7767929@fit.cvut.cz",
+            "044b0f4@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '[:upper:]' '[:lower:]' | tr ' ' '\\n' | tr -d '.,' | grep '.......' | sort | uniq -c | sort -rn | head -1 | tr -s ' ' | cut -d' ' -f3\n",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "06c4b14@fit.cvut.cz",
+            "eff1e61@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat $(echo /$DIR/*.txt) | tr '[:upper:]' '[:lower:]' | tr ' ' '\\n' | tr -d '.,' | grep '.......' | sort | uniq -c | sort -rn | head -1 | tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "86434d5@fit.cvut.cz",
+            "b954b66@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "SEL=$(awk -F',' -v sector=\"$2\" '$3 == sector' \"$1\")\n\n[[ -z \"$SEL\" ]] && {\n    echo Wrong sector >&2\n    echo Usage: \"$0\" file sector >&2\n    exit 1\n}\n\nDIV=\"-------------------------`tr [:print:] - <<< \"$2\"`\"\necho Shares from the sector \\\"\"$2\"\\\"\necho \"$DIV\"\necho \"$SEL\"\necho \"$DIV\"\n\nawk -F',' <<< \"$SEL\" '\n     NR==1{min=$5; max=$5; sum=$5; next} \n     {sum+=$5} \n     $5>max{max=$5;next}\n     $5<min{min=$5}\n  END {\n     printf \"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\", min, sum/NR, max \n  }\n' ",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "5dd7d83@fit.cvut.cz",
+            "e2486bc@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr '\\t,' ' ' | tr -s ' ' | tr ' ' ',' | sed 's/,[[:alpha:]]*$//1' | sed 's/,/ /4' | sed 's/,/ /4' >table.csv\ncat \"$FILE\" | tail -n+2 | tr '\\n' ',' | sed 's/, /\\n/g' | sed 's/^ //g' | sed 's/,$/\\n/g'| sed 's/,//4' | sed 's/,//4'>>table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "dd159bd@fit.cvut.cz",
+            "7fad2e7@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "num=$(cat \"$DIR\"/*.txt|tr 'A-Z' 'a-z'|tr -c '[:lower:]' '\\n'|grep -E '^.{7}$'|sort|uniq -c|tr -s ' ' ' '|sort -n -t' ' -k2,3|cut -d' ' -f2|uniq -c|tr -s ' ' ' '|cut -d' ' -f2|tail -1)\ncat \"$DIR\"/*.txt|tr 'A-Z' 'a-z'|tr -c '[:lower:]' '\\n'|grep -E '^.{7}$'|sort|uniq -c|tr -s ' ' ' '|sort -n -t' ' -k2,3|tail -$num|cut -d' ' -f3|sort|tail -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "7e9fd0c@fit.cvut.cz",
+            "5fabcab@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "FILE=\"$1\"\nmv \"$FILE\" \"$FILE\".original\n\nawk 'BEGIN {\n    lines=0; \n    censored=0\n};\n{\n    if(gsub(/\\<[Bb]l[a-z]*\\>/, \"xxxx\")) \n        censored++; \n    lines++; \n    print;\n}; \nEND {\n    printf(\"---\\nZ celkoveho poctu %d radek bylo %d cenzurovano\\n\", lines, censored);\n}' \"$FILE\".original > \"$FILE\"",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "7a61526@fit.cvut.cz",
+            "1560c38@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/usr/bin/bash\n\nexitErr() {\n    echo \"$1\" >&2\n    echo \"Usage: $0 file sector\" >&2\n    exit 1\n}\n\nif [ $# -lt 2 ]\nthen\n    exitErr \"Invalid number of arguments\"\nfi\n\nFILE=$1\n\nawk -v SECTOR=\"$2\" -F \",\" 'BEGIN {\n    num = 0;\n    sum = 0;\n    min = 2^32;\n    max = 0;\n};\n{\n    if($3 == SECTOR) {\n        records[num] = $0;\n        sum += $5;\n        num++;\n        if($5 < min)\n            min = $5;\n        if($5 > max)\n            max = $5;\n    }\n};\nEND {\n    if(num == 0)\n        exit 1;\n\n    out_info = \"Shares from the sector \\\"\" SECTOR \"\\\"\";\n    out_delim = \"-\";\n\n    printf(\"%s\\n\", out_info);\n    for(i = 1; i < length(out_info); i++)\n        out_delim = out_delim \"-\";\n\n    print out_delim;\n    \n    for(i = 0; i < length(records); i++)\n        print records[i];\n\n    print out_delim;\n\n    avg = sum / num;\n\n    printf(\"minimum last price = %.2f\\taverage last price = %.2f\\tmaximum last price= %.2f\\n\", min, avg, max);\n}' \"$FILE\"\n\nRESULT=$?\n\nif [ $RESULT -eq 1 ]\nthen\n    exitErr \"Wrong sector\"\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "7a61526@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1  | tr '\\t' ' ' | tr ',' ' ' | cut -d' ' -f1-8 | awk '{printf(\"%s,%s,%s,%s %s %s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}'  > table.csv\n\ncat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | head -3 | awk ' {FS=\",\";$0=$0}{\nprintf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\n\nsed 's/^ *//' temp >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "5d1772d@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "f=\"$1\"; \ncp \"$f\" \"$f\".original; \nsed 's/\\<[Bb]l[a-z]*\\>/xxxx/g' \"$f\" > tmp && mv -f tmp \"$f\";\nX=$(cat \"$f\" | wc -l | tr -d ' ');\nY=$((cat \"$f\"|tr ' ' '/n'|grep -c 'xxxx'));\necho \"---\" >> \"$f\"; echo \"Z celkoveho poctu $X radek bylo $Y cenzurovano\" >> \"$f\";",
+        "culprit_assignment_name": "2020-10 DU Cenzura",
+        "culprit_count": 2,
+        "culprits": [
+            "5d1772d@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -c '[:alpha:]' '\\n' | grep -E  '^.......$' | sort -r | uniq -c | sort -k1,1nr -k2,2r | tr -s ' ' | cut -d' ' -f3 | head -1",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "a366c58@fit.cvut.cz",
+            "0179895@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo 'Symbol,Name,Sector,Market Cap $K,Last' > table.csv ; cat \"$FILE\" | tail -n +2 |tr -d ',' | sed 's/^ //g' > tmp0.txt ; split -l 1 tmp0.txt step- ; paste -d',,,,\\n' step-* >> table.csv ; rm step-*",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "352cdbb@fit.cvut.cz",
+            "bda3dbb@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-z]/ /g' | tr ' ' '\\n' | sed -nr \"/......./p\"  | sort | uniq -c | sort -n | tail -1 |  tr -s ' ' | cut -d' ' -f3",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "352cdbb@fit.cvut.cz",
+            "bda3dbb@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d [0-9] | tr [:upper:] [:lower:] | sort > test.txt; split -l 10 test.txt test.txt_; paste test.txt_* | nl > \"$FILE\"; rm test*",
+        "culprit_assignment_name": "en-2020-06 Modification and joining columns",
+        "culprit_count": 2,
+        "culprits": [
+            "6858021@fit.cvut.cz",
+            "edfca61@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt |tr ' ' '\\n'| grep '^\\<.......\\>$' | sort | uniq -c |  sort -k1n -k2 | tail -1 | sed 's/[0-9]*//g' | sed 's/^ *//' | sort -r",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "7ce4662@fit.cvut.cz",
+            "3039e15@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$1\" | awk -v a=\"$2\" 'BEGIN{FS=\",\"}{if ($3 == a) printf(\"%s,%s,%s,%s,%g\\n\",$1,$2,$3,$4,$5) }' >RE.txt; \n[ -s RE.txt ]; b=$?;\nif [[ $b -eq 0 ]]; then \n  min=$(cat RE.txt | awk 'BEGIN{FS=\",\"}{printf(\"%g\\n\",$5)}' | sort -n | \n  head -1); \n  max=$(cat RE.txt | awk 'BEGIN{FS=\",\"}{printf(\"%g\\n\",$5)}' | sort -n | \n  tail -1);\n  avr=$(awk 'BEGIN{FS=\",\"}{ sum += $5; count++ }END{ avr = sum/count; \n  printf( \"%.2f\\n\", avr ) }' RE.txt);\n  string=\"Shares from the sector \\\"${2}\\\"\"; \n  printf '%s\\n' \"$string\"; iter=$(printf '%s\\n' \"$string\" | wc -c); \n  for i in `seq 2 $iter` ; \n    do printf '%c' \"-\"; \n  done; \n  printf '\\n'; \n  cat RE.txt; \n  for i in `seq 2 $iter` ; \n    do printf '%c' \"-\"; \n  done;\n  printf '\\n';\n  printf '%s\\t%s\\t%s\\n' \"minimum last price = ${min}\" \"average last price = ${avr}\" \"maximum last price= ${max}\";\nelse \n  printf '%s\\n%s\\n' \"Wrong sector\" \"Usage: ${0} file sector\" >&2 \n  return 1;\nfi",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "67b76a8@fit.cvut.cz",
+            "ff7598c@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tail -n +2 | paste -s -d',,,,@' | tr '@' '\\n'  | tail -n +2 | awk ' {FS=\",\";$0=$0}{\nprintf(\"%s,%s,%s,%s%s%s,%s\\n\",$1,$2,$3,$4,$5,$6,$7);}' > temp\nsed 's/^ *//' temp >> table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "ff7598c@fit.cvut.cz",
+            "32d5618@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "printf 'V adresari %s je %d polozek' \"$DIR\" \"$(($(ls -la \"$DIR\" | wc -l)-1))\" ; printf 'V adresari %s je %d polozek' \"$DIR\" \"$(($(ls -la \"$DIR\" | wc -l)-1))\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "604003e@fit.cvut.cz",
+            "b148348@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "printf 'V adresari %s je %d polozek\\n' \"$DIR\" \"$(($(ls -la \"$DIR\" | wc -l)-1))\" ; printf 'V adresari %s je %d polozek\\n' \"$DIR\" \"$(($(ls -la \"$DIR\" | wc -l)-1))\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "604003e@fit.cvut.cz",
+            "b148348@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cd \"$DIR\" ; N=$(ls -a | wc -l) ; cd  ; echo \"V adresari \"$DIR\" je \"$(ls -a \"$DIR\" | wc -l)\" polozek\" && echo \"V adresari \"$DIR\" je \"$(ls -a \"$DIR\" | wc -l)\" polozek\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "51f2f3b@fit.cvut.cz",
+            "0085d85@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"V adresari $DIR je $(ls -a \"$DIR\" | wc -w) polozek\"; echo \"V adresari $DIR je $(ls -a \"$DIR\" | wc -w) polozek\" > \"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "ad36c17@fit.cvut.cz",
+            "776fd53@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /bin/bash\nif [ $# -eq 3 ] ; then\necho $(($1 * $2 * $3))\nelse\necho \"Spatny pocet parametru\" >&2\nexit 2\nfi",
+        "culprit_assignment_name": "2020-12 - soucin",
+        "culprit_count": 2,
+        "culprits": [
+            "6ce9eb6@fit.cvut.cz",
+            "5fabcab@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | sed -e $'s/[^A-Za-z]/\\\\\\n/g' | grep '[a-zA-Z]\\{7,7\\}' | sort | uniq -c | sort | tail -1 | sed 's/[^a-zA-Z]//g'",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "07ba8b8@fit.cvut.cz",
+            "e8d2067@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "sed 's/,*//g' \"$FILE\" | sed '1s/.*/Symbol Name Sector Market.Cap.$K Last/g;s/^ //;1s/ /\\n/g;1s/./ /g' | paste -s -d',,,,\\n' >table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "0cee9ff@fit.cvut.cz",
+            "7375636@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "echo \"Symbol,Name,Sector,Market Cap \\$K,Last\" > tmp.txt\ntail +2 \"$FILE\" | sed 's/,//g' | paste -d ',,,,\\n' -s | sed \"s/^ *//\" >> tmp.txt\nmv tmp.txt table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "9bbbd22@fit.cvut.cz",
+            "5ff4648@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr ' ' '\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -nr | awk '{print $2}' | head -1",
+        "culprit_assignment_name": "en-2020-09 DU Word with the highest frequency",
+        "culprit_count": 2,
+        "culprits": [
+            "409c933@fit.cvut.cz",
+            "5e040bd@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | tr -d '[:digit:]'| tr '[:upper:]' '[:lower:]' | sort | pr -3 -t | tr -s ' \\t' | nl > tmp.txt\ncp tmp.txt \"$FILE\"\nrm tmp.txt",
+        "culprit_assignment_name": "2020-xx \u00daprava a spojen\u00ed do sloupc\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "6c61b43@fit.cvut.cz",
+            "80a6502@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$BIPS1\" \"$BIPA1\" > \"~/programatori.txt\"\nsort -t',' -k2,2 -k1,1 \"~/programatori.txt\" | uniq > \"~/programatori.txt\"",
+        "culprit_assignment_name": "2020-06 - Slou\u010den\u00ed soubor\u016f",
+        "culprit_count": 2,
+        "culprits": [
+            "00fa8bb@fit.cvut.cz",
+            "2ba48ad@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "printf \"Symbol,Name,Sector,Market Cap \\$K,Last\">table.csv;cat \"$FILE\" | tail +2 | tr -d ',' | sed -e 's/^ /;/' | tr '\\n' ',' | tr ';' '\\n' | sed -E 's/,$//g'>>table.csv; echo \"\">>table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "f3c8d3c@fit.cvut.cz",
+            "655b740@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#! /usr/bin/bash\n\norgfile=\"$1\"\ntmpfile=\"tmp.txt\"\nword=\"$2\"; \nmin=0; max=0; num=0; \n\n\ncat \"$orgfile\" | awk -v word=\"$word\" -F, '{ if ($3 == word) print($0); }'>\"$tmpfile\"; \nnum=$(cat tmp.txt | wc -l)\n\n\nif [ $num -eq 0 ]; \n\n\tthen printf \"Wrong sector\\nUsage: $0 file sector\\n\" 1>&2\n\texit 1;\n\t\n\telse \n\t\t\n\t\tsentence=\"Shares from the sector \\\"$word\\\"\"\n\t\tprintf \"$sentence\\n\";\n\t\t\n\t\t\n\t\techo \"$sentence\" | sed 's/./-/g';\n\t\t\t\n\t\t\t\n\n\t\tcat \"$tmpfile\";\n\t\t\n\t\t\n\t\techo \"$sentence\" | sed 's/./-/g';\n\t\t\n\t\t\n\t\t\n\t\tprintf \"minimum last price = $(cat \"$tmpfile\" | sort -n -k5 -t, | head -1 | cut -d, -f5)\\t\"\n\t\tcat \"$tmpfile\" | cut -d, -f5 | awk -v sum=0 -v num=$num '{ sum+=$0; } END{printf(\"average last price = %.2f\\t\", (sum/num));}'\n\t\tprintf \"maximum last price= $(cat \"$tmpfile\" | sort -n -k5 -t, | tail -1 | cut -d, -f5)\"\n\t\tprintf \"\\n\";\nfi\n\nrm \"$tmpfile\"",
+        "culprit_assignment_name": "2020-11 DU Ceny akci\u00ed",
+        "culprit_count": 2,
+        "culprits": [
+            "f3c8d3c@fit.cvut.cz",
+            "655b740@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "N=$(ls -a \"$DIR\" | wc -l)\necho \"V adresari $DIR je $N polozek\"\necho \"V adresari $DIR je $N polozek\" >\"$SOUBOR\"",
+        "culprit_assignment_name": "DU3 - Sou\u010det polo\u017eek v adres\u00e1\u0159i",
+        "culprit_count": 2,
+        "culprits": [
+            "1dc90cf@fit.cvut.cz",
+            "e800bc5@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr -sc '[:alnum:]' '[\\n*]' | sed -r '/^.{8,}$/d' | sed -r '/^.{,6}$/d' | uniq -c | sort -k1,2 -nr | head -1 | tr -cd '[:alpha:]'",
+        "culprit_assignment_name": "2020-09 DU Nej\u010detn\u011bj\u0161\u00ed sedmiznakov\u00e9 slovo",
+        "culprit_count": 2,
+        "culprits": [
+            "93ae0b6@fit.cvut.cz",
+            "9e18cf5@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$DIR\"/*.txt | tr '''\\n' | grep -E '^.{7}$' | sort | uniq -c | sort -nr | awk '{print $2}' | head -1",
+        "culprit_assignment_name": "en-2020-09 DU Word with the highest frequency",
+        "culprit_count": 2,
+        "culprits": [
+            "55c472d@fit.cvut.cz",
+            "6d86a84@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\ncat \"$1\" | grep \"$2\" > /dev/null\nif (($? != 0)) ; then\n  echo \"Wrong sector\nUsage: \"$0\" file sector\">&2\nexit 1\nelse\n  echo \"Shares from the sector \\\"$2\\\"\"\n  echo \"Shares from the sector \\\"$2\\\"\" | sed 's/./-/g'\n  cat \"$1\" | grep \"$2\"\n  echo \"Shares from the sector \\\"$2\\\"\" | sed 's/./-/g'\n  avg=$(cat \"$1\" | grep \"$2\" | sed 's/ //g' | tr ',' ' '| awk 'BEGIN{sum=0}{sum=sum+$5}END{printf(\"%.2f\", sum/NR)}')\n  min=$(cat \"$1\" | grep \"$2\" | sed 's/ //g' | tr ',' ' ' | awk '{print $5}' | sort -n | head -1)\n  max=$(cat \"$1\" | grep \"$2\" | sed 's/ //g' | tr ',' ' ' | awk '{print $5}' | sort -n | tail -1)\n  echo -e \"minimum last price = $min\\taverage last price = $avg\\tmaximum last price= $max\"\n  exit 0\nfi\n",
+        "culprit_assignment_name": "2020-11 DU Stock prices",
+        "culprit_count": 2,
+        "culprits": [
+            "dfb1b3e@fit.cvut.cz",
+            "3ce0506@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr ',' ' ' | tr '\\t' ','| cut -d',' -f1,2,3,4,5 | tr -s ' ' > nag.txt\nsed '1d' \"$FILE\" > reszta.txt\npaste -s -d',,,,\\n' reszta.txt > sklejone.txt\nsed 's/^[ \\t]*//' sklejone.txt > bezSpacji.txt\ncat sklejone.txt | cut -d',' -f1,2,3 > kol1_3.txt\ncat sklejone.txt  | cut -d',' -f4,5,6 | tr -d ','  > kol4_6.txt\ncat sklejone.txt | cut -d',' -f7 > kol7.txt\npaste -d',' kol1_3.txt kol4_6.txt kol7.txt > table_1.csv\ncat nag.txt table_1.csv > table_2.csv\nsed 's/^[ \\t]*//' table_2.csv > table.csv",
+        "culprit_assignment_name": "en-2020-09 DU Change of the file format to csv",
+        "culprit_count": 2,
+        "culprits": [
+            "472ad58@fit.cvut.cz",
+            "d71c4f1@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "cat \"$FILE\" | head -1 | tr '\\t,' ' ' | tr ',$' ' $' | tr -s ' ' | tr ' ' ',' | sed 's/,[[:alpha:]]*$//1' | sed 's/,/ /4' | sed 's/,/ /4' >table.csv;\n\ncat \"$FILE\" | tail -n+2 | tr '\\n' ',' | sed 's/, /\\n/g' | sed 's/^ //g' | sed 's/,$/\\n/g'| sed 's/,//4' | sed 's/,//4'>>table.csv",
+        "culprit_assignment_name": "2020-09 DU Zm\u011bna form\u00e1tu souboru na csv",
+        "culprit_count": 2,
+        "culprits": [
+            "a84399c@fit.cvut.cz",
+            "6964e76@fit.cvut.cz"
+        ]
+    },
+    {
+        "script": "#!/bin/bash\n\nif [[ $# -eq 2 ]];\nthen\necho \"$1\"\necho \"$2\"\nexit 0\nfi\n1>&2 echo \"Spatny pocet parametru\"\nexit 2\n",
+        "culprit_assignment_name": "2020-12 - Test 1",
+        "culprit_count": 2,
+        "culprits": [
+            "612778c@fit.cvut.cz",
+            "8418ffe@fit.cvut.cz"
+        ]
+    }
+]
