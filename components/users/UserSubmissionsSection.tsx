@@ -1,26 +1,15 @@
-import React from "react"
-import { decode } from "js-base64"
-import dayjs, { unix } from 'dayjs'
+import React, {useState} from "react"
+import {decode} from "js-base64"
+import dayjs from 'dayjs'
 import pluralize from 'pluralize'
-import { calculateSemesterScore } from '../../utils/score-utils'
 import {BorderCell, CodeCell} from "../../pages-styles/UserPage/UserPage.styles";
-import Button from "@atlaskit/button";
+import {SearchWrapper} from "../../pages-styles/UsersPage/UsersPage.styles";
+import Textfield from "@atlaskit/textfield";
+import EditorSearchIcon from "@atlaskit/icon/glyph/editor/search";
+import debounce from "lodash/debounce";
 
 type Props = {
   userData: any,
-}
-
-function filterAssignments() {
-    var input = document.getElementById("inputFilter");
-    var ass = document.getElementsByClassName("user-assignment");
-
-    for (var i = 0; i < ass.length; i++) {
-        if (ass[i].firstChild.textContent.includes(input.value))
-            ass[i].setAttribute("style", "display: block;");
-        else {
-            ass[i].setAttribute("style", "display: none;");
-        }
-    }
 }
 
 export default function UserSubmissionsSection(props: Props, filter: string) {
@@ -29,6 +18,21 @@ export default function UserSubmissionsSection(props: Props, filter: string) {
     return null
   }
 
+  const [inputVal, setInputVal] = useState("");
+  const setInputValDebounced = debounce(setInputVal, 300);
+  const handleSearchEvent = (event) => {
+    const { value } = event.target;
+    setInputValDebounced(value)
+  };
+
+    const filterUsers = (submissions) => {
+        return submissions.filter((submission) => {
+        return (
+            submission.assignment.name.toLowerCase().includes(inputVal.toLowerCase())
+        )
+    });
+  };
+
   return (
     <div>
       <br />
@@ -36,14 +40,19 @@ export default function UserSubmissionsSection(props: Props, filter: string) {
       <h3>Submissions</h3>
       <br />
       <br />
-
-        <input type="text" name="name" id="inputFilter" />
-        <Button appearance="primary" onClick={() => filterAssignments()}>Filter</Button>
-      <br />
-      <br />
+        <SearchWrapper>
+            <Textfield
+              name="basic"
+              isCompact
+              placeholder="Search submission"
+              elemAfterInput={<EditorSearchIcon label="" />}
+              onChange={(event) => handleSearchEvent(event)}
+            />
+        </SearchWrapper>
+        <br />
         <div className="assignments">
         {
-          assignments.results.map((ass, i) => {
+          filterUsers(assignments.results).map((ass, i) => {
           return (
             <BorderCell className="user-assignment">
               <b>{i}) <a href={`/assignments/edit/${ass.assignment.id}`}>{ass.assignment.name}</a>, score ({ass.score})</b>

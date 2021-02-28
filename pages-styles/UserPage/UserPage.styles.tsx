@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import React from "react";
 
 export const Table = styled.section`
     width: 100%;
@@ -50,13 +49,10 @@ export const ButtonCell = styled.div`
 `;
 
 export const BorderCell = styled.div`
-    border-style: solid;
-    border-right: none;
-    border-radius: 15px;
-    border-width: 1px;
+    border-radius: 5px;
     margin-top: 10px;
     padding: 10px;
-    border-color: #42526e;
+    border: 2px solid #DFE1E6;
 `;
 
 export const CodeCell = styled.pre`
