@@ -32,6 +32,8 @@
     "@atlaskit/textarea": "^3.0.3",
     "@atlaskit/textfield": "^4.0.5",
     "@emotion/core": "^10.0.35",
+    "@nivo/core": "^0.67.0",
+    "@nivo/network": "^0.67.0",
     "@sentry/react": "^5.25.0",
     "@sentry/tracing": "^5.25.0",
     "dayjs": "^1.9.1",

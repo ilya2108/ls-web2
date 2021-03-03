@@ -145,6 +145,11 @@ a {
   width: 250px;
 }
 
+.nivo-wrapper {
+  width: 1000px;
+  height: 1000px;
+}
+
 #__next {
   height: 100%;
 }

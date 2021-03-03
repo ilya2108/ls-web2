@@ -3,7 +3,7 @@ import React from 'react';
 import DynamicTable from '@atlaskit/dynamic-table'
 import Link from 'next/link'
 
-import { countPlagiatsOfCulprit, createCoworkerSet, getPlagiatsOfCulprit } from '../../utils/plagiarism-utils'
+import { countPlagiatsOfCulprit, createCoworkerSet, getPlagiatsOfCulprit } from '../../utils/plagiarism/plagiarism-utils'
 
 export default function PlagiaristCoworkers({ plagiats, userEmail }) {
     const plagiatsFiltered = getPlagiatsOfCulprit(plagiats, userEmail)
