@@ -1,11 +1,13 @@
 import React from 'react';
-import { useRouter } from "next/router";
-import Layout from "../../../layout/Layout";
+import { useRouter } from "next/router"
+import Layout from "../../../layout/Layout"
+import Link from 'next/link'
 
-import allPlagiats from '../__fixtures__/res_semester_anonymized_pretty.json';
+import allPlagiats from '../__fixtures__/res_semester_anonymized_pretty.json'
 
-import PlagiatsList from '../../../components/Plagiarism/PlagiatsList';
-import CulpritCoworkers from '../../../components/Plagiarism/CulpritCoworkers';
+import PlagiatsList from '../../../components/Plagiarism/PlagiatsList'
+import CulpritCoworkers from '../../../components/Plagiarism/CulpritCoworkers'
+import PlagiatsNetworkGraph from '../../../components/Plagiarism/PlagiatsNetworkGraph'
 
 export default function UserPage() {
 
@@ -15,6 +17,13 @@ export default function UserPage() {
     return (
         <Layout>
             <h1>User: {userEmail}</h1>
+
+            <Link href={"/plagiarism/"}>
+                <a>Back to all plagiats</a>
+            </Link>
+
+            <h2 className="mb-3">Graph of culprits</h2>
+            <PlagiatsNetworkGraph plagiats={allPlagiats} mainCulprit={userEmail} />
 
             <h2 className="mb-3">Most common coworkers</h2>
             <CulpritCoworkers plagiats={plagiats} userEmail={userEmail} />

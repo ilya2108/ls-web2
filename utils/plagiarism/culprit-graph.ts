@@ -1,8 +1,12 @@
+import PlagiatsList from "../../components/Plagiarism/PlagiatsList"
+import { createCoworkerSet, getPlagiatsOfCulprit } from "./plagiarism-utils"
+
 type Email = string
 interface Node {
     email: Email,
     countAsSource: number,
-    countAsTarget: number
+    countAsTarget: number,
+    depth: number
 }
 type BasicLink = { source: Node, target: Node }
 interface Link extends BasicLink { count: number }
@@ -15,12 +19,32 @@ type ScriptDescriptor = {
  }
 
 export default class CulpritGraph {
+
     nodes: Array<Node>
     links: Array<Link>
+    repulsivity = () => {
+        const n = this.nodes.length
+        if(n > 300) return 5
+        if(n > 200) return 15
+        if(n > 150) return 50
+        if(n > 100) return 200
+        if(n > 50) return 500
+        if(n > 10) return 750
+        if(n > 1) return 1000
+    }
 
     constructor() {
         this.nodes = []
         this.links = []
+    }
+
+    createNode(email: Email, depth: number = 0) {
+        return {
+            email,
+            countAsSource: 0,
+            countAsTarget: 0,
+            depth
+        }
     }
 
     findIndexLink(link: BasicLink) {
@@ -71,7 +95,6 @@ export default class CulpritGraph {
         this.addNode(link)
 
         const linkIndex = this.findLinkSymmetric(link)
-        //console.log(linkIndex)
         if(linkIndex >= 0) {
             ++this.links[linkIndex].count
         } else {
@@ -83,8 +106,8 @@ export default class CulpritGraph {
     private createAllCombinations(array: Array<Email>): Array<BasicLink> {
         return array.flatMap((v, i) => {
             return array.slice(i+1).map(w => {
-                const source: Node = { email: v, countAsSource: 0, countAsTarget: 0 }
-                const target: Node = { email: w, countAsSource: 0, countAsTarget: 0 }
+                const source: Node = this.createNode(v)
+                const target: Node = this.createNode(w)
                 return { source, target }
             })
         })
@@ -98,4 +121,34 @@ export default class CulpritGraph {
     addPlagiats(plagiats: Array<ScriptDescriptor>) {
         plagiats.forEach(plagiat => this.addPlagiat(plagiat))
     }
+
+    addCoworkers(coworkers: Array<Email>, mainCulprit: Email, depth: number) {
+        const combinations = coworkers.map(coworker => {
+            const source: Node = this.createNode(mainCulprit, depth)
+            const target: Node = this.createNode(coworker, depth + 1)
+            return { source, target }
+        }).filter(c => {
+            return !this.nodes.includes(c.target)
+        })
+        combinations.forEach(c => this.addLink(c))
+    }
+
+    addPlagiatsMainCulprit(plagiats: Array<ScriptDescriptor>, mainCulprit: Email, depth = 0) {
+        getPlagiatsOfCulprit(plagiats, mainCulprit).forEach(plagiat => {
+            const coworkers = createCoworkerSet([plagiat], mainCulprit)
+            this.addCoworkers(coworkers, mainCulprit, 0)
+        })
+        for(let i = 1; i < depth; ++i) {
+            const culprits = this.nodes.filter(n => n.depth == i)
+            culprits.forEach(culprit => {
+                getPlagiatsOfCulprit(plagiats, culprit.email).forEach(plagiat => {
+                    const coworkers = createCoworkerSet([plagiat], culprit.email)
+                    this.addCoworkers(coworkers, culprit.email, i)
+                })
+            })
+        }
+
+        this.links.sort((a, b) => b.source.depth - a.source.depth)
+    }
+
 }
