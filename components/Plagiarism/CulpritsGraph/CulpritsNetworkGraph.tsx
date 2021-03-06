@@ -84,7 +84,7 @@ export default function PlagiatsNetworkGraph({ plagiats, mainCulprit = null }) {
                     />
             </NivoGraph>
             <NivoNodes>
-                <NodeList nodes={culpritGraph.nodes.map(node => node.email)} />
+                <NodeList nodes={culpritGraph.nodes.map(node => node.email)} highlightNode={mainCulprit} />
             </NivoNodes>
         </NivoWrapper>
     );

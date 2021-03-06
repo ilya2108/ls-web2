@@ -178,6 +178,27 @@ a {
   width: 250px;
 }
 
+.node-list-row {
+  padding: 3px;
+  border-bottom: 1px solid #ccc;
+}
+
+.node-list-row:hover {
+  background-color: rgb(235,236,240);
+  cursor: pointer;
+}
+
+.node-list-row.active, .node-list-row.active:hover {
+  background-color: rgba(166, 7, 71, 0.1);
+  border-bottom: 1px solid rgb(166, 7, 71);
+  cursor: default;
+}
+
+.node-list-row > a {
+  text-decoration: none;
+  color: #000;
+}
+
 #__next {
   height: 100%;
 }
