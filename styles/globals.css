@@ -19,6 +19,9 @@ a {
   height: 20px;
 }
 
+.mb-0 {
+  margin-bottom: 0px;
+}
 .mb-1 {
   margin-bottom: 3px;
 }
@@ -33,6 +36,36 @@ a {
 }
 .mb-5 {
   margin-bottom: 15px;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mt-0 {
+  margin-top: 0px;
+}
+.mt-1 {
+  margin-top: 3px;
+}
+.mt-2 {
+  margin-top: 6px;
+}
+.mt-3 {
+  margin-top: 9px;
+}
+.mt-4 {
+  margin-top: 12px;
+}
+.mt-5 {
+  margin-top: 15px;
+}
+
+.align-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 
@@ -143,12 +176,6 @@ a {
 
 .search-field {
   width: 250px;
-}
-
-.nivo-wrapper {
-  width: 1000px;
-  height: 1000px;
-  border: 1px solid #eee
 }
 
 #__next {

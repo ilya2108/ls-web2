@@ -1,15 +1,15 @@
 import PlagiatsList from "../../components/Plagiarism/PlagiatsList"
 import { createCoworkerSet, getPlagiatsOfCulprit } from "./plagiarism-utils"
 
-type Email = string
-interface Node {
+import type { Email } from '../../components/Plagiarism/CulpritsGraph/CulpritsNetworkGraph'
+export interface Node {
     email: Email,
     countAsSource: number,
     countAsTarget: number,
     depth: number
 }
-type BasicLink = { source: Node, target: Node }
-interface Link extends BasicLink { count: number }
+export type BasicLink = { source: Node, target: Node }
+export interface Link extends BasicLink { count: number }
 
 type ScriptDescriptor = {
     script: string,
@@ -22,16 +22,6 @@ export default class CulpritGraph {
 
     nodes: Array<Node>
     links: Array<Link>
-    repulsivity = () => {
-        const n = this.nodes.length
-        if(n > 300) return 5
-        if(n > 200) return 15
-        if(n > 150) return 50
-        if(n > 100) return 200
-        if(n > 50) return 500
-        if(n > 10) return 750
-        if(n > 1) return 1000
-    }
 
     constructor() {
         this.nodes = []
@@ -150,5 +140,4 @@ export default class CulpritGraph {
 
         this.links.sort((a, b) => b.source.depth - a.source.depth)
     }
-
 }

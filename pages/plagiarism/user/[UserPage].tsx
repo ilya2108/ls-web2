@@ -7,7 +7,7 @@ import allPlagiats from '../__fixtures__/res_semester_anonymized_pretty.json'
 
 import PlagiatsList from '../../../components/Plagiarism/PlagiatsList'
 import CulpritCoworkers from '../../../components/Plagiarism/CulpritCoworkers'
-import PlagiatsNetworkGraph from '../../../components/Plagiarism/PlagiatsNetworkGraph'
+import PlagiatsNetworkGraph from '../../../components/Plagiarism/CulpritsGraph/CulpritsNetworkGraph'
 
 export default function UserPage() {
 
