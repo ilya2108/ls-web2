@@ -22,7 +22,7 @@ export const getPlagiatsOfCulprit = (plagiats: ScriptDescriptor[], culprit: Emai
  * Creates set of all culprits from plagiats
  */
 export const createCulpritsSet = (plagiats: ScriptDescriptor[]): Array<Email> => {
-    return removeDuplicates(plagiats.map(x => x.culprits).reduce((a, b) => a.concat(b)))
+    return removeDuplicates(plagiats.map(x => x.culprits).reduce((a, b) => a.concat(b), []))
 }
 /**
  * Creates set of all culprits (without the one in parameter) that had at least one common plagiat
