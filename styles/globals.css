@@ -190,6 +190,7 @@ a {
 
 .node-list-row.active, .node-list-row.active:hover {
   background-color: rgba(166, 7, 71, 0.1);
+  border-top: 1px solid rgb(166, 7, 71);
   border-bottom: 1px solid rgb(166, 7, 71);
   cursor: default;
 }

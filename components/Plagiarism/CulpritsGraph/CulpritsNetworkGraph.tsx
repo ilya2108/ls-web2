@@ -19,7 +19,8 @@ export interface Settings {
     repulsivity: (nodesLength: number) => number,
     radius: (node) => number,
     linkWidth: (link) => number,
-    depth: number
+    depth: number,
+    animationsEnabled: boolean
 }
 
 export default function PlagiatsNetworkGraph({ plagiats, mainCulprit = null }) {
@@ -69,7 +70,7 @@ export default function PlagiatsNetworkGraph({ plagiats, mainCulprit = null }) {
                     nodeBorderColor={{ from: 'color', modifiers: [ [ 'darker', 1 ] ] }}
                     linkThickness={e => settings.linkWidth(e)}
                     linkColor={(e) => e.source.color}
-                    animate={false}
+                    animate={settings.animationsEnabled}
                     tooltip={node => {
                         return (
                             <div>

@@ -7,6 +7,8 @@ import Button from '@atlaskit/button'
 import type { Settings, Link } from './CulpritsNetworkGraph'
 import type { Node } from '../../../utils/plagiarism/culprit-graph'
 
+import { SettingRow } from '../../../pages-styles/Plagiarism/Plagiarism.styles'
+
 const dynamicRepulsivityFunc = (n) => {
     if(n > 500) return 1
     if(n > 300) return 5
@@ -28,7 +30,8 @@ export const defaultSettings: Settings = {
     repulsivity: dynamicRepulsivityFunc,
     radius: dynamicRadiusFunc,
     linkWidth: dynamicWidthFunc,
-    depth: 1
+    depth: 1,
+    animationsEnabled: false
 }
 
 export default function CulpritGraphSettings({ updateSettings, displayDepth = false }) {
@@ -36,7 +39,8 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
     const [repulsivity, setRepulsivity] = useState(10)
     const [dynamicRadius, setDynamicRadius] = useState(true)
     const [dynamicWidth, setDynamicWidth] = useState(true)
-    const [depth, setDepth] = useState(1)
+    const [depth, setDepth] = useState(defaultSettings.depth)
+    const [animationsEnabled, setAnimationsEnabled] = useState(defaultSettings.animationsEnabled)
 
     const calculateRepulsivity = (n: number) => {
         if(manualRepulsivity) return repulsivity
@@ -63,7 +67,8 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
         repulsivity: calculateRepulsivity,
         radius: calculateRadius(),
         linkWidth: calculateLinkWidth(),
-        depth: depth
+        depth: depth,
+        animationsEnabled: animationsEnabled
     }
 
     const applySettings = () => {
@@ -88,7 +93,7 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
             </div>}
             <div>
                 <h4>Repulsivity</h4>
-                <div className="align-center">
+                <SettingRow className="align-center">
                     <span>Manual: </span>
                     <Toggle
                         id="toggle-default"
@@ -97,7 +102,7 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                             setManualRepulsivity(prev => !prev)
                         }}
                     />
-                </div>
+                </SettingRow>
                 {manualRepulsivity && (
                     <>
                         <span>{repulsivity}</span>
@@ -115,7 +120,7 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
             </div>
             <div>
                 <h4>Nodes</h4>
-                <div className="align-center">
+                <SettingRow className="align-center">
                     <span className="mt-0">Dynamic radius: </span>
                     <Toggle
                         id="toggle-default"
@@ -124,11 +129,11 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                             setDynamicRadius(prev => !prev)
                         }}
                     />
-                </div>
+                </SettingRow>
             </div>
             <div>
                 <h4>Links</h4>
-                <div className="align-center">
+                <SettingRow className="align-center">
                     <span className="mt-0">Dynamic width: </span>
                     <Toggle
                         id="toggle-default"
@@ -137,9 +142,22 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                             setDynamicWidth(prev => !prev)
                         }}
                     />
-                </div>
+                </SettingRow>
             </div>
-            <Button className="mt-3" appearance="primary" onClick={applySettings}>
+            <div>
+                <h4>Animations</h4>
+                <SettingRow className="align-center">
+                    <span className="mt-0">Enabled: </span>
+                    <Toggle
+                        id="toggle-default"
+                        isChecked={animationsEnabled}
+                        onChange={() => {
+                            setAnimationsEnabled(prev => !prev)
+                        }}
+                    />
+                </SettingRow>
+            </div>
+            <Button className="mt-2" appearance="primary" onClick={applySettings}>
                 Apply
             </Button>
         </>

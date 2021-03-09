@@ -31,6 +31,12 @@ export const NivoSettings = styled.div`
     padding: 5px;
 `
 
+export const SettingRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`
+
 export const NivoNodes = styled.div`
     grid-area: nodes;
     padding: 5px;
