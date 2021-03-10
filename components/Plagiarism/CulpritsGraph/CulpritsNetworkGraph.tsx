@@ -33,9 +33,7 @@ export default function PlagiatsNetworkGraph({ plagiats, mainCulprit = null }) {
         setSettings(newSettings)
     }
 
-    const culpritGraph = new CulpritGraph
-    if(!mainCulprit) culpritGraph.addPlagiats(plagiats)
-    else             culpritGraph.addPlagiatsMainCulprit(plagiats, mainCulprit, settings.depth)
+    const culpritGraph = new CulpritGraph(plagiats, mainCulprit, settings.depth)
 
     const nodesLength = culpritGraph.nodes.length
 

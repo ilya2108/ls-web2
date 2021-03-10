@@ -11,13 +11,13 @@ import { SettingGroup, SettingRow, RangeWrapper } from '../../../pages-styles/Pl
 
 const dynamicRepulsivityFunc = (n) => {
     if(n > 500) return 1
-    if(n > 300) return 5
-    if(n > 200) return 15
-    if(n > 150) return 50
-    if(n > 100) return 100
-    if(n > 70) return 250
-    if(n > 50) return 500
-    if(n > 10) return 750
+    if(n > 300) return 4
+    if(n > 200) return 12
+    if(n > 150) return 25
+    if(n > 100) return 50
+    if(n > 70) return 200
+    if(n > 50) return 400
+    if(n > 10) return 650
     if(n >= 1) return 1000
     else return 0
 }
