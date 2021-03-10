@@ -7,7 +7,7 @@ import Button from '@atlaskit/button'
 import type { Settings, Link } from './CulpritsNetworkGraph'
 import type { Node } from '../../../utils/plagiarism/culprit-graph'
 
-import { SettingRow } from '../../../pages-styles/Plagiarism/Plagiarism.styles'
+import { SettingGroup, SettingRow, RangeWrapper } from '../../../pages-styles/Plagiarism/Plagiarism.styles'
 
 const dynamicRepulsivityFunc = (n) => {
     if(n > 500) return 1
@@ -59,7 +59,7 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
         if(dynamicRadius) {
             return (node) => dynamicRadiusFunc(node)
         } else {
-            return () => 9
+            return () => 5
         }
     }
 
@@ -78,20 +78,23 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
     return (
         <>
             <h3 className="mb-2">Settings</h3>
-            {displayDepth && <div>
+            {displayDepth &&
+            <SettingGroup>
                 <h4>Depth</h4>
-                <p className="mt-0">Current: {depth}</p>
-                <Range
-                    isDisabled={!displayDepth}
-                    value={depth}
-                    min={1}
-                    max={10}
-                    onChange={value => {
-                        setDepth(value)
-                    }}
-                />
-            </div>}
-            <div>
+                <RangeWrapper>
+                    <span className="mt-0">{depth}</span>
+                    <Range
+                        isDisabled={!displayDepth}
+                        value={depth}
+                        min={1}
+                        max={10}
+                        onChange={value => {
+                            setDepth(value)
+                        }}
+                    />
+                </RangeWrapper>
+            </SettingGroup>}
+            <SettingGroup>
                 <h4>Repulsivity</h4>
                 <SettingRow className="align-center">
                     <span>Manual: </span>
@@ -104,8 +107,8 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                     />
                 </SettingRow>
                 {manualRepulsivity && (
-                    <>
-                        <span>{repulsivity}</span>
+                    <RangeWrapper>
+                        <span className="mr-2">{repulsivity}</span>
                         <Range
                             isDisabled={!manualRepulsivity}
                             value={repulsivity}
@@ -115,10 +118,10 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                                 setRepulsivity(value)
                             }}
                         />
-                    </>)
+                    </RangeWrapper>)
                 }
-            </div>
-            <div>
+            </SettingGroup>
+            <SettingGroup>
                 <h4>Nodes</h4>
                 <SettingRow className="align-center">
                     <span className="mt-0">Dynamic radius: </span>
@@ -130,8 +133,8 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                         }}
                     />
                 </SettingRow>
-            </div>
-            <div>
+            </SettingGroup>
+            <SettingGroup>
                 <h4>Links</h4>
                 <SettingRow className="align-center">
                     <span className="mt-0">Dynamic width: </span>
@@ -143,8 +146,8 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                         }}
                     />
                 </SettingRow>
-            </div>
-            <div>
+            </SettingGroup>
+            <SettingGroup>
                 <h4>Animations</h4>
                 <SettingRow className="align-center">
                     <span className="mt-0">Enabled: </span>
@@ -156,7 +159,7 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
                         }}
                     />
                 </SettingRow>
-            </div>
+            </SettingGroup>
             <Button className="mt-2" appearance="primary" onClick={applySettings}>
                 Apply
             </Button>

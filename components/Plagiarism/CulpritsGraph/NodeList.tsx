@@ -43,23 +43,25 @@ export default function CulpritGraphSettings({ nodes, highlightNode = null }: Pr
                 />
             </div>
 
-            {filterNodes(nodes).sort().map(node => {
-                if(node === highlightNode) {
-                    return (
-                        <div className="node-list-row active" key={node}>
-                            {node}
-                        </div>
-                    )
-                } else {
-                    return (
-                        <Link key={node} href={`/plagiarism/user/${encodeURIComponent(node)}`}>
-                            <div className="node-list-row">
-                                <a>{node}</a>
+            <div className="node-list">
+                {filterNodes(nodes).sort().map(node => {
+                    if(node === highlightNode) {
+                        return (
+                            <div className="node-list-row active" key={node}>
+                                {node}
                             </div>
-                        </Link>
-                    )
-                }
-            })}
+                        )
+                    } else {
+                        return (
+                            <Link key={node} href={`/plagiarism/user/${encodeURIComponent(node)}`}>
+                                <div className="node-list-row non-active">
+                                    <a>{node}</a>
+                                </div>
+                            </Link>
+                        )
+                    }
+                })}
+            </div>
         </>
     );
 };
