@@ -61,3 +61,28 @@ export const CodeCell = styled.pre`
     overflow: auto;
     padding: 10px;
 `;
+
+export const Tab = styled.button`
+  margin-bottom: -2px;
+  font-size: 20px;
+  padding: 10px 60px;
+  cursor: pointer;
+  opacity: 0.6;
+  background: white;
+  border: 0;
+  outline: 0;
+  ${({ active }) =>
+    active &&
+    `
+    border-bottom: 2px solid #0747A6;
+    opacity: 1;
+  `}
+`;
+export const TabGroup = styled.div`
+  margin-bottom: 30px;
+  border-bottom: 2px solid #DFE1E6;
+`;
+
+export const TabContent = styled.div`
+    padding: 15px;
+`;

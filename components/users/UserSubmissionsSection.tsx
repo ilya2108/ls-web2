@@ -35,11 +35,6 @@ export default function UserSubmissionsSection(props: Props) {
 
   return (
     <div>
-      <br />
-      <br />
-      <h3>Submissions</h3>
-      <br />
-      <br />
         <SearchWrapper>
             <Textfield
               name="basic"
