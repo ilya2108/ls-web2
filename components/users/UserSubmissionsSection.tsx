@@ -12,7 +12,7 @@ type Props = {
   userData: any,
 }
 
-export default function UserSubmissionsSection(props: Props, filter: string) {
+export default function UserSubmissionsSection(props: Props) {
   const { assignments } = props.userData
   if (!assignments || !assignments.results) {
     return null
