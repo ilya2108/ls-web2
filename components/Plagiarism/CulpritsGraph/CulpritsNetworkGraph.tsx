@@ -2,23 +2,28 @@ import React, { useState } from 'react'
 
 import { ResponsiveNetwork } from '@nivo/network'
 import { countPlagiatsOfCulprit } from '../../../utils/plagiarism/plagiarism-utils'
-import CulpritGraph from '../../../utils/plagiarism/culprit-graph'
+import CulpritGraph, { defaultSettings, tooltip, Node, Link } from '../../../utils/plagiarism/culprit-graph'
 import NodeList from './NodeList'
 
-import CulpritGraphSettings, { defaultSettings } from './CulpritGraphSettings'
+import CulpritGraphSettings from './CulpritGraphSettings'
 import { NivoWrapper, NivoSettings, NivoGraph, NivoNodes } from '../../../pages-styles/Plagiarism/Plagiarism.styles'
 
 export type Email = string
-export type Link = {
-    count: number,
-    source: Email,
-    target: Email
-}
 
 export interface Settings {
-    repulsivity: (nodesLength: number) => number,
-    radius: (node) => number,
-    linkWidth: (link) => number,
+    repulsivity: {
+        manualRepulsivity: boolean,
+        manualValue: number,
+        function: (nodesLength: number) => number,
+    },
+    radius: {
+        dynamicRadius: boolean,
+        function: (node: Node) => number,
+    }
+    linkWidth: {
+        dynamicWidth: boolean,
+        function: (link: Link) => number,
+    },
     depth: number,
     animationsEnabled: boolean
 }
@@ -48,7 +53,7 @@ export default function PlagiatsNetworkGraph({ plagiats, mainCulprit = null }) {
                         return {
                             id: n.email,
                             color: mainCulprit === n.email ? secondaryColor : primaryColor,
-                            radius: settings.radius(n),
+                            radius: settings.radius.function(n),
                             count: countPlagiatsOfCulprit(plagiats, n.email),
                             depth: n.depth
                         }
@@ -61,25 +66,15 @@ export default function PlagiatsNetworkGraph({ plagiats, mainCulprit = null }) {
                         }
                     })}
                     margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                    repulsivity={settings.repulsivity(nodesLength)}
+                    repulsivity={settings.repulsivity.function(nodesLength)}
                     iterations={100}
                     nodeColor={function(e){return e.color}}
                     nodeBorderWidth={2}
                     nodeBorderColor={{ from: 'color', modifiers: [ [ 'darker', 1 ] ] }}
-                    linkThickness={e => settings.linkWidth(e)}
+                    linkThickness={e => settings.linkWidth.function(e)}
                     linkColor={(e) => e.source.color}
                     animate={settings.animationsEnabled}
-                    tooltip={node => {
-                        return (
-                            <div>
-                                <strong style={{ color: node.color }}>Email: {node.id}</strong>
-                                <br />
-                                Number of plagiats: {node.count}
-                                <br />
-                                Depth: {node.depth}
-                            </div>
-                        )
-                    }}
+                    tooltip={tooltip}
                     />
             </NivoGraph>
             <NivoNodes>

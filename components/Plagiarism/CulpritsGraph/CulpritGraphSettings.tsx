@@ -4,35 +4,10 @@ import Toggle from '@atlaskit/toggle'
 import Range from '@atlaskit/range'
 import Button from '@atlaskit/button'
 
-import type { Settings, Link } from './CulpritsNetworkGraph'
-import type { Node } from '../../../utils/plagiarism/culprit-graph'
+import type { Settings } from './CulpritsNetworkGraph'
 
 import { SettingGroup, SettingRow, RangeWrapper } from '../../../pages-styles/Plagiarism/Plagiarism.styles'
-
-const dynamicRepulsivityFunc = (n) => {
-    if(n > 500) return 1
-    if(n > 300) return 4
-    if(n > 200) return 12
-    if(n > 150) return 25
-    if(n > 100) return 50
-    if(n > 70) return 200
-    if(n > 50) return 400
-    if(n > 10) return 650
-    if(n >= 1) return 1000
-    else return 0
-}
-const dynamicRadiusFunc = (node: Node) => {
-    return Math.min(Math.max(node.countAsSource + node.countAsTarget, 1), 8)
-}
-const dynamicWidthFunc = (link: Link) => link.count
-
-export const defaultSettings: Settings = {
-    repulsivity: dynamicRepulsivityFunc,
-    radius: dynamicRadiusFunc,
-    linkWidth: dynamicWidthFunc,
-    depth: 1,
-    animationsEnabled: false
-}
+import { calculateRepulsivity, calculateRadius, calculateLinkWidth, defaultSettings } from '../../../utils/plagiarism/culprit-graph'
 
 export default function CulpritGraphSettings({ updateSettings, displayDepth = false }) {
     const [manualRepulsivity, setManualRepulsivity] = useState(false)
@@ -42,31 +17,20 @@ export default function CulpritGraphSettings({ updateSettings, displayDepth = fa
     const [depth, setDepth] = useState(defaultSettings.depth)
     const [animationsEnabled, setAnimationsEnabled] = useState(defaultSettings.animationsEnabled)
 
-    const calculateRepulsivity = (n: number) => {
-        if(manualRepulsivity) return repulsivity
-        else return dynamicRepulsivityFunc(n)
-    }
-
-    const calculateLinkWidth = () => {
-        if(dynamicWidth) {
-            return (link) => dynamicWidthFunc(link)
-        } else {
-            return () => 1
-        }
-    }
-
-    const calculateRadius = () => {
-        if(dynamicRadius) {
-            return (node) => dynamicRadiusFunc(node)
-        } else {
-            return () => 5
-        }
-    }
-
     const settings: Settings = {
-        repulsivity: calculateRepulsivity,
-        radius: calculateRadius(),
-        linkWidth: calculateLinkWidth(),
+        repulsivity: {
+            manualRepulsivity,
+            manualValue: repulsivity,
+            function: calculateRepulsivity(manualRepulsivity, repulsivity)
+        },
+        radius: {
+            dynamicRadius,
+            function: calculateRadius(dynamicRadius),
+        },
+        linkWidth: {
+            dynamicWidth,
+            function: calculateLinkWidth(dynamicWidth),
+        },
         depth: depth,
         animationsEnabled: animationsEnabled
     }

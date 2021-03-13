@@ -1,4 +1,3 @@
-import PlagiatsList from "../../components/Plagiarism/PlagiatsList"
 import { createCoworkerSet, getPlagiatsOfCulprit } from "./plagiarism-utils"
 
 import { cloneDeep } from 'lodash'
@@ -19,6 +18,8 @@ type ScriptDescriptor = {
     culprit_count: number,
     culprits: Email[],
  }
+
+// Culprit graph utils
 
 export default class CulpritGraph {
 
@@ -153,4 +154,76 @@ export default class CulpritGraph {
 
         this._links.sort((a, b) => b.source.depth - a.source.depth)
     }
+}
+
+export const tooltip = node => {
+    return (
+        <div>
+            <strong style={{ color: node.color }}>Email: {node.id}</strong>
+            <br />
+            Number of plagiats: {node.count}
+            <br />
+            Depth: {node.depth}
+        </div>
+    )
+}
+
+// Settings utils
+import type { Settings } from '../../components/Plagiarism/CulpritsGraph/CulpritsNetworkGraph'
+
+const dynamicRepulsivityFunc = (n: number) => {
+    if(n > 500) return 1
+    if(n > 300) return 4
+    if(n > 200) return 12
+    if(n > 150) return 25
+    if(n > 100) return 50
+    if(n > 70) return 200
+    if(n > 50) return 400
+    if(n > 10) return 650
+    if(n >= 1) return 1000
+    else return 0
+}
+export const calculateRepulsivity = (manualRepulsivity: boolean, manualValue: number) => {
+    if(manualRepulsivity) return () => manualValue
+    else return (n: number) => dynamicRepulsivityFunc(n)
+}
+
+const dynamicRadiusFunc = (node: Node) => {
+    return Math.min(Math.max(node.countAsSource + node.countAsTarget, 1), 8)
+}
+export const calculateRadius = (dynamicRadius: boolean) => {
+    if(dynamicRadius) {
+        return (node: Node) => dynamicRadiusFunc(node)
+    } else {
+        return () => 5
+    }
+}
+
+const dynamicWidthFunc = (link: Link) => link.count
+
+export const calculateLinkWidth = (dynamicWidth: boolean) => {
+    if(dynamicWidth) {
+        return (link: Link) => dynamicWidthFunc(link)
+    } else {
+        return () => 1
+    }
+}
+
+
+export const defaultSettings: Settings = {
+    repulsivity: {
+        manualRepulsivity: false,
+        manualValue: 10,
+        function: dynamicRepulsivityFunc
+    },
+    radius: {
+        dynamicRadius: true,
+        function: dynamicRadiusFunc
+    },
+    linkWidth: {
+        dynamicWidth: true,
+        function: dynamicWidthFunc
+    },
+    depth: 1,
+    animationsEnabled: false
 }
