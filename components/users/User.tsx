@@ -105,6 +105,7 @@ export default function UserPage(props: Props) {
   // tab names
   const types = ['Home', 'Assignments', 'Dashboard'];
   const [active, setActive] = useState(types[0]);
+  const [hovered, setHovered] = useState(null);
   return (
     <Layout>
       <PageHeader
@@ -126,7 +127,10 @@ export default function UserPage(props: Props) {
           <Tab
             key={type}
             active={active === type}
+            hovered={hovered === type}
             onClick={() => setActive(type)}
+            onMouseEnter={() => setHovered(type)}
+            onMouseLeave={() => setHovered(null)}
           >
             {type}
           </Tab>

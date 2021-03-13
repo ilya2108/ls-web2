@@ -71,6 +71,12 @@ export const Tab = styled.button`
   background: white;
   border: 0;
   outline: 0;
+  ${({ hovered, active }) =>
+    hovered && !active &&
+    `
+ 
+    opacity: 0.3;
+    `}
   ${({ active }) =>
     active &&
     `
@@ -78,6 +84,7 @@ export const Tab = styled.button`
     opacity: 1;
   `}
 `;
+
 export const TabGroup = styled.div`
   margin-bottom: 30px;
   border-bottom: 2px solid #DFE1E6;
