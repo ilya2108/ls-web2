@@ -1,14 +1,13 @@
 type Props = {
-  userData: any,
-}
+  userData: any;
+};
 
-export default function StudentsDashboard (props: Props) {
-return (
+export default function StudentsDashboard(props: Props) {
+  return (
     <div>
-      <br/>
+      <br />
       <h3>Dashboard</h3>
-      <br/>
-
+      <br />
     </div>
-)
+  );
 }

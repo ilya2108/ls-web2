@@ -102,9 +102,9 @@ export default function UserPage(props: Props) {
   if (error) {
     return <Error />;
   }
-  // tab names
-  const types = ['Home', 'Assignments', 'Dashboard'];
-  const [active, setActive] = useState(types[0]);
+
+  const tabNames = ( profile ? ['Home', 'Dashboard'] : ['Home', 'Assignments', 'Dashboard']);
+  const [active, setActive] = useState(tabNames[0]);
   const [hovered, setHovered] = useState(null);
   return (
     <Layout>
@@ -123,16 +123,16 @@ export default function UserPage(props: Props) {
       </PageHeader>
 
       <TabGroup>
-        {types.map(type => (
+        {tabNames.map(tabName => (
           <Tab
-            key={type}
-            active={active === type}
-            hovered={hovered === type}
-            onClick={() => setActive(type)}
-            onMouseEnter={() => setHovered(type)}
+            key={tabName}
+            active={active === tabName}
+            hovered={hovered === tabName}
+            onClick={() => setActive(tabName)}
+            onMouseEnter={() => setHovered(tabName)}
             onMouseLeave={() => setHovered(null)}
           >
-            {type}
+            {tabName}
           </Tab>
         ))}
       </TabGroup>
