@@ -1,8 +1,12 @@
-import React from "react"
-import { decode } from "js-base64"
-import dayjs, { unix } from 'dayjs'
+import React, {useState} from "react"
+import {decode} from "js-base64"
+import dayjs from 'dayjs'
 import pluralize from 'pluralize'
-import { calculateSemesterScore } from '../../utils/score-utils'
+import {BorderCell, CodeCell} from "../../pages-styles/UserPage/UserPage.styles";
+import {SearchWrapper} from "../../pages-styles/UsersPage/UsersPage.styles";
+import Textfield from "@atlaskit/textfield";
+import EditorSearchIcon from "@atlaskit/icon/glyph/editor/search";
+import debounce from "lodash/debounce";
 
 type Props = {
   userData: any,
@@ -14,17 +18,38 @@ export default function UserSubmissionsSection(props: Props) {
     return null
   }
 
+  const [inputVal, setInputVal] = useState("");
+  const setInputValDebounced = debounce(setInputVal, 300);
+  const handleSearchEvent = (event) => {
+    const { value } = event.target;
+    setInputValDebounced(value)
+  };
+
+    const filterUsers = (submissions) => {
+        return submissions.filter((submission) => {
+        return (
+            submission.assignment.name.toLowerCase().includes(inputVal.toLowerCase())
+        )
+    });
+  };
+
   return (
     <div>
-      <br />
-      <br />
-      <h3>Submissions</h3>
-      <br />
-      <br />
-      {
-        assignments.results.map((ass, i) => {
+        <SearchWrapper>
+            <Textfield
+              name="basic"
+              isCompact
+              placeholder="Search submission"
+              elemAfterInput={<EditorSearchIcon label="" />}
+              onChange={(event) => handleSearchEvent(event)}
+            />
+        </SearchWrapper>
+        <br />
+        <div className="assignments">
+        {
+          filterUsers(assignments.results).map((ass, i) => {
           return (
-            <div>
+            <BorderCell className="user-assignment">
               <b>{i}) <a href={`/assignments/edit/${ass.assignment.id}`}>{ass.assignment.name}</a>, score ({ass.score})</b>
               {ass.submissions.results.map((sub, i) => {
                 try {
@@ -33,14 +58,16 @@ export default function UserSubmissionsSection(props: Props) {
                   return (
                     <>
                       <p>
-                        <b>
                           {dayjs(sub?.correction?.submission.createdAt).format("DD.MM. HH:mm:ss")}
-                          { } ({sub?.correction.score} {pluralize('point', sub?.correction.score)})
-                        </b>
+                          <b>
+                              { } ({sub?.correction.score} {pluralize('point', sub?.correction.score)})
+                          </b>
                       </p>
-                      <pre>
-                        {decodedSubmission}
-                      </pre>
+                      <CodeCell>
+                         <code>
+                            {decodedSubmission}
+                        </code>
+                      </CodeCell>
                       <br/>
                     </>
                   )
@@ -51,14 +78,13 @@ export default function UserSubmissionsSection(props: Props) {
                   )
                 }
               })}
-              <br />
-              <i>-----------------------------------------</i>
-              <br />
-              <br />
-            </div>
+
+            </BorderCell>
+
           )
         })
       }
+      </div>
     </div>
   )
 }
