@@ -17,19 +17,17 @@ type ScriptDescriptor = {
     culprit_assignment_name: string,
     culprit_count: number,
     culprits: Email[],
- }
+}
 
 // Culprit graph utils
-
 export default class CulpritGraph {
+    private _nodes: Array<Node>
+    private _links: Array<Link>
 
-    private readonly _nodes: Array<Node>
-    private readonly _links: Array<Link>
+    public readonly nodes: ReadonlyArray<Node>
+    public readonly links: ReadonlyArray<Link>
 
-    public nodes: ReadonlyArray<Node>
-    public links: ReadonlyArray<Link>
-
-    constructor(plagiats: Array<ScriptDescriptor>, mainCulprit?: Email, depth: number = 0) {
+    constructor(plagiats: ReadonlyArray<ScriptDescriptor>, mainCulprit?: Email, depth: number = 0) {
         this._nodes = []
         this._links = []
         if(mainCulprit) {
@@ -51,12 +49,6 @@ export default class CulpritGraph {
         }
     }
 
-    private findIndexLink(link: BasicLink) {
-        return this._links.findIndex(l => {
-            return (l.source.email === link.source.email &&
-            l.target.email === link.target.email)
-        })
-    }
     private findLinkSymmetric(link: BasicLink) {
         return this._links.findIndex(l => {
             return ((l.source.email === link.source.email ||
@@ -65,28 +57,19 @@ export default class CulpritGraph {
              l.target.email === link.source.email))
         })
     }
-    private findLinkSource(link: BasicLink) {
-        return this._links.findIndex(l => {
-            return l.source.email === link.source.email
-        })
-    }
-    private findLinkTarget(link: BasicLink) {
-        return this._links.findIndex(l => {
-            return l.target.email === link.target.email
-        })
-    }
 
     private addNode(link: BasicLink) {
         const sourceIndex = this._nodes.findIndex(n => n.email === link.source.email)
         const targetIndex = this._nodes.findIndex(n => n.email === link.target.email)
 
+        // If source node is new than add him otherwise just increase the source count
         if(sourceIndex < 0) {
             ++link.source.countAsSource
             this._nodes.push(link.source)
         } else {
             ++this._nodes[sourceIndex].countAsSource
         }
-
+        // If target node is new than add him otherwise just increase the target count
         if(targetIndex < 0) {
             ++link.target.countAsTarget
             this._nodes.push(link.target)
@@ -99,6 +82,7 @@ export default class CulpritGraph {
         this.addNode(link)
 
         const linkIndex = this.findLinkSymmetric(link)
+        // If link already exists than only increase count otherwise create it
         if(linkIndex >= 0) {
             ++this._links[linkIndex].count
         } else {
@@ -122,31 +106,41 @@ export default class CulpritGraph {
         combinations.forEach(c => this.addLink(c))
     }
 
-    private addPlagiats(plagiats: Array<ScriptDescriptor>) {
+    private addPlagiats(plagiats: ReadonlyArray<ScriptDescriptor>) {
         plagiats.forEach(plagiat => this.addPlagiat(plagiat))
     }
 
-    private addCoworkers(coworkers: Array<Email>, mainCulprit: Email, depth: number) {
+    private addCoworkers(coworkers: ReadonlyArray<Email>, mainCulprit: Email, depth: number) {
+        // Generate all combinations from mainculprit to coworkers
         const combinations = coworkers.map(coworker => {
             const source: Node = this.createNode(mainCulprit, depth)
             const target: Node = this.createNode(coworker, depth + 1)
             return { source, target }
-        }).filter(c => {
-            return !this._nodes.includes(c.target)
         })
+        // Add combinations as links and nodes
         combinations.forEach(c => this.addLink(c))
     }
 
-    private addPlagiatsMainCulprit(plagiats: Array<ScriptDescriptor>, mainCulprit: Email, depth = 0) {
+    // Creates array of links and nodes from mainCulprit with certain depth
+    private addPlagiatsMainCulprit(plagiats: ReadonlyArray<ScriptDescriptor>, mainCulprit: Email, depth = 0) {
+        // Get all plagiats of the main culprit
         getPlagiatsOfCulprit(plagiats, mainCulprit).forEach(plagiat => {
+            // Get all of his coworkers
             const coworkers = createCoworkerSet([plagiat], mainCulprit)
+            // Add links from main culprit to his coworkers with depth 0
             this.addCoworkers(coworkers, mainCulprit, 0)
         })
+
+        //For every depth > 0
         for(let i = 1; i < depth; ++i) {
+            // Find all culprits that were added in the last iteration (have potential to add new links)
             const culprits = this._nodes.filter(n => n.depth == i)
             culprits.forEach(culprit => {
+                // Foreach culprit find his plagiats
                 getPlagiatsOfCulprit(plagiats, culprit.email).forEach(plagiat => {
+                    // Foreach plagiat find all coworkers
                     const coworkers = createCoworkerSet([plagiat], culprit.email)
+                    // Add links and nodes from culprit to all his coworkers
                     this.addCoworkers(coworkers, culprit.email, i)
                 })
             })
