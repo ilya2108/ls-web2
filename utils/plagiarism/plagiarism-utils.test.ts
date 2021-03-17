@@ -1,6 +1,10 @@
-import plagiats from '../../pages/plagiarism/__fixtures__/res_final_exam_anonymized_pretty.json'
+import plagiats from './__fixtures__/plagiats1.json'
 
 import { countPlagiatsOfCulprit, createCoworkerSet, createCulpritsSet, getPlagiatsOfCulprit, removeDuplicates } from './plagiarism-utils'
+
+const user1 = "e7a2297@fit.cvut.cz"
+const user2 = "f8ea00a@fit.cvut.cz"
+const user3 = "nonexistent@fit.cvut.cz"
 
 describe("removeDuplicates function", () => {
     test("should not remove any element", () => {
@@ -22,20 +26,20 @@ describe("removeDuplicates function", () => {
 
 describe("getPlagiatsOfCulprit function", () => {
     test("should return only the first plagiat", () => {
-        const culprit = "e7a2297@fit.cvut.cz"
+        const culprit = user1
         const res = getPlagiatsOfCulprit(plagiats, culprit)
         expect(res.includes(plagiats[0])).toBe(true)
         expect(res.length).toBe(1)
     })
 
     test("should return 3 plagiats", () => {
-        const culprit = "f8ea00a@fit.cvut.cz"
+        const culprit = user2
         const res = getPlagiatsOfCulprit(plagiats, culprit)
         expect(res.length).toBe(3)
     })
 
     test("should not find any plagiats for a non-existent user", () => {
-        const culprit = "nonexistent@fit.cvut.cz"
+        const culprit = user3
         const res = getPlagiatsOfCulprit(plagiats, culprit)
         expect(res).toStrictEqual([])
     })
@@ -59,12 +63,12 @@ describe("createCulpritsSet function", () => {
 
 describe("createCoworkerSet function", () => {
     test("should return an array of 2 users", () => {
-        const culprit = "e7a2297@fit.cvut.cz"
+        const culprit = user1
         const filteredPlagiats = getPlagiatsOfCulprit(plagiats, culprit)
         const res = createCoworkerSet(filteredPlagiats, culprit)
         expect(res.includes("8495b25@fit.cvut.cz")).toBe(true)
         expect(res.includes("81830c2@fit.cvut.cz")).toBe(true)
-        expect(res.includes("e7a2297@fit.cvut.cz")).toBe(false)
+        expect(res.includes(culprit)).toBe(false)
         expect(res.length).toBe(2)
     })
 
@@ -84,17 +88,17 @@ describe("createCoworkerSet function", () => {
 
 describe("countPlagiatsOfCulprit function", () => {
     test("should find 1 plagiat", () => {
-        const culprit = "e7a2297@fit.cvut.cz"
+        const culprit = user1
         expect(countPlagiatsOfCulprit(plagiats, culprit)).toBe(1)
     })
 
     test("should find 3 plagiats", () => {
-        const culprit = "f8ea00a@fit.cvut.cz"
+        const culprit = user2
         expect(countPlagiatsOfCulprit(plagiats, culprit)).toBe(3)
     })
 
     test("should find 0 plagiats for a non-existent user", () => {
-        const culprit = "nonexistent@fit.cvut.cz"
+        const culprit = user3
         expect(countPlagiatsOfCulprit(plagiats, culprit)).toBe(0)
     })
 })
