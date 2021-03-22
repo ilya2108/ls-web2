@@ -19,6 +19,9 @@ a {
   height: 20px;
 }
 
+.mb-0 {
+  margin-bottom: 0px;
+}
 .mb-1 {
   margin-bottom: 3px;
 }
@@ -33,6 +36,55 @@ a {
 }
 .mb-5 {
   margin-bottom: 15px;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mt-0 {
+  margin-top: 0px;
+}
+.mt-1 {
+  margin-top: 3px;
+}
+.mt-2 {
+  margin-top: 6px;
+}
+.mt-3 {
+  margin-top: 9px;
+}
+.mt-4 {
+  margin-top: 12px;
+}
+.mt-5 {
+  margin-top: 15px;
+}
+
+.mr-0 {
+  margin-right: 0px;
+}
+.mr-1 {
+  margin-right: 3px;
+}
+.mr-2 {
+  margin-right: 6px;
+}
+.mr-3 {
+  margin-right: 9px;
+}
+.mr-4 {
+  margin-right: 12px;
+}
+.mr-5 {
+  margin-right: 15px;
+}
+
+.align-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 
@@ -143,6 +195,36 @@ a {
 
 .search-field {
   width: 250px;
+}
+
+.node-list-row {
+  padding: 3px;
+  border-top: 1px solid #eee;
+}
+
+.node-list-row.non-active:last-child {
+  border-bottom: 1px solid #eee;
+}
+
+.node-list-row:hover {
+  background-color: rgb(235,236,240);
+  cursor: pointer;
+}
+
+.node-list-row.active, .node-list-row.active:hover {
+  background-color: rgba(166, 7, 71, 0.1);
+  border-top: 1px solid rgb(166, 7, 71);
+  border-bottom: 1px solid rgb(166, 7, 71);
+  cursor: default;
+}
+
+.node-list-row.active + .node-list-row {
+  border: 0
+}
+
+.node-list-row > a {
+  text-decoration: none;
+  color: #000;
 }
 
 #__next {

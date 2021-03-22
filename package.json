@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "preinstall": "npx npm-force-resolutions"
+    "preinstall": "npx npm-force-resolutions",
+    "test": "jest"
   },
   "dependencies": {
     "@atlaskit/atlassian-navigation": "^0.11.4",
@@ -25,13 +26,17 @@
     "@atlaskit/page-header": "^10.0.3",
     "@atlaskit/page-layout": "^0.9.3",
     "@atlaskit/quick-search": "^8.0.3",
+    "@atlaskit/range": "^5.0.7",
     "@atlaskit/side-navigation": "^0.7.6",
     "@atlaskit/spinner": "^15.0.3",
     "@atlaskit/table-tree": "^9.0.4",
     "@atlaskit/tag": "^10.0.4",
     "@atlaskit/textarea": "^3.0.3",
     "@atlaskit/textfield": "^4.0.5",
+    "@atlaskit/toggle": "^12.0.3",
     "@emotion/core": "^10.0.35",
+    "@nivo/core": "^0.67.0",
+    "@nivo/network": "^0.67.0",
     "@sentry/react": "^5.25.0",
     "@sentry/tracing": "^5.25.0",
     "dayjs": "^1.9.1",
@@ -54,10 +59,12 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.20",
     "@types/node": "^14.6.0",
     "@types/react": "^16.9.47",
     "babel-plugin-styled-components": "^1.11.1",
     "graphql-tag": "^2.11.0",
+    "jest": "^26.6.3",
     "npm-force-resolutions": "0.0.3",
     "redux-devtools-extension": "^2.13.8",
     "typescript": "^4.0.2"

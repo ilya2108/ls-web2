@@ -14,28 +14,28 @@ export const removeDuplicates = <T>(arr: Array<T>): Array<T> => Array.from(new S
 /**
  * Filters only plagiats from the culprit from all of the plagiats
  */
-export const getPlagiatsOfCulprit = (plagiats: ScriptDescriptor[], culprit: Email): ScriptDescriptor[] => {
+export const getPlagiatsOfCulprit = (plagiats: ReadonlyArray<ScriptDescriptor>, culprit: Email): ScriptDescriptor[] => {
     return plagiats.filter(plagiat => plagiat.culprits.includes(culprit))
 }
 
 /**
  * Creates set of all culprits from plagiats
  */
-export const createCulpritsSet = (plagiats: ScriptDescriptor[]): Array<Email> => {
-    return removeDuplicates(plagiats.map(x => x.culprits).reduce((a, b) => a.concat(b)))
+export const createCulpritsSet = (plagiats: ReadonlyArray<ScriptDescriptor>): Array<Email> => {
+    return removeDuplicates(plagiats.map(x => x.culprits).reduce((a, b) => a.concat(b), []))
 }
 /**
  * Creates set of all culprits (without the one in parameter) that had at least one common plagiat
  * @param plagiatsFiltered Array of all plagiats with relation to culprit
  * @param culprit Culprit whose coworkers are wanted
  */
-export const createCoworkerSet = (plagiatsFiltered: ScriptDescriptor[], culprit: Email): Array<Email> => {
+export const createCoworkerSet = (plagiatsFiltered: ReadonlyArray<ScriptDescriptor>, culprit: Email): Array<Email> => {
     return createCulpritsSet(plagiatsFiltered).filter(x => x !== culprit)
 }
 
 /**
  * Counts how many plagiats has the culprit made
  */
-export const countPlagiatsOfCulprit = (plagiats: ScriptDescriptor[], culprit: Email): number => {
+export const countPlagiatsOfCulprit = (plagiats: ReadonlyArray<ScriptDescriptor>, culprit: Email): number => {
     return getPlagiatsOfCulprit(plagiats, culprit).length
 }

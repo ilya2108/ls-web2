@@ -6,7 +6,7 @@ import EditorSearchIcon from '@atlaskit/icon/glyph/editor/search'
 import Link from 'next/link'
 import debounce from 'lodash/debounce'
 
-import { createCulpritsSet, countPlagiatsOfCulprit } from '../../utils/plagiarism-utils'
+import { createCulpritsSet, countPlagiatsOfCulprit } from '../../utils/plagiarism/plagiarism-utils'
 
 export default function PlagiaristTable({ plagiats }) {
     // Search input

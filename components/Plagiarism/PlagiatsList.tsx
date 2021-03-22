@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import Link from "next/link";
+import Link from 'next/link'
 
-import Badge from '@atlaskit/badge';
-import Lozenge from '@atlaskit/lozenge';
+import Badge from '@atlaskit/badge'
+import Lozenge from '@atlaskit/lozenge'
 
 export default function PlagiatsList({ plagiats, highlightUser = null }) {
     return (
