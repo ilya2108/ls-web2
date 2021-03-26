@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { CSVLink } from "react-csv";
 import Button from "@atlaskit/button";
+import Select from "@atlaskit/select";
 
 type Email = string;
 type ScriptDescriptor = {
@@ -14,6 +15,17 @@ type PropType = {
   plagiats: ScriptDescriptor[];
 };
 
+enum formatOptions {
+  CSV = "csv",
+  JSONMinified = "jsonminified",
+  JSONPretty = "jsonpretty",
+}
+
+type SelectedFormatType = {
+  label: string;
+  value: string;
+};
+
 export default function PlagiarismDownload({ plagiats }: PropType) {
   const filename = "plagiarism";
   const csvHeaders = [
@@ -22,38 +34,59 @@ export default function PlagiarismDownload({ plagiats }: PropType) {
     { label: "Culprits", key: "culprits" },
   ];
 
+  const [selectedFormat, setSelectedFormat] = useState("jsonpretty");
+
   return (
-    <div className="mt-4">
-      <Button>
-        <CSVLink
-          data={plagiats}
-          headers={csvHeaders}
-          filename={`${filename}.csv`}
-          class="plagiarism-download"
-        >
-          Download CSV
-        </CSVLink>
-      </Button>
-      <Button className="plagiarism-download">
-        <a
-          href={`data:text/json;charset=utf-8,${encodeURIComponent(
-            JSON.stringify(plagiats)
-          )}`}
-          download={`${filename}.json`}
-        >
-          Download JSON
-        </a>
-      </Button>
-      <Button className="plagiarism-download">
-        <a
-          href={`data:text/json;charset=utf-8,${encodeURIComponent(
-            JSON.stringify(plagiats, null, 2)
-          )}`}
-          download={`${filename}.json`}
-        >
-          Download JSON Pretty
-        </a>
-      </Button>
+    <div className="plagiarism-download-wrapper mt-4">
+      <Select
+        className="plagiarism-download-select mr-5"
+        onChange={(newValue) => {
+          setSelectedFormat((newValue as SelectedFormatType).value);
+        }}
+        options={Object.keys(formatOptions).map((key) => {
+          return { label: key, value: formatOptions[key] }
+        })}
+        placeholder="Choose export format"
+      />
+
+      { selectedFormat === "csv" &&
+      <CSVLink
+      data={plagiats}
+      headers={csvHeaders}
+      filename={`${filename}.csv`}
+      className="plagiarism-download"
+      >
+        <Button>
+          Download
+        </Button>
+      </CSVLink>}
+
+      { selectedFormat === "jsonminified" &&
+      <a
+        className="plagiarism-download"
+        href={`data:text/json;charset=utf-8,${encodeURIComponent(
+          JSON.stringify(plagiats)
+        )}`}
+        download={`${filename}-min.json`}
+      >
+        <Button>
+          Download
+        </Button>
+      </a>}
+
+      { selectedFormat === "jsonpretty" &&
+      <a
+        className="plagiarism-download"
+        href={`data:text/json;charset=utf-8,${encodeURIComponent(
+          JSON.stringify(plagiats, null, 2)
+        )}`}
+        download={`${filename}-pretty.json`}
+      >
+        <Button>
+          Download
+        </Button>
+      </a>}
+
     </div>
   );
 }
