@@ -2,31 +2,11 @@ import React, { useState } from 'react'
 
 import { ResponsiveNetwork } from '@nivo/network'
 import { countPlagiatsOfCulprit } from '../../../utils/plagiarism/plagiarism-utils'
-import CulpritGraph, { defaultSettings, tooltip, Node, Link } from '../../../utils/plagiarism/culprit-graph'
+import CulpritGraph, { defaultSettings, tooltip } from '../../../utils/plagiarism/culprit-graph'
 import NodeList from './NodeList'
 
-import CulpritGraphSettings from './CulpritGraphSettings'
+import CulpritGraphSettings, { Settings } from './CulpritGraphSettings'
 import { NivoWrapper, NivoSettings, NivoGraph, NivoNodes } from '../../../pages-styles/Plagiarism/Plagiarism.styles'
-
-export type Email = string
-
-export interface Settings {
-    repulsivity: {
-        manualRepulsivity: boolean,
-        manualValue: number,
-        function: (nodesLength: number) => number,
-    },
-    radius: {
-        dynamicRadius: boolean,
-        function: (node: Node) => number,
-    }
-    linkWidth: {
-        dynamicWidth: boolean,
-        function: (link: Link) => number,
-    },
-    depth: number,
-    animationsEnabled: boolean
-}
 
 export default function PlagiatsNetworkGraph({ plagiats, mainCulprit = null }) {
     const primaryColor = "rgb(7, 71, 166)"

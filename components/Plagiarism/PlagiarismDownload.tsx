@@ -4,13 +4,7 @@ import { CSVLink } from "react-csv";
 import Button from "@atlaskit/button";
 import Select from "@atlaskit/select";
 
-type Email = string;
-type ScriptDescriptor = {
-  script: string;
-  culprit_assignment_name: string;
-  culprit_count: number;
-  culprits: Email[];
-};
+import { ScriptDescriptor } from '../../utils/plagiarism/plagiarism.types'
 type PropType = {
   plagiats: ScriptDescriptor[];
 };
@@ -34,7 +28,7 @@ export default function PlagiarismDownload({ plagiats }: PropType) {
     { label: "Culprits", key: "culprits" },
   ];
 
-  const [selectedFormat, setSelectedFormat] = useState("jsonpretty");
+  const [selectedFormat, setSelectedFormat] = useState("");
 
   return (
     <div className="plagiarism-download-wrapper mt-4">
@@ -86,6 +80,12 @@ export default function PlagiarismDownload({ plagiats }: PropType) {
           Download
         </Button>
       </a>}
+
+      { selectedFormat === "" &&
+        <Button isDisabled>
+          Download
+        </Button>
+      }
 
     </div>
   );

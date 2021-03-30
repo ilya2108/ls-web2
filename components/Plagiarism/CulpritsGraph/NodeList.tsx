@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce'
 import Textfield from '@atlaskit/textfield'
 import EditorSearchIcon from '@atlaskit/icon/glyph/editor/search'
 
-import type { Email } from './CulpritsNetworkGraph'
+import type { Email } from '../../../utils/plagiarism/plagiarism.types'
 
 type Props = {
     nodes: Array<Email>,

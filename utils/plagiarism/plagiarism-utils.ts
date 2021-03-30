@@ -1,10 +1,4 @@
-type Email = string
-type ScriptDescriptor = {
-   script: string,
-   culprit_assignment_name: string,
-   culprit_count: number,
-   culprits: Email[],
-}
+import { Email, ScriptDescriptor} from './plagiarism.types'
 
 /**
  * Removes duplicates from array
