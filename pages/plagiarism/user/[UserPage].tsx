@@ -10,7 +10,6 @@ import CulpritCoworkers from '../../../components/Plagiarism/CulpritCoworkers'
 import PlagiatsNetworkGraph from '../../../components/Plagiarism/CulpritsGraph/CulpritsNetworkGraph'
 
 export default function UserPage() {
-
     const router = useRouter();
     const userEmail: string = Array.isArray(router.query.UserPage) ? router.query.UserPage[0] : router.query.UserPage
     const plagiats = allPlagiats.filter(plagiat => { return plagiat.culprits.includes(userEmail)})

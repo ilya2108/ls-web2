@@ -2,7 +2,8 @@ import { createCoworkerSet, getPlagiatsOfCulprit } from "./plagiarism-utils"
 
 import { cloneDeep } from 'lodash'
 
-import type { Email } from '../../components/Plagiarism/CulpritsGraph/CulpritsNetworkGraph'
+import type { Email, ScriptDescriptor } from './plagiarism.types'
+
 export interface Node {
     email: Email,
     countAsSource: number,
@@ -11,13 +12,6 @@ export interface Node {
 }
 export type BasicLink = { source: Node, target: Node }
 export interface Link extends BasicLink { count: number }
-
-type ScriptDescriptor = {
-    script: string,
-    culprit_assignment_name: string,
-    culprit_count: number,
-    culprits: Email[],
-}
 
 // Culprit graph utils
 export default class CulpritGraph {

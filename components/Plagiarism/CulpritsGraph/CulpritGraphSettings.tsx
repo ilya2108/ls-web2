@@ -4,7 +4,25 @@ import Toggle from '@atlaskit/toggle'
 import Range from '@atlaskit/range'
 import Button from '@atlaskit/button'
 
-import type { Settings } from './CulpritsNetworkGraph'
+import { Node, Link } from '../../../utils/plagiarism/culprit-graph'
+
+export interface Settings {
+    repulsivity: {
+        manualRepulsivity: boolean,
+        manualValue: number,
+        function: (nodesLength: number) => number,
+    },
+    radius: {
+        dynamicRadius: boolean,
+        function: (node: Node) => number,
+    }
+    linkWidth: {
+        dynamicWidth: boolean,
+        function: (link: Link) => number,
+    },
+    depth: number,
+    animationsEnabled: boolean
+}
 
 import { SettingGroup, SettingRow, RangeWrapper } from '../../../pages-styles/Plagiarism/Plagiarism.styles'
 import { calculateRepulsivity, calculateRadius, calculateLinkWidth, defaultSettings } from '../../../utils/plagiarism/culprit-graph'
