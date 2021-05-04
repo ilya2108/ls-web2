@@ -6,11 +6,51 @@ import Badge from '@atlaskit/badge'
 import Lozenge from '@atlaskit/lozenge'
 import Button from '@atlaskit/button'
 import CheckIcon from '@atlaskit/icon/glyph/check';
+import EditorSearchIcon from '@atlaskit/icon/glyph/editor/search'
+import Select from "@atlaskit/select";
+import Textfield from '@atlaskit/textfield'
 
-import { resolvePlagiat } from '../../utils/plagiarism/plagiarism-utils'
+import debounce from 'lodash/debounce'
+
+import { resolvePlagiat, sortingFunctions } from '../../utils/plagiarism/plagiarism-utils'
+import { ScriptDescriptor } from '../../utils/plagiarism/plagiarism.types'
 
 export default function PlagiatsList({ plagiats:plagiatsProp, highlightUser = null }) {
     const [plagiats, setPlagiats] = useState(plagiatsProp)
+
+    // Sorting
+    type SelectedSortingType = {
+        label: string;
+        value: string;
+    };
+    enum sortOptions {
+        "Culprits count descending" = "countDSC",
+        "Culprits count ascending" = "countASC",
+        "Assignment name descending" = "nameDSC",
+        "Assignment name ascending" = "nameASC",
+    }
+    const [selectedSorting, setSelectedSorting] = useState(() => sortingFunctions.countDSC);
+
+    // Search input
+    const [inputVal, setInputVal] = useState("");
+    const setInputValDebounced = debounce(setInputVal, 300)
+    const handleSearchEvent = (event) => {
+        const { value } = event.target;
+        setInputValDebounced(value)
+    };
+
+    const filterPlagiats = (plagiats) => {
+        const sortingFunction = selectedSorting || sortingFunctions.countDSC
+        return plagiats.filter((plagiat: ScriptDescriptor) => {
+            const val = inputVal.toLowerCase()
+            return (
+                plagiat.culprit_assignment_name.toLowerCase().includes(val) ||
+                plagiat.culprits.some((culprit) => {
+                    return culprit.toLowerCase().includes(val)
+                })
+            )
+        }).sort(sortingFunction)
+    }
 
     const resolveButtonClicked = (id: number) => {
         setPlagiats([...resolvePlagiat(plagiats, id)])
@@ -18,7 +58,32 @@ export default function PlagiatsList({ plagiats:plagiatsProp, highlightUser = nu
 
     return (
         <div>
-            {plagiats.map((plagiat, index) => {
+            <div className="plagiat-list-actions">
+                <div className="plagiat-list-action mr-3 pb-3">
+                    <Textfield
+                        name="basic"
+                        isCompact
+                        placeholder="Search assignment or username"
+                        elemAfterInput={<EditorSearchIcon label="" />}
+                        onChange={(event) => handleSearchEvent(event)}
+                    />
+                </div>
+                <div className="plagiat-list-action">
+                    <Select
+                        className="plagiat-action-select mb-3"
+                        onChange={(newValue) => {
+                            const val = (newValue as SelectedSortingType).value
+                            setSelectedSorting(() => sortingFunctions[val])
+                        }}
+                        options={Object.keys(sortOptions).map((key) => {
+                            return {label: key, value: sortOptions[key] }
+                        })}
+                        placeholder="Choose sorting"
+                    />
+                </div>
+            </div>
+
+            {filterPlagiats(plagiats).map((plagiat, index) => {
                 if(plagiat.resolved === true) {
                     return (
                         <div key={index} className="plagiat-wrapper">

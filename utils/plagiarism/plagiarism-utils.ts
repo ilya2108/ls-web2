@@ -42,3 +42,29 @@ export const resolvePlagiat = (plagiats: Array<ScriptDescriptor>, id: number) =>
     plagiats[id].resolved = true
     return plagiats
 }
+
+/**
+ * Utility functions for sorting plagiarism suspicions array
+ */
+export const sortingFunctions = {
+    countDSC: (a: ScriptDescriptor, b: ScriptDescriptor): number => {
+        return b.culprit_count - a.culprit_count
+    },
+    countASC: (a: ScriptDescriptor, b: ScriptDescriptor): number => {
+        return a.culprit_count - b.culprit_count
+    },
+    nameDSC: (a: ScriptDescriptor, b: ScriptDescriptor): number => {
+        const name1 = a.culprit_assignment_name.toLowerCase()
+        const name2 = b.culprit_assignment_name.toLowerCase()
+        if(name1 > name2) return -1
+        if(name1 < name2) return 1
+        return 0
+    },
+    nameASC: (a: ScriptDescriptor, b: ScriptDescriptor): number => {
+        const name1 = a.culprit_assignment_name.toLowerCase()
+        const name2 = b.culprit_assignment_name.toLowerCase()
+        if(name1 < name2) return -1
+        if(name1 > name2) return 1
+        return 0
+    },
+}
