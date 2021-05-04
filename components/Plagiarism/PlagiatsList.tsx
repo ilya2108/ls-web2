@@ -1,14 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Link from 'next/link'
 
 import Badge from '@atlaskit/badge'
 import Lozenge from '@atlaskit/lozenge'
+import Button from '@atlaskit/button'
+import CheckIcon from '@atlaskit/icon/glyph/check';
 
-export default function PlagiatsList({ plagiats, highlightUser = null }) {
+import { resolvePlagiat } from '../../utils/plagiarism/plagiarism-utils'
+
+export default function PlagiatsList({ plagiats:plagiatsProp, highlightUser = null }) {
+    const [plagiats, setPlagiats] = useState(plagiatsProp)
+
+    const resolveButtonClicked = (id: number) => {
+        setPlagiats([...resolvePlagiat(plagiats, id)])
+    }
+
     return (
         <div>
             {plagiats.map((plagiat, index) => {
+                if(plagiat.resolved === true) {
+                    return (
+                        <div key={index} className="plagiat-wrapper">
+                            <div className="plagiat-header">
+                                <Link href={`/plagiarism/assignment/${encodeURIComponent(plagiat.culprit_assignment_name)}`}>
+                                    <h1><a>{plagiat.culprit_assignment_name}</a></h1>
+                                </Link>
+                                <span className="resolved-text"><Lozenge appearance="success">Resolved</Lozenge></span>
+                                <Badge>{"Count: " + plagiat.culprit_count}</Badge>
+                            </div>
+                        </div>
+                    )
+                }
+
                 return (
                     <div key={index} className="plagiat-wrapper">
                         <div className="plagiat-header">
@@ -33,6 +57,12 @@ export default function PlagiatsList({ plagiats, highlightUser = null }) {
                                     </span>
                                 )
                             })}
+                        </div>
+                        <div className="plagiat-action">
+                            <Button
+                                iconAfter={<CheckIcon label="Star icon" size="small" />}
+                                onClick={() => {resolveButtonClicked(index)}}
+                            >Resolve</Button>
                         </div>
                     </div>
                 )

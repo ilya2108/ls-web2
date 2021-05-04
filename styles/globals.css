@@ -330,12 +330,28 @@ a {
   text-decoration: none !important;
 }
 
+.plagiat-wrapper > .plagiat-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .plagiat-wrapper > .plagiat-header > h1 {
-  margin: 5px 10px 0 0;
+  margin: 0 10px 0 0;
   display: inline-block;
 }
+
+.plagiat-wrapper > .plagiat-header > .resolved-text {
+  margin-right: 5px;
+}
+
+.plagiat-wrapper > .plagiat-header > .resolved-text > span {
+  padding: 7px 5px;
+  font-size: 16px;
+}
+
 .plagiat-wrapper > h2 {
-  margin: 5px 10px;
+  margin: 5px 0px;
   display: inline-block;
 }
 .plagiat-wrapper > span {
@@ -349,11 +365,15 @@ a {
 
 .plagiat-wrapper > .culprits > span {
   min-width: 140px;
-  margin: 1px 10px;
+  margin: 1px 0px;
 }
 
 .plagiat-wrapper > .culprits > span > * {
   margin: auto;
+}
+
+.plagiat-wrapper > .plagiat-action {
+  margin-top: 5px;
 }
 
 code {

@@ -5,4 +5,5 @@ export type ScriptDescriptor = {
    culprit_assignment_name: string,
    culprit_count: number,
    culprits: Email[],
+   resolved?: boolean
 }

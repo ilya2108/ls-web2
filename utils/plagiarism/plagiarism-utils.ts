@@ -33,3 +33,12 @@ export const createCoworkerSet = (plagiatsFiltered: ReadonlyArray<ScriptDescript
 export const countPlagiatsOfCulprit = (plagiats: ReadonlyArray<ScriptDescriptor>, culprit: Email): number => {
     return getPlagiatsOfCulprit(plagiats, culprit).length
 }
+
+/**
+ * Resolves plagiat based on the id provided
+ */
+export const resolvePlagiat = (plagiats: Array<ScriptDescriptor>, id: number) => {
+    // TODO: Connect to a back-end
+    plagiats[id].resolved = true
+    return plagiats
+}
