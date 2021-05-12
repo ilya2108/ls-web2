@@ -23,7 +23,7 @@ export default function Login() {
         appearance="primary"
         href={`https://auth.fit.cvut.cz/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`}
       >
-        Login with CTU account
+        Login with CTU account aaaaaaa
       </Button>
       {/* <a href='#'>We're doing maintenance. We'll be back online soon. Sorry about that.</a> */}
       <br />
